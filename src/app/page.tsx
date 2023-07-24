@@ -1,19 +1,12 @@
+"use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import HomeClient from "./component/home/HomeClient";
 
 export default function Home() {
   return (
     <div>
-      <h1>Logn</h1>
-      <form action="">
-        <div>
-          <label htmlFor="">Email</label>
-          <input type="text" />
-        </div>
-        <div>
-          <label htmlFor="">Password</label>
-          <input type="text" />
-        </div>
-      </form>
+      <HomeClient />
     </div>
   );
 }
