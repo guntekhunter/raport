@@ -1,12 +1,12 @@
-"use client";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import HomeClient from "./component/home/HomeClient";
+import HomeAdmin from "./component/home/HomeAdmin";
+import { getUsers } from "./fetch/getUsers";
 
 export default function Home() {
+  const users = getUsers();
+  console.log(users);
   return (
     <div>
-      <HomeClient />
+      <HomeAdmin users={users} />
     </div>
   );
 }

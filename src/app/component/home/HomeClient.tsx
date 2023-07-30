@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -7,8 +8,8 @@ export default function HomeClient() {
     route.push("/login");
   };
   return (
-    <div>
-      <h1>Selamat Datang di Welcome</h1>
+    <div className="flex justify-around bg-yellow-200">
+      <h1>Selamat Datang di Welcome member</h1>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
