@@ -5,7 +5,7 @@ import Title from "./Title";
 import Tabel from "./Tabel";
 
 //@ts-ignore
-export default function HomeAdmin({users}) {
+export default function HomeAdmin() {
   const route = useRouter();
   const handleLogout = () => {
     route.push("/login");
@@ -60,7 +60,7 @@ export default function HomeAdmin({users}) {
           </button>
         </div>
 
-        <Tabel users={users}/>
+        <Tabel />
       </div>
     </div>
   );
