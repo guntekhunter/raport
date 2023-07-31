@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Users } from "../../../../typings";
 import { format } from "date-fns";
+import Image from "next/image";
 
 //@ts-ignore
 export default function Tabel() {
@@ -53,7 +54,7 @@ export default function Tabel() {
             <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Update At
             </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider justify-center flex">
               Action
             </th>
           </tr>
@@ -69,6 +70,26 @@ export default function Tabel() {
               </td>
               <td className="px-6 py-4 whitespace-no-wrap">
                 {formatDate(item.updatedAt)}
+              </td>
+              <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
+                <div className="p-[.5rem] bg-red-200 border-red-300 border-[1.3px] rounded-md">
+                  <Image
+                    src="/delete.png"
+                    alt=""
+                    width={500}
+                    height={500}
+                    className="w-4"
+                  />
+                </div>
+                <div className="p-[.5rem] bg-green-200 border-green-300 border-[1.3px] rounded-md">
+                  <Image
+                    src="/editing.png"
+                    alt=""
+                    width={500}
+                    height={500}
+                    className="w-4"
+                  />
+                </div>
               </td>
             </tr>
           ))}
