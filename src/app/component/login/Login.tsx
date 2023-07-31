@@ -68,12 +68,14 @@ export default function Login() {
             error ? "" : "hidden"
           }`}
         >
-          <p className={`text-[.8rem] text-red-500 ${error ? "" : "hidden"}`}>{error}</p>
+          <p className={`text-[.8rem] text-red-500 ${error ? "" : "hidden"}`}>
+            {error}
+          </p>
         </div>
         <div className="flex justify-around pt-[1rem]">
           <button
             onClick={loginHandler}
-            className="bg-red-200 px-[1rem] rounded-md bg-blue-400 text-white w-full h-[2rem] hover:bg-blue-300 flex justify-around items-center"
+            className="px-[1rem] rounded-md bg-blue-400 text-white w-full h-[2rem] hover:bg-blue-300 flex justify-around items-center"
           >
             {isLoading ? (
               <Image

@@ -11,3 +11,26 @@ export async function GET(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }
+export async function POST(req: NextRequest) {
+  try {
+    const reqBody = await req.json();
+    const { id } = reqBody;
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!user) {
+      console.log(`Post with ID ${id} not found.`);
+      return;
+    }
+    const deletedUser = await prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+    return NextResponse.json({ status: "Ok", deletedUser });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 400 });
+  }
+}

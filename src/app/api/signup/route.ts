@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
     const { email, name, isAdmin, password } = reqBody;
-    const secretPassword = password;
 
     const user = await prisma.user.findUnique({
       where: {
