@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
     if (!user) {
       return NextResponse.json(
-        { error: "user does not exist" },
+        { error: "email tidak terdaftar" },
         { status: 400 }
       );
     }
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     const validatePassword = await bcryptjs.compare(password, user.password);
 
     if (!validatePassword) {
-      return NextResponse.json({ error: "Wrong Password" }, { status: 400 });
+      return NextResponse.json({ error: "password salah" }, { status: 400 });
     }
 
     //create token data
