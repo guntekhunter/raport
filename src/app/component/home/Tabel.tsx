@@ -32,7 +32,7 @@ export default function Tabel() {
 
   const data: Users[] = users;
 
-  console.log(data);
+  // console.log(data[0].createdAt);
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg">
       <table className="min-w-full divide-y divide-gray-200">
@@ -65,9 +65,11 @@ export default function Tabel() {
               <td className="px-6 py-4 whitespace-no-wrap">{item.name}</td>
               <td className="px-6 py-4 whitespace-no-wrap">{item.email}</td>
               <td className="px-6 py-4 whitespace-no-wrap">
-                {formatDate(item.createAt)}
+                {formatDate(item.createdAt)}
               </td>
-              <td className="px-6 py-4 whitespace-no-wrap">{item.createAt}</td>
+              <td className="px-6 py-4 whitespace-no-wrap">
+                {formatDate(item.updatedAt)}
+              </td>
             </tr>
           ))}
         </tbody>
