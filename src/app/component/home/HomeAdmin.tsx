@@ -84,18 +84,18 @@ export default function HomeAdmin() {
           </div>
           <button
             onClick={createUser}
-            className="px-[2rem] py-[.5rem] bg-blue-400 rounded-md text-white"
+            className="px-[2rem] py-[.5rem] bg-blue-400 rounded-md text-white h-[2.5rem] w-[6rem] flex justify-around items-center"
           >
             {isLoading ? (
-              <p>Add</p>
-            ) : (
               <Image
                 width={500}
                 height={500}
                 src="/spinner-of-dots.png"
                 alt=""
-                className="animate-spin w-[1rem] invert m-auto"
+                className="animate-spin w-[1rem] invert"
               />
+            ) : (
+              <p>Add</p>
             )}
           </button>
           <button
