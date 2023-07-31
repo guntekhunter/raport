@@ -4,25 +4,36 @@ import React, { useState } from "react";
 import Title from "./Title";
 import Tabel from "./Tabel";
 import axios from "axios";
+import AddUser from "../models/AddUser";
+import Image from "next/image";
 
 //@ts-ignore
 export default function HomeAdmin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [addSuccess, setAddSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const route = useRouter();
 
   const createUser = async () => {
     try {
+      setIsLoading(true);
       const res = await axios.post("/api/signup", {
         email,
         name,
         password,
         isAdmin: false,
       });
+      setAddSuccess(true);
       console.log(res);
+      setTimeout(() => {
+        setAddSuccess(false);
+      }, 3000);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleLogout = () => {
@@ -30,6 +41,7 @@ export default function HomeAdmin() {
   };
   return (
     <div className="flex justify-around">
+      <AddUser className={`${addSuccess ? "" : "hidden"}`} />
       <div className="w-[80%]">
         <div className=" py-[2rem] space-y-[1rem]">
           <Title>Buat User Baru</Title>
@@ -74,7 +86,17 @@ export default function HomeAdmin() {
             onClick={createUser}
             className="px-[2rem] py-[.5rem] bg-blue-400 rounded-md text-white"
           >
-            Add
+            {isLoading ? (
+              <p>Add</p>
+            ) : (
+              <Image
+                width={500}
+                height={500}
+                src="/spinner-of-dots.png"
+                alt=""
+                className="animate-spin w-[1rem] invert m-auto"
+              />
+            )}
           </button>
           <button
             onClick={handleLogout}
