@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
     const { email, name, isAdmin, password } = reqBody;
-    const secretPassword = password;
 
     const user = await prisma.user.findUnique({
       where: {
@@ -42,9 +41,11 @@ export async function POST(req: NextRequest) {
         password: hashedPassword,
       },
     });
+    const users = await prisma.user.findMany();
     return NextResponse.json({
       status: "Ok",
       message: "new user added",
+      users,
       newUser,
     });
   } catch (error: any) {
