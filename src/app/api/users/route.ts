@@ -29,7 +29,10 @@ export async function POST(req: NextRequest) {
         id,
       },
     });
-    return NextResponse.json({ status: "Ok", deletedUser });
+
+    const users = await prisma.user.findMany();
+
+    return NextResponse.json({ status: "Ok", users });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }

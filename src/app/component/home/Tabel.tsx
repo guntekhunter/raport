@@ -6,31 +6,28 @@ import { format } from "date-fns";
 import Image from "next/image";
 
 //@ts-ignore
-export default function Tabel() {
-  const [users, setUsers] = useState([]);
-
-  const handleDelete = async (id: Number) => {
+export default function Tabel({ users, callback }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [deletedKey, setDeletedKey] = useState(null);
+  const handleDelete = async (id: any, key: any) => {
     try {
+      setDeletedKey(key);
+      setIsLoading(true);
       const res = await axios.post("/api/users", {
         id,
       });
-      console.log(res);
+      callback(true, res.data.users);
+      setTimeout(() => {
+        callback(false, res.data.users);
+      }, 3000);
+
+      console.log(id);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get("/api/users");
-        setUsers(res.data.user);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetch();
-  }, []);
 
   function formatDate(timestamp: any) {
     const date = new Date(timestamp);
@@ -82,15 +79,25 @@ export default function Tabel() {
               <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
                 <button
                   className="p-[.5rem] bg-red-200 border-red-300 border-[1.3px] rounded-md"
-                  onClick={(e) => handleDelete(item.id)}
+                  onClick={(e) => handleDelete(item.id, key)}
                 >
-                  <Image
-                    src="/delete.png"
-                    alt=""
-                    width={500}
-                    height={500}
-                    className="w-4"
-                  />
+                  {isLoading && key === deletedKey ? (
+                    <Image
+                      width={500}
+                      height={500}
+                      src="/spinner-of-dots.png"
+                      alt=""
+                      className="animate-spin w-[1rem]"
+                    />
+                  ) : (
+                    <Image
+                      src="/delete.png"
+                      alt=""
+                      width={500}
+                      height={500}
+                      className="w-4 filter brightness-0 saturate-100 contrast-300"
+                    />
+                  )}
                 </button>
                 <div className="p-[.5rem] bg-green-200 border-green-300 border-[1.3px] rounded-md">
                   <Image

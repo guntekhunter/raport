@@ -1,11 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "./Title";
 import Tabel from "./Tabel";
 import axios from "axios";
 import AddUser from "../models/AddUser";
 import Image from "next/image";
+import { Users } from "../../../../typings";
+import DeleteUser from "../models/DeleteUser";
 
 //@ts-ignore
 export default function HomeAdmin() {
@@ -14,6 +16,8 @@ export default function HomeAdmin() {
   const [name, setName] = useState("");
   const [addSuccess, setAddSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [isDeleted, setIsDeleted] = useState(false);
   const route = useRouter();
 
   const createUser = async () => {
@@ -30,6 +34,8 @@ export default function HomeAdmin() {
       setTimeout(() => {
         setAddSuccess(false);
       }, 3000);
+      setUsers(res.data.users);
+      console.log(res.data.users);
     } catch (error) {
       console.log(error);
     } finally {
@@ -39,9 +45,27 @@ export default function HomeAdmin() {
   const handleLogout = () => {
     route.push("/login");
   };
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await axios.get("/api/users");
+        setUsers(res.data.user);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetch();
+  }, []);
+
+  const callbackDelete = async (deleted: boolean, users: any) => {
+    setIsDeleted(deleted);
+    setUsers(users);
+  };
   return (
     <div className="flex justify-around">
       <AddUser className={`${addSuccess ? "" : "hidden"}`} />
+      <DeleteUser className={`${isDeleted ? "" : "hidden"}`} />
       <div className="w-[80%]">
         <div className=" py-[2rem] space-y-[1rem]">
           <Title>Buat User Baru</Title>
@@ -84,7 +108,7 @@ export default function HomeAdmin() {
           </div>
           <button
             onClick={createUser}
-            className="px-[2rem] py-[.5rem] bg-blue-400 rounded-md text-white h-[2.5rem] w-[6rem] flex justify-around items-center"
+            className="px-[2rem] py-[.5rem] bg-blue-400 rounded-md text-white h-[2.5rem] w-[6rem] flex justify-around items-center  "
           >
             {isLoading ? (
               <Image
@@ -106,7 +130,7 @@ export default function HomeAdmin() {
           </button>
         </div>
 
-        <Tabel />
+        <Tabel users={users} callback={callbackDelete} />
       </div>
     </div>
   );

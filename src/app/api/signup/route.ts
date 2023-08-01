@@ -41,9 +41,11 @@ export async function POST(req: NextRequest) {
         password: hashedPassword,
       },
     });
+    const users = await prisma.user.findMany();
     return NextResponse.json({
       status: "Ok",
       message: "new user added",
+      users,
       newUser,
     });
   } catch (error: any) {
