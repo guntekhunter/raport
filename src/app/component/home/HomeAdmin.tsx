@@ -8,6 +8,7 @@ import AddUser from "../models/AddUser";
 import Image from "next/image";
 import { Users } from "../../../../typings";
 import DeleteUser from "../models/DeleteUser";
+import AllertDelete from "../models/AllertDelete";
 
 //@ts-ignore
 export default function HomeAdmin() {
@@ -17,6 +18,8 @@ export default function HomeAdmin() {
   const [addSuccess, setAddSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(0);
+  const [allert, setAllert] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const route = useRouter();
 
@@ -58,14 +61,31 @@ export default function HomeAdmin() {
     fetch();
   }, []);
 
-  const callbackDelete = async (deleted: boolean, users: any) => {
-    setIsDeleted(deleted);
-    setUsers(users);
+  // const callbackDelete = async (deleted: boolean, users: any, id: any) => {
+  const callbackDelete = async (deleted: boolean, id: any) => {
+    setAllert(deleted);
+    setUser(id);
   };
+
+  const cancelCallback = async (deleted: boolean) => {
+    setAllert(deleted);
+  };
+
+  const callbackDeleted = async (isDeleted: boolean, user: any) => {
+    setIsDeleted(isDeleted);
+    setUsers(user);
+  };
+
   return (
     <div className="flex justify-around">
       <AddUser className={`${addSuccess ? "" : "hidden"}`} />
       <DeleteUser className={`${isDeleted ? "" : "hidden"}`} />
+      <AllertDelete
+        className={`${allert ? "" : "hidden"}`}
+        cancelCallback={cancelCallback}
+        callbackDeleted={callbackDeleted}
+        id={user}
+      />
       <div className="w-[80%]">
         <div className=" py-[2rem] space-y-[1rem]">
           <Title>Buat User Baru</Title>
