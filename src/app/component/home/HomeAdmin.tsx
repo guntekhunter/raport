@@ -25,28 +25,29 @@ export default function HomeAdmin() {
 
   const createUser = async () => {
     try {
-      setIsLoading(true);
-      const res = await axios.post("/api/signup", {
-        email,
-        name,
-        password,
-        isAdmin: false,
-      });
-      setAddSuccess(true);
-      console.log(res);
-      setTimeout(() => {
-        setAddSuccess(false);
-      }, 3000);
-      setUsers(res.data.users);
-      console.log(res.data.users);
+      if (name && email && password) {
+        setIsLoading(true);
+        const res = await axios.post("/api/signup", {
+          email,
+          name,
+          password,
+          isAdmin: false,
+        });
+        setAddSuccess(true);
+        console.log(res);
+        setTimeout(() => {
+          setAddSuccess(false);
+        }, 3000);
+        setUsers(res.data.users);
+        console.log(res.data.users);
+      } else {
+        alert("Please fill in all required fields.");
+      }
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  };
-  const handleLogout = () => {
-    route.push("/login");
   };
 
   useEffect(() => {
@@ -97,6 +98,7 @@ export default function HomeAdmin() {
                   className="h-[2rem] px-[1rem] rounded-md border-[1.4px] border-gray-200 text-[.9rem] w-[20rem]"
                   type="text"
                   autoComplete="off"
+                  required
                   onChange={(e: any) => {
                     setEmail(e.target.value);
                   }}
@@ -108,6 +110,7 @@ export default function HomeAdmin() {
                   className="h-[2rem] px-[1rem] rounded-md border-[1.4px] border-gray-200 text-[.9rem] w-[20rem]"
                   type="text"
                   autoComplete="off"
+                  required
                   onChange={(e: any) => {
                     setName(e.target.value);
                   }}
@@ -119,6 +122,7 @@ export default function HomeAdmin() {
                   className="h-[2rem] px-[1rem] rounded-md border-[1.4px] border-gray-200 text-[.9rem] w-[20rem]"
                   type="text"
                   autoComplete="off"
+                  required
                   onChange={(e: any) => {
                     setPassword(e.target.value);
                   }}
@@ -141,12 +145,6 @@ export default function HomeAdmin() {
             ) : (
               <p>Add</p>
             )}
-          </button>
-          <button
-            onClick={handleLogout}
-            className="px-[2rem] py-[.5rem] bg-blue-400 rounded-md text-white"
-          >
-            Logout
           </button>
         </div>
 

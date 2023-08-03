@@ -1,9 +1,23 @@
 "use client";
-import { usePathname } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 export default function Navbar() {
+  const [isDrop, setIsDrop] = useState(false);
+
+  const route = useRouter();
+
   const pathname = usePathname();
+
+  const handleDrop = () => {
+    setIsDrop(!isDrop);
+  };
+
+  const logout = () => {
+    setIsDrop(!isDrop);
+    route.push("/login");
+  };
+
   return (
     <div
       className={`${
@@ -14,7 +28,18 @@ export default function Navbar() {
         <p className="font-bold flex items-center">RAPORT</p>
         <div className="flex items-center space-x-[1rem]">
           <p>ommaleka</p>
-          <div className="w-[2rem] h-[2rem] bg-black rounded-full" />
+          <button
+            className="w-[2rem] h-[2rem] bg-black rounded-full"
+            onClick={handleDrop}
+          />
+          <button
+            className={`${
+              isDrop ? "" : "hidden"
+            } absolute top-[4rem] right-[10%] px-[1rem] py-[.3rem] rounded-md shadow-md hover:bg-gray-100`}
+            onClick={logout}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
