@@ -13,11 +13,25 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
   name      String
   password  String
   isAdmin   Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  main_data main_data[]
+}
+
+model main_data {
+  id          Int      @id @default(autoincrement())
+  guru_kelas  String
+  nip         Int      @unique
+  kelas_huruf String
+  kelas_angka String
+  semester    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  id_user     Int
+  user        User     @relation(fields: [id_user], references: [id])
 }
