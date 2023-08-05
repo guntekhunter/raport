@@ -23,6 +23,7 @@ export default function Login() {
         email: email,
         password: password,
       });
+
       if (res.status && res.data.user.isAdmin) {
         route.push("/admin");
       } else {

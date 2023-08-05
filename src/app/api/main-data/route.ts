@@ -11,3 +11,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }
+
+export async function POST(req: NextRequest) {
+  try {
+    const reqBody = await req.json();
+    const { guru_kelas, nip, kelas_huruf, kelas_angka, semester, id_user } =
+      reqBody;
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

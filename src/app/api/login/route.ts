@@ -50,7 +50,10 @@ export async function POST(req: NextRequest) {
       user,
     });
 
-    response.cookies.set("token", token, { httpOnly: true });
+    const userId = user.id;
+
+    response.cookies.set("token", token, { httpOnly: true,  });
+    response.cookies.set("user id", String(userId), { httpOnly: true });
 
     return response;
 

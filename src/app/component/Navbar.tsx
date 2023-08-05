@@ -1,6 +1,7 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
   const [isDrop, setIsDrop] = useState(false);
@@ -15,6 +16,8 @@ export default function Navbar() {
 
   const logout = () => {
     setIsDrop(!isDrop);
+    Cookies.remove("token");
+    Cookies.remove("user id");
     route.push("/");
   };
 

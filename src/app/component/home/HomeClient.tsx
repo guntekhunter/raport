@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 export default function HomeClient() {
   const [isDrop, setIsDrop] = useState(false);
@@ -10,13 +11,11 @@ export default function HomeClient() {
   const [kelasHuruf, setKelasHuruf] = useState("");
 
   const route = useRouter();
-  const handleLogout = () => {
-    route.push("/login");
-  };
 
   const dropDown = () => {
     setIsDrop(!isDrop);
   };
+
   return (
     <div className="flex justify-around py-[2rem] bg-gray-50 h-[100vh]">
       <div className="w-[80%] rounded-md px-[3.5rem] py-[1.5rem] border-[1.5px] border-gray-200 bg-white h-[20rem]">
