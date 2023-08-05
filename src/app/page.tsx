@@ -1,9 +1,9 @@
-import HomeAdmin from "./component/home/HomeAdmin";
+import Login from "./component/login/Login";
 
 export default function Home() {
   return (
     <div>
-      <HomeAdmin/>
+      <Login />
     </div>
   );
 }

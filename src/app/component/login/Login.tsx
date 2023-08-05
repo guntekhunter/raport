@@ -24,7 +24,7 @@ export default function Login() {
         password: password,
       });
       if (res.status && res.data.user.isAdmin) {
-        route.push("/");
+        route.push("/admin");
       } else {
         route.push("/member");
       }
