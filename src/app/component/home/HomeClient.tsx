@@ -8,9 +8,27 @@ export default function HomeClient() {
     route.push("/login");
   };
   return (
-    <div className="flex justify-around bg-yellow-200">
-      <h1>Selamat Datang di Welcome member</h1>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="flex justify-around py-[2rem]">
+      <div className="w-[80%] rounded-md px-[3.5rem] py-[3rem] border-[1.5px] border-gray-200">
+        <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+          <div>Guru Kelas</div>
+          <div>Samsul Rijal S.Pd</div>
+        </div>
+        <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+          <div>NIP</div>
+          <div>1324592295</div>
+        </div>
+        <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+          <div>Semester</div>
+          <div className="relative">
+            <p>Ganjil</p>
+            <div className="absolute bg-red-200 px-[1rem] py-[1rem] space-y-[.5rem] right-0">
+              <p>Ganjil</p>
+              <p>Genap</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
