@@ -2,19 +2,15 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import DropDown from "./DropDown";
 
 export default function HomeClient() {
-  const [isDrop, setIsDrop] = useState(false);
   const [guru, setGuru] = useState("");
   const [nip, setNip] = useState("");
   const [kelasAngka, setKelasAngka] = useState("");
   const [kelasHuruf, setKelasHuruf] = useState("");
 
   const route = useRouter();
-
-  const dropDown = () => {
-    setIsDrop(!isDrop);
-  };
 
   return (
     <div className="flex justify-around py-[2rem] bg-gray-50 h-[100vh]">
@@ -24,7 +20,7 @@ export default function HomeClient() {
           <input
             value={guru}
             placeholder="Salsul Rijal S.Pt"
-            className="flex justify-center text-center"
+            className="flex justify-center text-left"
           />
         </div>
         <div className="flex justify-between py-[1rem] border-b-[1.5px]">
@@ -32,44 +28,25 @@ export default function HomeClient() {
           <input
             value={nip}
             placeholder="1829040023"
-            className="flex justify-center text-center"
+            className="flex justify-center text-left"
           />
         </div>
         <div className="flex justify-between py-[1rem] border-b-[1.5px]">
           <div>Kelas</div>
           <input
             value={kelasAngka}
-            className="w-[1rem] flex justify-center text-center"
+            className="w-[1rem] flex justify-center text-left"
             placeholder="II"
           />
           <input
             value={kelasHuruf}
-            className="w-[1rem] flex justify-center text-center"
+            className="w-[1rem] flex justify-center text-left"
             placeholder="A"
           />
         </div>
         <div className="flex justify-between py-[1rem]">
           <div>Semester</div>
-          <div className="relative">
-            <button
-              className="flex rounded-md transition-all duration-300"
-              onClick={dropDown}
-            >
-              <p>Ganjil</p>
-            </button>
-            <div
-              className={`absolute bg-white right-0 rounded-md shadow-md top-[2.5rem] ${
-                isDrop ? "block" : "hidden"
-              }`}
-            >
-              <p className="hover:bg-gray-200 w-full px-[1rem] h-full p-[.2rem]">
-                Ganjil
-              </p>
-              <p className="hover:bg-gray-200 w-full px-[1rem] h-full p-[.2rem]">
-                Genap
-              </p>
-            </div>
-          </div>
+          <DropDown drop={["Ganjil", "Genap"]} />
         </div>
       </div>
     </div>
