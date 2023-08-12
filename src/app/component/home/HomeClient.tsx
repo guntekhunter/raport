@@ -5,13 +5,32 @@ import Cookies from "js-cookie";
 import DropDown from "./DropDown";
 import axios from "axios";
 
+interface DataItem {
+  guru: string;
+  nip: string;
+  grade: string;
+  semester: string;
+}
+
 export default function HomeClient() {
   const [guru, setGuru] = useState("");
   const [nip, setNip] = useState("");
-  const [kelasAngka, setKelasAngka] = useState("");
-  const [kelasHuruf, setKelasHuruf] = useState("");
+  const [grade, setGrade] = useState("");
+  const [semester, setSemester] = useState("");
+  const [data, setData] = useState<DataItem[]>([]);
 
   const route = useRouter();
+
+  const classCallback = (item: any, name: any) => {
+    if (name === "kelas") {
+      setGrade(item);
+    }
+    if (name === "semester") {
+      setSemester(item);
+    }
+  };
+
+  console.log(grade, semester);
 
   useEffect(() => {
     const fetch = async () => {
@@ -25,6 +44,19 @@ export default function HomeClient() {
 
     fetch();
   }, []);
+
+  const save = () => {
+    const newData = {
+      guru: guru,
+      nip: nip,
+      grade: grade,
+      semester: semester,
+    };
+
+    setData((prevData) => [...prevData, newData]);
+  };
+
+  console.log(data)
 
   return (
     <div className="flex justify-around py-[2rem] bg-gray-50">
@@ -54,14 +86,27 @@ export default function HomeClient() {
           </div>
           <div className="flex justify-between py-[1rem] border-b-[1.5px]">
             <div>Kelas</div>
-            <DropDown title="II" drop={["I", "II", "III", "IV", "V", "VI"]} />
+            <DropDown
+              name="kelas"
+              title="II"
+              drop={["I", "II", "III", "IV", "V", "VI"]}
+              classCallback={classCallback}
+            />
           </div>
           <div className="flex justify-between py-[1rem]">
             <div>Semester</div>
-            <DropDown title="Ganjil" drop={["Ganjil", "Genap"]} />
+            <DropDown
+              name="semester"
+              title="Ganjil"
+              drop={["Ganjil", "Genap"]}
+              classCallback={classCallback}
+            />
           </div>
           <div>
-            <button className="bg-black w-full py-[1rem] rounded-md mb-[2rem] text-white mt-[2rem] hover:bg-black-200">
+            <button
+              className="bg-black w-full py-[1rem] rounded-md mb-[2rem] text-white mt-[2rem] hover:bg-black-200"
+              onClick={save}
+            >
               Simpan Perubahan
             </button>
           </div>

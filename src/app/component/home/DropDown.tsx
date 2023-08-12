@@ -1,8 +1,9 @@
+"use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 //@ts-ignore
-export default function DropDown({ drop, title }) {
+export default function DropDown({ drop, title, classCallback, name }) {
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState(title);
 
@@ -13,6 +14,7 @@ export default function DropDown({ drop, title }) {
   const select = (item: any) => {
     setSelected(item);
     setIsDrop(!isDrop);
+    classCallback(item, name);
   };
 
   const dropData = drop;
