@@ -33,17 +33,23 @@ export default function HomeClient() {
           <div className="flex justify-between py-[1rem] border-b-[1.5px]">
             <div>Guru Kelas</div>
             <input
+              onChange={(e) => {
+                setGuru(e.target.value);
+              }}
               value={guru}
               placeholder="Salsul Rijal S.Pt"
-              className="flex justify-center text-left w-[10rem]"
+              className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
             />
           </div>
           <div className="flex justify-between py-[1rem] border-b-[1.5px]">
             <div>NIP</div>
             <input
               value={nip}
+              onChange={(e) => {
+                setNip(e.target.value);
+              }}
               placeholder="1829040023"
-              className="flex justify-center text-left w-[10rem]"
+              className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
             />
           </div>
           <div className="flex justify-between py-[1rem] border-b-[1.5px]">
@@ -55,7 +61,7 @@ export default function HomeClient() {
             <DropDown title="Ganjil" drop={["Ganjil", "Genap"]} />
           </div>
           <div>
-            <button className="bg-black w-full py-[1rem] rounded-md mb-[2rem] text-white mt-[2rem]">
+            <button className="bg-black w-full py-[1rem] rounded-md mb-[2rem] text-white mt-[2rem] hover:bg-black-200">
               Simpan Perubahan
             </button>
           </div>
