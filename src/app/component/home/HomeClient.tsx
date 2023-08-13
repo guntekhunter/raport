@@ -18,10 +18,12 @@ export default function HomeClient() {
   const [grade, setGrade] = useState("");
   const [semester, setSemester] = useState("");
   const [data, setData] = useState<DataItem[]>([]);
+  const [buttonActive, setButtonActive] = useState(false);
 
   const route = useRouter();
 
   const classCallback = (item: any, name: any) => {
+    setButtonActive(true);
     if (name === "kelas") {
       setGrade(item);
     }
@@ -35,8 +37,7 @@ export default function HomeClient() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get("/api/main-data");
-        console.log(res);
+        const res = await axios.get("/api/main-data?id_user=1");
       } catch (error) {
         console.log(error);
       }
@@ -53,10 +54,15 @@ export default function HomeClient() {
       semester: semester,
     };
 
-    setData((prevData) => [...prevData, newData]);
+    setData([newData]);
+    setGuru("");
+    setNip("");
+    setGrade("");
+    setSemester("");
+    setButtonActive(false);
   };
 
-  console.log(data)
+  console.log(data);
 
   return (
     <div className="flex justify-around py-[2rem] bg-gray-50">
@@ -66,7 +72,7 @@ export default function HomeClient() {
             <div>Guru Kelas</div>
             <input
               onChange={(e) => {
-                setGuru(e.target.value);
+                setGuru(e.target.value), setButtonActive(true);
               }}
               value={guru}
               placeholder="Salsul Rijal S.Pt"
@@ -78,10 +84,10 @@ export default function HomeClient() {
             <input
               value={nip}
               onChange={(e) => {
-                setNip(e.target.value);
+                setNip(e.target.value), setButtonActive(true);
               }}
               placeholder="1829040023"
-              className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+              className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200"
             />
           </div>
           <div className="flex justify-between py-[1rem] border-b-[1.5px]">
@@ -104,7 +110,11 @@ export default function HomeClient() {
           </div>
           <div>
             <button
-              className="bg-black w-full py-[1rem] rounded-md mb-[2rem] text-white mt-[2rem] hover:bg-black-200"
+              className={` w-full py-[1rem] rounded-md mb-[2rem] text-white mt-[2rem] hover:bg-black-200 ${
+                buttonActive
+                  ? "bg-black"
+                  : "bg-gray-100 border-[1.5px] border-gray-300 text-gray-300"
+              }`}
               onClick={save}
             >
               Simpan Perubahan
