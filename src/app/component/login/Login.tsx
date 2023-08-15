@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -27,6 +28,9 @@ export default function Login() {
       if (res.status && res.data.user.isAdmin) {
         route.push("/admin");
       } else {
+        console.log(res.data.user.id);
+        const id = res.data.id;
+        Cookies.set("user", id);
         route.push("/member");
       }
     } catch (error: any) {

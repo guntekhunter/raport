@@ -37,7 +37,16 @@ export default function HomeClient() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get("/api/main-data?id_user=1");
+        const idUser = Cookies.get("user"); // Retrieving the cookie named "user"
+        console.log(idUser);
+        if (idUser !== undefined) {
+          // Proceed only if idUser is not undefined
+          const parsedId = parseInt(idUser); // Parsing the value to an integer
+          console.log(parsedId); // Output the parsed id value
+        } else {
+          console.log("user parameter not found in the cookie");
+        }
+        const res = await axios.get(`/api/main-data?id_user=1`);
       } catch (error) {
         console.log(error);
       }
