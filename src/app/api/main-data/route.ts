@@ -6,14 +6,20 @@ const prisma = new PrismaClient();
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const reqBody = req.nextUrl.searchParams.get("id_user");
-    // const reqBody = await req.json();
-    // const id_user = reqBody;
-    // const data = await prisma.main_data.findFirst({
-    //   where: {
-    //     id_user,
-    //   },
-    // });
-    return NextResponse.json({ status: "Ok", data: reqBody });
+    let id = 0;
+
+    if (reqBody !== null) {
+      id = parseInt(reqBody, 10); // Using radix 10 for decimal
+    } else {
+      console.log("id_user parameter not found in the URL");
+    }
+    const data = await prisma.main_data.findFirst({
+      where: {
+        id_user: id,
+      },
+    });
+    console.log(reqBody);
+    return NextResponse.json({ status: "Ok", data: data });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }

@@ -47,19 +47,21 @@ export default function HomeClient() {
   }, []);
 
   const save = () => {
-    const newData = {
-      guru: guru,
-      nip: nip,
-      grade: grade,
-      semester: semester,
-    };
+    if (buttonActive) {
+      const newData = {
+        guru: guru,
+        nip: nip,
+        grade: grade,
+        semester: semester,
+      };
 
-    setData([newData]);
-    setGuru("");
-    setNip("");
-    setGrade("");
-    setSemester("");
-    setButtonActive(false);
+      setData([newData]);
+      setGuru("");
+      setNip("");
+      setGrade("");
+      setSemester("");
+      setButtonActive(false);
+    }
   };
 
   console.log(data);
@@ -110,10 +112,10 @@ export default function HomeClient() {
           </div>
           <div>
             <button
-              className={` w-full py-[1rem] rounded-md mb-[2rem] text-white mt-[2rem] hover:bg-black-200 ${
+              className={` w-full py-[1rem] rounded-md mb-[2rem] mt-[2rem] hover:bg-black-200 ${
                 buttonActive
-                  ? "bg-black"
-                  : "bg-gray-100 border-[1.5px] border-gray-300 text-gray-300"
+                  ? "bg-black text-white"
+                  : "bg-gray-100 border-[1.5px] border-gray-300 text-gray-400"
               }`}
               onClick={save}
             >
