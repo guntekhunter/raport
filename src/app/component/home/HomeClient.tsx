@@ -7,18 +7,20 @@ import Cookies from "js-cookie";
 
 interface DataItem {
   guru: string;
-  nip: string;
+  nip: number;
   grade: string;
   semester: string;
 }
 
 export default function HomeClient() {
   const [guru, setGuru] = useState("");
-  const [nip, setNip] = useState("");
+  const [nip, setNip] = useState<number>(0);
   const [grade, setGrade] = useState("");
   const [semester, setSemester] = useState("");
   const [data, setData] = useState<DataItem[]>([]);
   const [buttonActive, setButtonActive] = useState(false);
+  const [userId, setUserId] = useState(0);
+  const [id, setId] = useState(0);
 
   const route = useRouter();
 
@@ -40,13 +42,14 @@ export default function HomeClient() {
 
         let parsedId = 0;
         if (id !== undefined) {
-          parsedId = parseInt(id, 10); // Parsing the user ID to an integer
-          console.log(parsedId); // Output the parsed user ID value
+          parsedId = parseInt(id); // Parsing the user ID to an integer
+          setUserId(parsedId);
         } else {
           console.log("User ID not found in localStorage");
         }
         const res = await axios.get(`/api/main-data?id_user=${parsedId}`);
-        setData(res.data);
+        setData(res.data.data);
+        setId(res.data.data.id);
         console.log(res);
       } catch (error) {
         console.log(error);
@@ -56,7 +59,7 @@ export default function HomeClient() {
     fetch();
   }, []);
 
-  const save = () => {
+  const save = async () => {
     if (buttonActive) {
       const newData = {
         guru: guru,
@@ -65,15 +68,48 @@ export default function HomeClient() {
         semester: semester,
       };
 
+      if (data === null) {
+        try {
+          console.log(newData);
+          const res = await axios.post("/api/main-data", {
+            guru_kelas: guru,
+            nip: nip,
+            kelas_angka: grade,
+            semester: semester,
+            id_user: userId,
+            kelas_huruf: "A",
+          });
+          setData(res.data.newData);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          console.log(newData);
+          const res = await axios.put(`/api/main-data?id=${id}`, {
+            guru_kelas: guru,
+            nip: nip,
+            kelas_angka: grade,
+            semester: semester,
+            id_user: userId,
+            kelas_huruf: "A",
+          });
+          setData(res.data.newData);
+        } catch (error) {
+          console.log(error);
+        }
+      }
       setData([newData]);
       setGuru("");
-      setNip("");
+      setNip(0);
       setGrade("");
       setSemester("");
       setButtonActive(false);
+      console.log(newData);
     }
   };
 
+  console.log(data);
   return (
     <div className="flex justify-around py-[2rem] bg-gray-50">
       <div className="w-[80%] flex justify-between">
@@ -94,7 +130,7 @@ export default function HomeClient() {
             <input
               value={nip}
               onChange={(e) => {
-                setNip(e.target.value), setButtonActive(true);
+                setNip(Number(e.target.value)), setButtonActive(true);
               }}
               placeholder="1829040023"
               className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200"
