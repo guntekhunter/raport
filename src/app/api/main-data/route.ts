@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     let id = 0;
 
     if (reqBody !== null) {
-      id = parseInt(reqBody, 10); // Using radix 10 for decimal
+      id = parseInt(reqBody); // Using radix 10 for decimal
     } else {
       console.log("id_user parameter not found in the URL");
     }
@@ -18,7 +18,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
         id_user: id,
       },
     });
-    console.log(reqBody);
     return NextResponse.json({ status: "Ok", data: data });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 400 });
