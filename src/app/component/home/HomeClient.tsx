@@ -1,9 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import DropDown from "./DropDown";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 interface DataItem {
   guru: string;
@@ -31,22 +31,23 @@ export default function HomeClient() {
       setSemester(item);
     }
   };
-
   console.log(grade, semester);
 
   useEffect(() => {
     const fetch = async () => {
       try {
-        const idUser = Cookies.get("user"); // Retrieving the cookie named "user"
-        console.log(idUser);
-        if (idUser !== undefined) {
-          // Proceed only if idUser is not undefined
-          const parsedId = parseInt(idUser); // Parsing the value to an integer
-          console.log(parsedId); // Output the parsed id value
+        const id = Cookies.get("user id");
+
+        let parsedId = 0;
+        if (id !== undefined) {
+          parsedId = parseInt(id, 10); // Parsing the user ID to an integer
+          console.log(parsedId); // Output the parsed user ID value
         } else {
-          console.log("user parameter not found in the cookie");
+          console.log("User ID not found in localStorage");
         }
-        const res = await axios.get(`/api/main-data?id_user=1`);
+        const res = await axios.get(`/api/main-data?id_user=${parsedId}`);
+        setData(res.data);
+        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -72,8 +73,6 @@ export default function HomeClient() {
       setButtonActive(false);
     }
   };
-
-  console.log(data);
 
   return (
     <div className="flex justify-around py-[2rem] bg-gray-50">

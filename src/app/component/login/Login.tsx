@@ -28,9 +28,8 @@ export default function Login() {
       if (res.status && res.data.user.isAdmin) {
         route.push("/admin");
       } else {
-        console.log(res.data.user.id);
-        const id = res.data.id;
-        Cookies.set("user", id);
+        const id = res.data.user.id;
+        Cookies.set("user id", id);
         route.push("/member");
       }
     } catch (error: any) {

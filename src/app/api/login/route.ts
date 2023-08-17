@@ -44,18 +44,19 @@ export async function POST(req: NextRequest) {
       expiresIn: "1d",
     });
 
-    const response = NextResponse.json({
-      success: true,
-      message: "Login Successfull",
-      user,
-    });
+    // const response = NextResponse.json({
+    //   success: true,
+    //   message: "Login Successfull",
+    //   user: user.id,
+    // });
 
-    const userId = user.id;
+    // const userId = user.id;
 
-    response.cookies.set("token", token, { httpOnly: true,  });
-    response.cookies.set("user id", String(userId), { httpOnly: true });
+    // response.cookies.set("token", token, { httpOnly: true });
+    // response.cookies.set("user id", String(userId), { httpOnly: true });
 
-    return response;
+    // return response;
+    return NextResponse.json({ status: "Ok", user: user, token: token });
 
     // console.log(serverRuntimeConfig.secret);
   } catch (error: any) {
