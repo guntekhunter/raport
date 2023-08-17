@@ -77,7 +77,6 @@ export async function PUT(req: NextRequest) {
         id_user,
       },
     });
-    console.log(data);
     return NextResponse.json({ status: "Ok", dataUpdated: data });
   } catch (error) {
     console.log(error);

@@ -11,6 +11,10 @@ export default function DropDown({ drop, title, classCallback, name }) {
     setIsDrop(!isDrop);
   };
 
+  useEffect(() => {
+    setSelected(title);
+  }, [title]);
+
   const select = (item: any) => {
     setSelected(item);
     setIsDrop(!isDrop);

@@ -49,6 +49,11 @@ export default function HomeClient() {
         }
         const res = await axios.get(`/api/main-data?id_user=${parsedId}`);
         setData(res.data.data);
+        setGuru(res.data.data.guru_kelas);
+        setGrade(res.data.data.kelas_angka);
+        setSemester(res.data.data.semester);
+        setNip(res.data.data.nip);
+        setUserId(res.data.data.id_user);
         setId(res.data.data.id);
         console.log(res);
       } catch (error) {
@@ -58,6 +63,8 @@ export default function HomeClient() {
 
     fetch();
   }, []);
+
+  console.log(guru);
 
   const save = async () => {
     if (buttonActive) {
@@ -80,6 +87,12 @@ export default function HomeClient() {
             kelas_huruf: "A",
           });
           setData(res.data.newData);
+          setGuru(res.data.newData.guru_kelas);
+          setGrade(res.data.newData.kelas_angka);
+          setSemester(res.data.newData.semester);
+          setNip(res.data.newData.nip);
+          setUserId(res.data.newData.id_user);
+          setId(res.data.newData.id);
         } catch (error) {
           console.log(error);
         }
@@ -94,7 +107,14 @@ export default function HomeClient() {
             id_user: userId,
             kelas_huruf: "A",
           });
-          setData(res.data.newData);
+          setData(res.data.dataUpdated);
+          console.log(res.data.dataUpdated.kelas_angka);
+          setGuru(res.data.dataUpdated.guru_kelas);
+          setGrade(res.data.dataUpdated.kelas_angka);
+          setSemester(res.data.dataUpdated.semester);
+          setNip(res.data.dataUpdated.nip);
+          setUserId(res.data.dataUpdated.id_user);
+          setId(res.data.dataUpdated.id);
         } catch (error) {
           console.log(error);
         }
@@ -140,7 +160,7 @@ export default function HomeClient() {
             <div>Kelas</div>
             <DropDown
               name="kelas"
-              title="II"
+              title={grade}
               drop={["I", "II", "III", "IV", "V", "VI"]}
               classCallback={classCallback}
             />
@@ -149,7 +169,7 @@ export default function HomeClient() {
             <div>Semester</div>
             <DropDown
               name="semester"
-              title="Ganjil"
+              title={semester}
               drop={["Ganjil", "Genap"]}
               classCallback={classCallback}
             />
