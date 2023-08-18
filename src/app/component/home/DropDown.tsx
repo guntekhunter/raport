@@ -3,9 +3,11 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 //@ts-ignore
-export default function DropDown({ drop, title, classCallback, name }) {
+export default function DropDown({drop,title,classCallback,name,isActive,
+}) {
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState(title);
+  const [active, setActive] = useState(isActive);
 
   const dropDown = () => {
     setIsDrop(!isDrop);
@@ -15,8 +17,11 @@ export default function DropDown({ drop, title, classCallback, name }) {
     setSelected(title);
   }, [title]);
 
+  console.log(active);
+
   const select = (item: any) => {
     setSelected(item);
+    setActive(false);
     setIsDrop(!isDrop);
     classCallback(item, name);
   };
@@ -29,7 +34,9 @@ export default function DropDown({ drop, title, classCallback, name }) {
         className="flex rounded-md bg-gray-100 border-[1.5px] border-gray-200 w-[6rem] justify-between px-[.5rem]"
         onClick={dropDown}
       >
-        <p>{selected}</p>
+        <p className={`${!active ? "text-black" : "text-gray-400"}`}>
+          {selected}
+        </p>
         <div className="flex items-bottom pt-[.1rem]">
           <Image
             src="/down.png"

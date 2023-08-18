@@ -15,11 +15,12 @@ interface DataItem {
 export default function HomeClient() {
   const [guru, setGuru] = useState("");
   const [nip, setNip] = useState<number>(0);
-  const [grade, setGrade] = useState("");
-  const [semester, setSemester] = useState("");
+  const [grade, setGrade] = useState("I");
+  const [semester, setSemester] = useState("Genap");
   const [data, setData] = useState<DataItem[]>([]);
   const [buttonActive, setButtonActive] = useState(false);
   const [userId, setUserId] = useState(0);
+  const [isActive, setIsActive] = useState(true);
   const [id, setId] = useState(0);
 
   const route = useRouter();
@@ -48,6 +49,12 @@ export default function HomeClient() {
           console.log("User ID not found in localStorage");
         }
         const res = await axios.get(`/api/main-data?id_user=${parsedId}`);
+        console.log(res.data.data);
+        if (res.data.data === null) {
+          setIsActive(!isActive);
+        } else {
+          setIsActive(true);
+        }
         setData(res.data.data);
         setGuru(res.data.data.guru_kelas);
         setGrade(res.data.data.kelas_angka);
@@ -55,7 +62,6 @@ export default function HomeClient() {
         setNip(res.data.data.nip);
         setUserId(res.data.data.id_user);
         setId(res.data.data.id);
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -63,8 +69,6 @@ export default function HomeClient() {
 
     fetch();
   }, []);
-
-  console.log(guru);
 
   const save = async () => {
     if (buttonActive) {
@@ -154,6 +158,7 @@ export default function HomeClient() {
             <DropDown
               name="kelas"
               title={grade}
+              isActive={isActive}
               drop={["I", "II", "III", "IV", "V", "VI"]}
               classCallback={classCallback}
             />
@@ -163,6 +168,7 @@ export default function HomeClient() {
             <DropDown
               name="semester"
               title={semester}
+              isActive={isActive}
               drop={["Ganjil", "Genap"]}
               classCallback={classCallback}
             />
