@@ -98,7 +98,6 @@ export default function HomeClient() {
         }
       } else {
         try {
-          console.log(newData);
           const res = await axios.put(`/api/main-data?id=${id}`, {
             guru_kelas: guru,
             nip: nip,
@@ -107,8 +106,9 @@ export default function HomeClient() {
             id_user: userId,
             kelas_huruf: "A",
           });
-          setData(res.data.dataUpdated);
-          console.log(res.data.dataUpdated.kelas_angka);
+          console.log("ini dia", res.data.dataUpdated.guru_kelas);
+          // setData(res.data.dataUpdated);
+          // console.log(res.data.dataUpdated.kelas_angka);
           setGuru(res.data.dataUpdated.guru_kelas);
           setGrade(res.data.dataUpdated.kelas_angka);
           setSemester(res.data.dataUpdated.semester);
@@ -120,16 +120,9 @@ export default function HomeClient() {
         }
       }
       setData([newData]);
-      setGuru("");
-      setNip(0);
-      setGrade("");
-      setSemester("");
       setButtonActive(false);
-      console.log(newData);
     }
   };
-
-  console.log(data);
   return (
     <div className="flex justify-around py-[2rem] bg-gray-50">
       <div className="w-[80%] flex justify-between">
