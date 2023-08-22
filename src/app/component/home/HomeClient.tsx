@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import DropDown from "./DropDown";
 import axios from "axios";
 import Cookies from "js-cookie";
+import EditMainData from "../models/EditMainData";
 
 interface DataItem {
   guru: string;
@@ -22,6 +23,7 @@ export default function HomeClient() {
   const [userId, setUserId] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [id, setId] = useState(0);
+  const [updated, setUpdated] = useState(false);
 
   const route = useRouter();
 
@@ -34,7 +36,6 @@ export default function HomeClient() {
       setSemester(item);
     }
   };
-  console.log(grade, semester);
 
   useEffect(() => {
     const fetch = async () => {
@@ -77,10 +78,13 @@ export default function HomeClient() {
         grade: grade,
         semester: semester,
       };
+      setUpdated(true);
+      setTimeout(() => {
+        setUpdated(false);
+      }, 3000);
 
       if (data === null) {
         try {
-          console.log(newData);
           const res = await axios.post("/api/main-data", {
             guru_kelas: guru,
             nip: nip,
@@ -109,9 +113,6 @@ export default function HomeClient() {
             id_user: userId,
             kelas_huruf: "A",
           });
-          console.log("ini dia", res.data.dataUpdated.guru_kelas);
-          // setData(res.data.dataUpdated);
-          // console.log(res.data.dataUpdated.kelas_angka);
           setGuru(res.data.dataUpdated.guru_kelas);
           setGrade(res.data.dataUpdated.kelas_angka);
           setSemester(res.data.dataUpdated.semester);
@@ -127,10 +128,9 @@ export default function HomeClient() {
     }
   };
 
-  console.log("ini", isActive);
-
   return (
     <div className="flex justify-around py-[2rem] bg-gray-50">
+      <EditMainData className={`${updated ? "" : "hidden"}`} />
       <div className="w-[80%] flex justify-between">
         <div className="w-[50%] rounded-md px-[3.5rem] py-[1.5rem] border-[1.5px] border-gray-200 bg-white">
           <div className="flex justify-between py-[1rem] border-b-[1.5px]">

@@ -15,8 +15,8 @@ export default function DropDown({drop,title,classCallback,name,isActive,
 
   useEffect(() => {
     setSelected(title);
-    if(isActive){
-      setActive(true)
+    if (isActive) {
+      setActive(true);
     }
   }, [title, isActive]);
 
