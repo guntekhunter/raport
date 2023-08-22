@@ -49,14 +49,11 @@ export default function HomeClient() {
           console.log("User ID not found in localStorage");
         }
         const res = await axios.get(`/api/main-data?id_user=${parsedId}`);
-        console.log(res.data.data);
-        console.log("before", isActive);
         if (res.data.data !== null) {
           setIsActive(true);
         } else {
           setIsActive(false);
         }
-        console.log("after update", isActive);
         setData(res.data.data);
         setGuru(res.data.data.guru_kelas);
         setGrade(res.data.data.kelas_angka);
@@ -155,7 +152,9 @@ export default function HomeClient() {
                 setNip(Number(e.target.value)), setButtonActive(true);
               }}
               placeholder="1829040023"
-              className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200"
+              className={`flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem] ${
+                nip === 0 ? "text-gray-400" : "text-black"
+              }`}
             />
           </div>
           <div className="flex justify-between py-[1rem] border-b-[1.5px]">
