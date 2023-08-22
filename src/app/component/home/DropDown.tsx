@@ -7,7 +7,7 @@ export default function DropDown({drop,title,classCallback,name,isActive,
 }) {
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState(title);
-  const [active, setActive] = useState(isActive);
+  const [active, setActive] = useState(false);
 
   const dropDown = () => {
     setIsDrop(!isDrop);
@@ -15,13 +15,16 @@ export default function DropDown({drop,title,classCallback,name,isActive,
 
   useEffect(() => {
     setSelected(title);
-  }, [title]);
+    if(isActive){
+      setActive(true)
+    }
+  }, [title, isActive]);
 
-  console.log(active);
+  console.log(title, active);
 
   const select = (item: any) => {
     setSelected(item);
-    setActive(false);
+    setActive(!active);
     setIsDrop(!isDrop);
     classCallback(item, name);
   };
@@ -34,7 +37,7 @@ export default function DropDown({drop,title,classCallback,name,isActive,
         className="flex rounded-md bg-gray-100 border-[1.5px] border-gray-200 w-[6rem] justify-between px-[.5rem]"
         onClick={dropDown}
       >
-        <p className={`${!active ? "text-black" : "text-gray-400"}`}>
+        <p className={`${active ? "text-black" : "text-gray-400"}`}>
           {selected}
         </p>
         <div className="flex items-bottom pt-[.1rem]">

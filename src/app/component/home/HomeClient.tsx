@@ -20,7 +20,7 @@ export default function HomeClient() {
   const [data, setData] = useState<DataItem[]>([]);
   const [buttonActive, setButtonActive] = useState(false);
   const [userId, setUserId] = useState(0);
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   const [id, setId] = useState(0);
 
   const route = useRouter();
@@ -50,11 +50,13 @@ export default function HomeClient() {
         }
         const res = await axios.get(`/api/main-data?id_user=${parsedId}`);
         console.log(res.data.data);
-        if (res.data.data === null) {
-          setIsActive(!isActive);
-        } else {
+        console.log("before", isActive);
+        if (res.data.data !== null) {
           setIsActive(true);
+        } else {
+          setIsActive(false);
         }
+        console.log("after update", isActive);
         setData(res.data.data);
         setGuru(res.data.data.guru_kelas);
         setGrade(res.data.data.kelas_angka);
@@ -68,7 +70,7 @@ export default function HomeClient() {
     };
 
     fetch();
-  }, []);
+  }, [isActive]);
 
   const save = async () => {
     if (buttonActive) {
@@ -127,6 +129,9 @@ export default function HomeClient() {
       setButtonActive(false);
     }
   };
+
+  console.log("ini", isActive);
+
   return (
     <div className="flex justify-around py-[2rem] bg-gray-50">
       <div className="w-[80%] flex justify-between">
