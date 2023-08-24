@@ -129,11 +129,11 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="flex justify-around py-[2rem] bg-gray-50">
+    <div className="flex justify-around py-[2rem]">
       <EditMainData className={`${updated ? "" : "hidden"}`} />
       <div className="w-[80%] flex justify-between">
-        <div className="w-[50%] rounded-md px-[3.5rem] py-[1.5rem] border-[1.5px] border-gray-200 bg-white">
-          <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+        <div className="w-[50%] ">
+          <div className="flex justify-between rounded-md px-[3.5rem] py-[1.5rem] border-[1.5px] border-gray-200 bg-whitepy-[1rem] border-b-[1.5px]">
             <div>Guru Kelas</div>
             <input
               onChange={(e) => {
@@ -181,7 +181,7 @@ export default function HomeClient() {
             <button
               className={` w-full py-[1rem] rounded-md mb-[2rem] mt-[2rem] hover:bg-black-200 ${
                 buttonActive
-                  ? "bg-black text-white"
+                  ? "bg-[#793FDF] text-white"
                   : "bg-gray-100 border-[1.5px] border-gray-300 text-gray-400"
               }`}
               onClick={save}
