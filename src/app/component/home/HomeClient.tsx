@@ -132,8 +132,8 @@ export default function HomeClient() {
     <div className="flex justify-around py-[2rem]">
       <EditMainData className={`${updated ? "" : "hidden"}`} />
       <div className="w-[80%] flex justify-between">
-        <div className="w-[50%] ">
-          <div className="flex justify-between rounded-md px-[3.5rem] py-[1.5rem] border-[1.5px] border-gray-200 bg-whitepy-[1rem] border-b-[1.5px]">
+        <div className="w-[50%] border-[1.5px] border-gray-200 rounded-md px-[3.5rem] py-[1.5rem]">
+          <div className="flex justify-between py-[1rem] border-b-[1.5px]">
             <div>Guru Kelas</div>
             <input
               onChange={(e) => {

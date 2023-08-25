@@ -1,10 +1,34 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import AddSiswa from "../models/AddSiswa";
+import Cookies from "js-cookie";
 
 export default function Siswa() {
+  const [isActive, setIsActive] = useState(false);
+
+  const modalActive = () => {
+    setIsActive(!isActive);
+  };
+
+  const callbackActive = async (active: boolean) => {
+    setIsActive(active);
+  };
+  console.log(Cookies.get("user id"));
+
   return (
-    <div className="flex justify-around">
+    <div className="flex justify-around relative">
+      <AddSiswa
+        callbackActive={callbackActive}
+        className={`${isActive ? "" : "hidden"}`}
+      />
       <div className="w-[80%] py-[2rem]">
+        <button
+          className="bg-[#793FDF] rounded-md text-white px-[2rem] py-[.5rem]"
+          onClick={modalActive}
+        >
+          Tambah Siswa
+        </button>
         <div className="rounded-md py-[1rem] w-full">
           <p className="text-[1rem] font-bold">SISWA</p>
         </div>
@@ -31,11 +55,9 @@ export default function Siswa() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               <tr>
-                <td className="px-6 py-4 whitespace-nowrap">Samusl</td>
-                <td className="px-6 py-4 whitespace-nowrap">2</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  Samsul@gmail.com
-                </td>
+                <td className="px-6 py-4 whitespace-nowrap">Samsul Rijal</td>
+                <td className="px-6 py-4 whitespace-nowrap">6/Agustus/2000</td>
+                <td className="px-6 py-4 whitespace-nowrap">Daeng Sunggu</td>
                 <td className="px-6 py-4 whitespace-nowrap">082353194026</td>
                 <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
                   <button
