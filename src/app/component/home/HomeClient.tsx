@@ -190,7 +190,9 @@ export default function HomeClient() {
             </button>
           </div>
         </div>
-        <div className="w-[47%] rounded-md px-[3.5rem] py-[1.5rem] border-[1.5px] border-gray-200 bg-white "></div>
+        <div className="w-[47%] rounded-md px-[3.5rem] py-[1.5rem] bg-[#793FDF] text-white">
+          ahhay
+        </div>
       </div>
     </div>
   );

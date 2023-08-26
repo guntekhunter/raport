@@ -56,6 +56,12 @@ export default function Navbar() {
             >
               Nilai
             </Link>
+            <Link
+              href="/"
+              className="cursor-pointer transform duration-200 ease-in px-[1rem] hover:shadow-md rounded-md"
+            >
+              Print     
+            </Link>
           </div>
         </div>
         <div className="flex items-center space-x-[1rem]">

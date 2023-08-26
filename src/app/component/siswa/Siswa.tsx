@@ -46,7 +46,7 @@ export default function Siswa() {
                   Orang Tua/Wali
                 </th>
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
-                  No Telp. Orang Tua
+                  NISN
                 </th>
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
                   Edit/Hapus
@@ -58,7 +58,7 @@ export default function Siswa() {
                 <td className="px-6 py-4 whitespace-nowrap">Samsul Rijal</td>
                 <td className="px-6 py-4 whitespace-nowrap">6/Agustus/2000</td>
                 <td className="px-6 py-4 whitespace-nowrap">Daeng Sunggu</td>
-                <td className="px-6 py-4 whitespace-nowrap">082353194026</td>
+                <td className="px-6 py-4 whitespace-nowrap">1829040023</td>
                 <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
                   <button
                     className="p-[.5rem] bg-red-200 border-red-300 border-[1.3px] rounded-md"
@@ -69,7 +69,7 @@ export default function Siswa() {
                       alt=""
                       width={500}
                       height={500}
-                      className="w-4 filter brightness-0 saturate-100 contrast-300"
+                      className="w-4"
                     />
                   </button>
                   <div className="p-[.5rem] bg-green-200 border-green-300 border-[1.3px] rounded-md">
