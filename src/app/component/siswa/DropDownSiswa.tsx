@@ -39,7 +39,7 @@ export default function DropDownSiswa({drop,title,classCallback,name,isActive,
         className="flex rounded-md bg-gray-100 border-[1.5px] border-gray-200 w-[13.7rem] justify-between px-[.5rem] h-[2rem] items-center"
         onClick={dropDown}
       >
-        <p className={`${active ? "text-black" : "text-gray-400"}`}>
+        <p className={`text-[.7rem] ${active ? "text-black " : "text-gray-400"}`}>
           {selected}
         </p>
         <div className="flex items-bottom pt-[.1rem]">
@@ -53,7 +53,7 @@ export default function DropDownSiswa({drop,title,classCallback,name,isActive,
         </div>
       </button>
       <div
-        className={`absolute bg-white right-0 rounded-md shadow-md top-[2.5rem] transition-all duration-300  ${
+        className={`absolute bg-white right-0 rounded-md shadow-md top-[3rem] transition-all duration-300 text-[.7rem] ${
           isDrop ? "block" : "hidden"
         }`}
       >

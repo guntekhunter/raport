@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import AddSiswa from "../models/AddSiswa";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 export default function Siswa() {
   const [isActive, setIsActive] = useState(false);
@@ -23,12 +24,12 @@ export default function Siswa() {
         className={`${isActive ? "" : "hidden"}`}
       />
       <div className="w-[80%] py-[2rem]">
-        <button
+        <Link
+          href="/newSiswa"
           className="bg-[#793FDF] rounded-md text-white px-[2rem] py-[.5rem]"
-          onClick={modalActive}
         >
           Tambah Siswa
-        </button>
+        </Link>
         <div className="rounded-md py-[1rem] w-full">
           <p className="text-[1rem] font-bold">SISWA</p>
         </div>
