@@ -27,7 +27,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
 export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
-    console.log(reqBody);
     const { guru_kelas, nip, kelas_huruf, kelas_angka, semester, id_user } =
       reqBody;
 
@@ -78,8 +77,8 @@ export async function PUT(req: NextRequest) {
       },
     });
     return NextResponse.json({ status: "Ok", dataUpdated: data });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
@@ -99,7 +98,7 @@ export async function DELETE(req: NextRequest) {
       },
     });
     return NextResponse.json({ status: "Ok", dataDeleted: data });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
