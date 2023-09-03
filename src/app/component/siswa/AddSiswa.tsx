@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Input from "./Input";
 import DropDownSiswa from "./DropDownSiswa";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function AddSiswa() {
   const [gender, setGender] = useState("Jenis Kelamin");
@@ -28,12 +29,20 @@ export default function AddSiswa() {
     <div className={`w-full flex justify-around z-1 py-[1.7rem]`}>
       <div className="w-[80%] space-y-[.7rem]">
         <div className="space-y-[1rem]">
-          <Link
-            href="siswa"
-            className="bg-[#793FDF] rounded-md text-white px-[2rem] py-[.5rem]"
-          >
-            Back
-          </Link>
+          <button className="bg-[#793FDF] rounded-md">
+            <Link
+              href="/siswa"
+              className="w-full px-[1rem] py-[.5rem] flex justify-center"
+            >
+              <Image
+                src="/arrow.png"
+                height={500}
+                width={500}
+                alt=""
+                className="w-[1rem] filter invert"
+              />
+            </Link>
+          </button>
           <p className="font-bold">TAMBAH PESERTA DIDIK</p>
         </div>
         <div className="flex justify-between rounded-md px-[3.5rem] py-[1.5rem] border-[1.5px] border-gray-200 border-b-[1.5px] bg-white w-full">

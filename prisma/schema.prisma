@@ -19,14 +19,15 @@ datasource db {
 // }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  email     String      @unique
-  name      String
-  password  String
-  isAdmin   Boolean
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  main_data main_data[]
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  name          String
+  password      String
+  isAdmin       Boolean
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  main_data     main_data[]
+  students_data students_data[]
 }
 
 model main_data {
@@ -40,4 +41,75 @@ model main_data {
   updatedAt   DateTime @updatedAt
   id_user     Int
   user        User     @relation(fields: [id_user], references: [id])
+}
+
+model students_data {
+  id                                   Int      @id @default(autoincrement())
+  id_user                              Int
+  nama_lengkap                         String
+  nama_panggilan                       String
+  jenis_kelamin                        String
+  tempat_tanggal_lahir                 String
+  agama                                String
+  kewarganegaraan                      String
+  anak_keberapa                        Int
+  jumlah_saudara_kandung               Int
+  jumlah_saudara_tiri                  Int
+  jumlah_saudara_angkat                Int
+  bahasa_sehari_hari                   String
+  alamat                               String
+  nomor_telepon                        Int
+  bertempat_tinggal_bersama            String
+  jarak_tempat_tinggal_ke_sekolah      Int
+  golongan_darah                       String
+  penyakit_yang_pernah_diderita        String
+  kelainan_jasmani                     String
+  tinggi_dan_berat_badan_saat_diterima Int
+  tahun_pelajaran                      Int
+  semester                             Int
+  berat_badan                          Int
+  tinggi_badan                         Int
+  asal_murid                           String
+  nama_tk                              String
+  alamat_tk                            String
+  tanggal_dan_nomor_sstb               String
+  nama_sekolah_asal                    String
+  dari_tingkat_kelas                   String
+  nis                                  Int
+  alasan_pindah                        String
+  diterima_tanggal                     String
+  diterima_saat_kelas                  Int
+  nama_ayah                            String
+  tahu_lahir_ayah                      Int
+  agama_ayah                           String
+  pendidikan_ayah                      String
+  pekerjaan_ayah                       String
+  nama_ibu                             String
+  tahu_lahir_ibu                       Int
+  agama_ibu                            String
+  pendidikan_ibu                       String
+  pekerjaan_ibu                        String
+  nama_wali                            String
+  tahun_lahir_wali                     Int
+  agama_wali                           String
+  pendidikan_wali                      String
+  pekerjaan_wali                       String
+  alamat_wali                          String
+  hubungan_keluarga_wali               String
+  tahun_sekarang                       String
+  kelas_sekarang                       Int
+  dari_kelas                           Int
+  tanggal_meninggalkan_sekolah         String
+  kelas_yang_ditinggalkan              Int
+  alasan_meninggalkan_sekolah          String
+  sekolah_yang_dituju                  String
+  kecamatan_sekolah_tujuan             String
+  kabupaten_sekolah_tujuan             String
+  provinsi_sekolah_tujuan              String
+  tempat_belajar                       String
+  nomor_ijasah                         String
+  akan_melanjutkan_ke                  String
+  createdAt                            DateTime @default(now())
+  updatedAt                            DateTime @updatedAt
+  user                                 User     @relation(fields: [id_user], references: [id])
 }
