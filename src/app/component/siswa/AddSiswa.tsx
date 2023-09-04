@@ -10,8 +10,13 @@ export default function AddSiswa() {
   const [isActive, setIsActive] = useState(false);
   const [buttonActive, setButtonActive] = useState(false);
   const [isPindahan, setIsPindahan] = useState(false);
+  const [nama, setNama] = useState("");
   const [inputSets, setInputSets] = useState([
-    [{ title: "Tahun" }, { title: "Kelas" }, { title: "Dari" }],
+    [
+      { title: "Tahun", value: "" },
+      { title: "Kelas", value: "" },
+      { title: "Dari", value: "" },
+    ],
   ]);
 
   const classCallback = (item: any, name: any) => {
@@ -30,17 +35,37 @@ export default function AddSiswa() {
   };
 
   const addInputSet = () => {
-    setInputSets([
-      ...inputSets,
-      [{ title: "Tahun" }, { title: "Kelas" }, { title: "Dari" }],
-    ]);
+    // Create a new input set with default values
+    const newInputSet = [
+      { title: "Tahun", value: "" },
+      { title: "Kelas", value: "" },
+      { title: "Dari", value: "" },
+    ];
+    setInputSets([...inputSets, newInputSet]);
   };
-
   const deleteInputSet = (setIndex: any) => {
     const updatedInputSets = [...inputSets];
     updatedInputSets.splice(setIndex, 1); // Remove the set at setIndex
     setInputSets(updatedInputSets);
   };
+
+  const handleInputChange = (
+    setValue: any,
+    setIndex: any,
+    fieldIndex: any,
+    event: any
+  ) => {
+    const newValue = event.target.value;
+
+    // Copy the current inputSets and update the specific value
+    const updatedInputSets = [...inputSets];
+    updatedInputSets[setIndex][fieldIndex].value = newValue;
+
+    // Update the state with the modified inputSets
+    setInputSets(updatedInputSets);
+  };
+
+  console.log(inputSets);
   return (
     <div className={`w-full flex justify-around z-1 py-[1.7rem]`}>
       <div className="w-[80%] space-y-[.7rem]">
@@ -68,8 +93,8 @@ export default function AddSiswa() {
                 Keterangan Tentang Diri Peserta Didik
               </div>
               <div className="flex justify-between">
-                <Input title="Nama Lengkap" />
-                <Input title="Nama Panggilan" />
+                <Input onChange={() => setNama} title="Nama Lengkap" />
+                <Input onChange={() => setNama} title="Nama Panggilan" />
                 <DropDownSiswa
                   name="semester"
                   title={gender}
@@ -79,18 +104,24 @@ export default function AddSiswa() {
                 />
               </div>
               <div className="flex justify-between">
-                <Input title="Tempat Tanggal Lahir" />
-                <Input title="Agama" />
-                <Input title="Kewarganegaraan" />
+                <Input onChange={() => setNama} title="Tempat Tanggal Lahir" />
+                <Input onChange={() => setNama} title="Agama" />
+                <Input onChange={() => setNama} title="Kewarganegaraan" />
               </div>
               <div className="flex justify-between">
-                <Input title="Anak Keberapa" />
-                <Input title="Jumlah Saudara kandung" />
-                <Input title="Jumlah Saudara Tiri" />
+                <Input onChange={() => setNama} title="Anak Keberapa" />
+                <Input
+                  onChange={() => setNama}
+                  title="Jumlah Saudara kandung"
+                />
+                <Input onChange={() => setNama} title="Jumlah Saudara Tiri" />
               </div>
               <div className="flex justify-between">
-                <Input title="Jumlah Saudara Angkat" />
-                <Input title="Bahasa Sehari-hari di Keluarga" />
+                <Input onChange={() => setNama} title="Jumlah Saudara Angkat" />
+                <Input
+                  onChange={() => setNama}
+                  title="Bahasa Sehari-hari di Keluarga"
+                />
                 <div className="">
                   <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
                 </div>
@@ -103,8 +134,27 @@ export default function AddSiswa() {
               </div>
               {inputSets.map((inputFields, setIndex) => (
                 <div key={setIndex} className="flex justify-between">
-                  {inputFields.map((input, index) => (
-                    <Input key={index} title={input.title} />
+                  {inputFields.map((input, fieldIndex) => (
+                    <>
+                      <div>
+                        <p className="text-[.7rem]">{input.title}</p>
+                        <input
+                          key={fieldIndex}
+                          type="text"
+                          value={input.value}
+                          placeholder={input.title}
+                          onChange={(e) =>
+                            handleInputChange(
+                              setInputSets,
+                              setIndex,
+                              fieldIndex,
+                              e
+                            )
+                          }
+                          className="border p-2 rounded h-[2rem] px-[.5rem] rounded-md border-[1.4px] border-gray-200 text-[.7rem]"
+                        />
+                      </div>
+                    </>
                   ))}
                   <div className="flex pt-[1rem]">
                     <button
@@ -134,29 +184,41 @@ export default function AddSiswa() {
                 Keterangan Tempat Tinggal
               </div>
               <div className="flex justify-between">
-                <Input title="Alamat" />
-                <Input title="Nomor Telepon / HP" />
-                <Input title="Bertempat tinggal pada/bersama" />
+                <Input onChange={() => setNama} title="Alamat" />
+                <Input onChange={() => setNama} title="Nomor Telepon / HP" />
+                <Input
+                  onChange={() => setNama}
+                  title="Bertempat tinggal pada/bersama"
+                />
               </div>
               <div className="flex justify-between">
-                <Input title="Jarak Tempat Tinggal ke Sekolah" />
+                <Input
+                  onChange={() => setNama}
+                  title="Jarak Tempat Tinggal ke Sekolah"
+                />
               </div>
               <div className="font-bold pt-[1rem]">
                 Keterangan Tentang Kesehatan
               </div>
               <div className="flex justify-between">
-                <Input title="Golongan Darah" />
-                <Input title="Pnyakit Yang Pernah Diderita" />
-                <Input title="Kelainan Jasmani" />
+                <Input onChange={() => setNama} title="Golongan Darah" />
+                <Input
+                  onChange={() => setNama}
+                  title="Pnyakit Yang Pernah Diderita"
+                />
+                <Input onChange={() => setNama} title="Kelainan Jasmani" />
               </div>
               <div className="flex justify-between">
-                <Input title="Tinggi dan Berat badan saat diterima" />
-                <Input title="Tahun Pelajaran " />
-                <Input title="Semester" />
+                <Input
+                  onChange={() => setNama}
+                  title="Tinggi dan Berat badan saat diterima"
+                />
+                <Input onChange={() => setNama} title="Tahun Pelajaran " />
+                <Input onChange={() => setNama} title="Semester" />
               </div>
               <div className="flex justify-between">
-                <Input title="Berat Badan" />
-                <Input title="Tinggi Badan" />
+                <Input onChange={() => setNama} title="Berat Badan" />
+                <Input onChange={() => setNama} title="Tinggi Badan" />
                 <div className="">
                   <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
                 </div>
@@ -177,12 +239,18 @@ export default function AddSiswa() {
                   Pendidkan Sebelumnya
                 </div>
                 <div className="flex justify-between">
-                  <Input title="Asal Murid" />
-                  <Input title="Nama Taman Kanak-kanak" />
-                  <Input title="Alamat" />
+                  <Input onChange={() => setNama} title="Asal Murid" />
+                  <Input
+                    onChange={() => setNama}
+                    title="Nama Taman Kanak-kanak"
+                  />
+                  <Input onChange={() => setNama} title="Alamat" />
                 </div>
                 <div className="flex justify-between">
-                  <Input title="Tanggal dan Nomor STTB" />
+                  <Input
+                    onChange={() => setNama}
+                    title="Tanggal dan Nomor STTB"
+                  />
                 </div>
                 <div
                   className={`${
@@ -195,19 +263,25 @@ export default function AddSiswa() {
                     Pindahan Dari Sekolah Lain
                   </div>
                   <div className="flex justify-between">
-                    <Input title="Nama Sekolah Asal" />
-                    <Input title="Dari Tingkat / Kelas" />
-                    <Input title="NIS" />
+                    <Input onChange={() => setNama} title="Nama Sekolah Asal" />
+                    <Input
+                      onChange={() => setNama}
+                      title="Dari Tingkat / Kelas"
+                    />
+                    <Input onChange={() => setNama} title="NIS" />
                   </div>
                   <div className="flex justify-between">
-                    <Input title="Alasan Pindah" />
+                    <Input onChange={() => setNama} title="Alasan Pindah" />
                   </div>
                   <div className="font-bold pt-[.5rem] text-[.7rem]">
                     Diterima Disekolah Ini
                   </div>
                   <div className="flex justify-between">
-                    <Input title="Diterima Tanggal" />
-                    <Input title="Di Kelas / Tingkat" />
+                    <Input onChange={() => setNama} title="Diterima Tanggal" />
+                    <Input
+                      onChange={() => setNama}
+                      title="Di Kelas / Tingkat"
+                    />
                     <div className="">
                       <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
                     </div>
@@ -216,13 +290,13 @@ export default function AddSiswa() {
               </div>
               <div className="font-bold">Keterangan Tentang Ayah Kandung</div>
               <div className="flex justify-between">
-                <Input title="Nama" />
-                <Input title="Tahun Lahir" />
-                <Input title="Agama" />
+                <Input onChange={() => setNama} title="Nama" />
+                <Input onChange={() => setNama} title="Tahun Lahir" />
+                <Input onChange={() => setNama} title="Agama" />
               </div>
               <div className="flex justify-between">
-                <Input title="Pendidikan" />
-                <Input title="Pekerjaan" />
+                <Input onChange={() => setNama} title="Pendidikan" />
+                <Input onChange={() => setNama} title="Pekerjaan" />
                 <div className="">
                   <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
                 </div>
@@ -231,51 +305,54 @@ export default function AddSiswa() {
                 Keterangan Tentang Ibu Kandung
               </div>
               <div className="flex justify-between">
-                <Input title="Nama" />
-                <Input title="Tahun Lahir" />
-                <Input title="Agama" />
+                <Input onChange={() => setNama} title="Nama" />
+                <Input onChange={() => setNama} title="Tahun Lahir" />
+                <Input onChange={() => setNama} title="Agama" />
               </div>
               <div className="flex justify-between">
-                <Input title="Pendidikan" />
-                <Input title="Pekerjaan" />
+                <Input onChange={() => setNama} title="Pendidikan" />
+                <Input onChange={() => setNama} title="Pekerjaan" />
                 <div className="">
                   <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
                 </div>
               </div>
               <div className="font-bold pt-[1rem]">Keterangan Tentang Wali</div>
               <div className="flex justify-between">
-                <Input title="Nama" />
-                <Input title="Tahun Lahir" />
-                <Input title="Agama" />
+                <Input onChange={() => setNama} title="Nama" />
+                <Input onChange={() => setNama} title="Tahun Lahir" />
+                <Input onChange={() => setNama} title="Agama" />
               </div>
               <div className="flex justify-between">
-                <Input title="Pendidikan" />
-                <Input title="Pekerjaan" />
-                <Input title="Alamat Rumah. Nomor Telp." />
+                <Input onChange={() => setNama} title="Pendidikan" />
+                <Input onChange={() => setNama} title="Pekerjaan" />
+                <Input
+                  onChange={() => setNama}
+                  title="Alamat Rumah. Nomor Telp."
+                />
               </div>
               <div className="flex justify-between">
-                <Input title="Hubungan Keluarga" />
+                <Input onChange={() => setNama} title="Hubungan Keluarga" />
               </div>
 
               {/* <div className="font-bold pt-[1rem]">Meninggalkan Sekolah</div>
             <div className="flex justify-between">
-              <Input title="Tanggal Meninggalkan Sekolah" />
-              <Input title="Kelas Yang Ditinggalkan" />
-              <Input title="Alasan" />
+              <Input onChange={() => setNama} title="Tanggal Meninggalkan Sekolah" />
+              <Input onChange={() => setNama} title="Kelas Yang Ditinggalkan" />
+              <Input onChange={() => setNama} title="Alasan" />
             </div>
             <div className="flex justify-between">
-              <Input title="Sekolah Yang Dituju" />
-              <Input title="Kecamatan" />
-              <Input title="Kabupaten" />
+              <Input onChange={() => setNama} title="Sekolah Yang Dituju" />
+              <Input onChange={() => setNama} title="Kecamatan" />
+              <Input onChange={() => setNama} title="Kabupaten" />
             </div>
             <div className="flex justify-between">
-              <Input title="Provinsi" />
+              <Input onChange={() => setNama} title="Provinsi" />
             </div> */}
               {/* <div className="font-bold pt-[1rem]">Akhir Pendidikan</div>
             <div className="flex justify-between">
-              <Input title="Tempat belajar / Lulus Tahun" />
-              <Input title="Nomor Ijasah / STL" />
-              <Input title="Akan Melanjutkan Ke" />
+              <Input onChange={() => setNama} title="Tempat belajar / Lulus Tahun" />
+              <Input onChange={() => setNama} title="Nomor Ijasah / STL" />
+              <Input onChange={() => setNama} title="Akan Melanjutkan Ke" />
             </div> */}
             </div>
             <div className="flex justify-between w-[45%]">
