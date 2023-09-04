@@ -10,6 +10,9 @@ export default function AddSiswa() {
   const [isActive, setIsActive] = useState(false);
   const [buttonActive, setButtonActive] = useState(false);
   const [isPindahan, setIsPindahan] = useState(false);
+  const [inputSets, setInputSets] = useState([
+    [{ title: "Tahun" }, { title: "Kelas" }, { title: "Dari" }],
+  ]);
 
   const classCallback = (item: any, name: any) => {
     setButtonActive(true);
@@ -24,6 +27,19 @@ export default function AddSiswa() {
 
   const pindahan = () => {
     setIsPindahan(!isPindahan);
+  };
+
+  const addInputSet = () => {
+    setInputSets([
+      ...inputSets,
+      [{ title: "Tahun" }, { title: "Kelas" }, { title: "Dari" }],
+    ]);
+  };
+
+  const deleteInputSet = (setIndex: any) => {
+    const updatedInputSets = [...inputSets];
+    updatedInputSets.splice(setIndex, 1); // Remove the set at setIndex
+    setInputSets(updatedInputSets);
   };
   return (
     <div className={`w-full flex justify-around z-1 py-[1.7rem]`}>
@@ -85,14 +101,33 @@ export default function AddSiswa() {
               <div className="font-bold pt-[.5rem] text-[.7rem]">
                 Menerima Beasiswa
               </div>
-              <div className="flex justify-between">
-                <Input title="Tahun" />
-                <Input title="Kelas" />
-                <Input title="Dari" />
-              </div>
-              <div className="w-full flex justify-center text-[.7rem] py-[.5rem] rounded-md bg-[#793FDF] text-white">
+              {inputSets.map((inputFields, setIndex) => (
+                <div key={setIndex} className="flex justify-between">
+                  {inputFields.map((input, index) => (
+                    <Input key={index} title={input.title} />
+                  ))}
+                  <div className="flex pt-[1rem]">
+                    <button
+                      className="bg-red-200 p-[.5rem] rounded-md"
+                      onClick={() => deleteInputSet(setIndex)}
+                    >
+                      <Image
+                        src="/delete.png"
+                        alt=""
+                        width={500}
+                        height={500}
+                        className="w-[1rem]"
+                      />
+                    </button>
+                  </div>
+                </div>
+              ))}
+              <button
+                className="w-full flex justify-center text-[.7rem] py-[.5rem] rounded-md bg-[#793FDF] text-white"
+                onClick={addInputSet}
+              >
                 Tambahkan Pencapaian Peserta Didik
-              </div>
+              </button>
               <div className="font-bold pt-[1rem]">
                 Keterangan Tempat Tinggal
               </div>
@@ -134,13 +169,7 @@ export default function AddSiswa() {
                   <p>bukan pindahan?</p>
                 )}
               </button>
-              <div
-                className={`space-y-[.7rem] pb-[.4rem] ${
-                  isPindahan
-                    ? "transition-opacity ease-in duration-200 opacity-100"
-                    : "transition-opacity ease-out duration-200 opacity-0 pointer-events-none absolute"
-                }`}
-              >
+              <div className={`space-y-[.7rem] pb-[.4rem]`}>
                 <div className="font-bold">Keterangan Tentang Pendidikan</div>
                 <div className="font-bold pt-[.5rem] text-[.7rem]">
                   Pendidkan Sebelumnya
@@ -153,25 +182,33 @@ export default function AddSiswa() {
                 <div className="flex justify-between">
                   <Input title="Tanggal dan Nomor STTB" />
                 </div>
-                <div className="font-bold pt-[.5rem] text-[.7rem]">
-                  Pindahan Dari Sekolah Lain
-                </div>
-                <div className="flex justify-between">
-                  <Input title="Nama Sekolah Asal" />
-                  <Input title="Dari Tingkat / Kelas" />
-                  <Input title="NIS" />
-                </div>
-                <div className="flex justify-between">
-                  <Input title="Alasan Pindah" />
-                </div>
-                <div className="font-bold pt-[.5rem] text-[.7rem]">
-                  Diterima Disekolah Ini
-                </div>
-                <div className="flex justify-between">
-                  <Input title="Diterima Tanggal" />
-                  <Input title="Di Kelas / Tingkat" />
-                  <div className="">
-                    <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
+                <div
+                  className={`${
+                    isPindahan
+                      ? "transition-opacity ease-in duration-200 opacity-100"
+                      : "transition-opacity ease-out duration-200 opacity-0 pointer-events-none absolute"
+                  }`}
+                >
+                  <div className="font-bold pt-[.5rem] text-[.7rem]">
+                    Pindahan Dari Sekolah Lain
+                  </div>
+                  <div className="flex justify-between">
+                    <Input title="Nama Sekolah Asal" />
+                    <Input title="Dari Tingkat / Kelas" />
+                    <Input title="NIS" />
+                  </div>
+                  <div className="flex justify-between">
+                    <Input title="Alasan Pindah" />
+                  </div>
+                  <div className="font-bold pt-[.5rem] text-[.7rem]">
+                    Diterima Disekolah Ini
+                  </div>
+                  <div className="flex justify-between">
+                    <Input title="Diterima Tanggal" />
+                    <Input title="Di Kelas / Tingkat" />
+                    <div className="">
+                      <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
+                    </div>
                   </div>
                 </div>
               </div>
