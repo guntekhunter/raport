@@ -111,13 +111,15 @@ export default function AddSiswa() {
                       className="bg-red-200 p-[.5rem] rounded-md"
                       onClick={() => deleteInputSet(setIndex)}
                     >
-                      <Image
-                        src="/delete.png"
-                        alt=""
-                        width={500}
-                        height={500}
-                        className="w-[1rem]"
-                      />
+                      <div className="filter brightness-100 contrast-100 saturate-100 grayscale-0 sepia-0 hue-rotate-0 invert-0 drop-shadow-md">
+                        <Image
+                          src="/delete.png"
+                          alt=""
+                          width={500}
+                          height={500}
+                          className="w-[1rem]"
+                        />
+                      </div>
                     </button>
                   </div>
                 </div>
