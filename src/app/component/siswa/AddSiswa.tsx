@@ -122,7 +122,7 @@ export default function AddSiswa() {
                   onChange={() => setNama}
                   title="Bahasa Sehari-hari di Keluarga"
                 />
-                <div className="">
+                <div className="w-[30%]">
                   <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
                 </div>
               </div>
@@ -219,7 +219,7 @@ export default function AddSiswa() {
               <div className="flex justify-between">
                 <Input onChange={() => setNama} title="Berat Badan" />
                 <Input onChange={() => setNama} title="Tinggi Badan" />
-                <div className="">
+                <div className="w-[30%]">
                   <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
                 </div>
               </div>
@@ -297,7 +297,7 @@ export default function AddSiswa() {
               <div className="flex justify-between">
                 <Input onChange={() => setNama} title="Pendidikan" />
                 <Input onChange={() => setNama} title="Pekerjaan" />
-                <div className="">
+                <div className="w-[30%]">
                   <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
                 </div>
               </div>
@@ -312,7 +312,7 @@ export default function AddSiswa() {
               <div className="flex justify-between">
                 <Input onChange={() => setNama} title="Pendidikan" />
                 <Input onChange={() => setNama} title="Pekerjaan" />
-                <div className="">
+                <div className="w-[30%]">
                   <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
                 </div>
               </div>

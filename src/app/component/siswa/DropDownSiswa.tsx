@@ -33,13 +33,15 @@ export default function DropDownSiswa({drop,title,classCallback,name,isActive,
   const dropData = drop;
 
   return (
-    <div className="relative">
+    <div className="relative w-[30%]">
       <p className="text-[.7rem]">Jenis Kelamin</p>
       <button
-        className="flex rounded-md bg-gray-100 border-[1.5px] border-gray-200 w-[13.7rem] justify-between px-[.5rem] h-[2rem] items-center"
+        className="flex rounded-md bg-gray-100 border-[1.5px] border-gray-200 w-full justify-between px-[.5rem] h-[2rem] items-center "
         onClick={dropDown}
       >
-        <p className={`text-[.7rem] ${active ? "text-black " : "text-gray-400"}`}>
+        <p
+          className={`text-[.7rem] ${active ? "text-black " : "text-gray-400"}`}
+        >
           {selected}
         </p>
         <div className="flex items-bottom pt-[.1rem]">
