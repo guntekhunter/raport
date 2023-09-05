@@ -15,7 +15,6 @@ export default function Siswa() {
   const callbackActive = async (active: boolean) => {
     setIsActive(active);
   };
-  console.log(Cookies.get("user id"));
 
   return (
     <div className="flex justify-around relative">
