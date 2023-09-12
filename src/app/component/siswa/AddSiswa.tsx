@@ -35,6 +35,7 @@ export default function AddSiswa() {
     jumlah_saudara_tiri: 0,
     jumlah_saudara_angkat: 0,
     bahasa_sehari_hari: "",
+    keterangan_perkembangan_pesdik: {},
     alamat: "",
     nomor_telepon: 0,
     bertempat_tinggal_bersama: "",
@@ -148,6 +149,9 @@ export default function AddSiswa() {
     updatedInputSets[setIndex][fieldIndex].value = newValue;
 
     setInputSets(updatedInputSets);
+    setData((prev) => {
+      return { ...prev, ["keterangan_perkembangan_pesdik"]: updatedInputSets };
+    });
   };
 
   const handleInput = (e: any) => {
@@ -164,6 +168,7 @@ export default function AddSiswa() {
 
   console.log(data);
   console.log(userId);
+  console.log(inputSets);
   return (
     <div className={`w-full flex justify-around z-1 py-[1.7rem]`}>
       <div className="w-[80%] space-y-[.7rem]">
