@@ -58,7 +58,7 @@ export default function AddSiswa() {
     diterima_tanggal: "",
     diterima_saat_kelas: 0,
     nama_ayah: "",
-    tahu_lahir_ayah: 0,
+    tahun_lahir_ayah: 0,
     agama_ayah: "",
     pendidikan_ayah: "",
     pekerjaan_ayah: "",
@@ -192,11 +192,13 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.nama_lengkap}
                   onChange={handleInput}
                   name="nama_lengkap"
                   title="Nama Lengkap"
                 />
                 <Input
+                  value={data.nama_panggilan}
                   onChange={handleInput}
                   name="nama_panggilan"
                   title="Nama Panggilan"
@@ -211,12 +213,19 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.tempat_tanggal_lahir}
                   onChange={handleInput}
                   name="tempat_tanggal_lahir"
                   title="Tempat Tanggal Lahir"
                 />
-                <Input onChange={handleInput} name="alamat" title="Agama" />
                 <Input
+                  value={data.agama}
+                  onChange={handleInput}
+                  name="agama"
+                  title="Agama"
+                />
+                <Input
+                  value={data.kewarganegaraan}
                   onChange={handleInput}
                   name="kewarganegaraan"
                   title="Kewarganegaraan"
@@ -224,16 +233,19 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.anak_keberapa}
                   onChange={handleInput}
                   name="anak_keberapa"
                   title="Anak Keberapa"
                 />
                 <Input
+                  value={data.jumlah_saudara_kandung}
                   onChange={handleInput}
                   name="jumlah_saudara_kandung"
                   title="Jumlah Saudara kandung"
                 />
                 <Input
+                  value={data.jumlah_saudara_tiri}
                   onChange={handleInput}
                   name="jumlah_saudara_tiri"
                   title="Jumlah Saudara Tiri"
@@ -241,11 +253,13 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.jumlah_saudara_angkat}
                   onChange={handleInput}
                   name="jumlah_saudara_angkat"
                   title="Jumlah Saudara Angkat"
                 />
                 <Input
+                  value={data.bahasa_sehari_hari}
                   onChange={handleInput}
                   name="bahasa_sehari_hari"
                   title="Bahasa Sehari-hari di Keluarga"
@@ -312,13 +326,20 @@ export default function AddSiswa() {
                 Keterangan Tempat Tinggal
               </div>
               <div className="flex justify-between">
-                <Input onChange={handleInput} name="alamat" title="Alamat" />
                 <Input
+                  value={data.alamat}
+                  onChange={handleInput}
+                  name="alamat"
+                  title="Alamat"
+                />
+                <Input
+                  value={data.nomor_telepon}
                   onChange={handleInput}
                   name="nomor_telepon"
                   title="Nomor Telepon / HP"
                 />
                 <Input
+                  value={data.bertempat_tinggal_bersama}
                   onChange={handleInput}
                   name="bertempat_tinggal_bersama"
                   title="Bertempat tinggal pada/bersama"
@@ -326,6 +347,7 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.jarak_tempat_tinggal_ke_sekolah}
                   onChange={handleInput}
                   name="jarak_tempat_tinggal_ke_sekolah"
                   title="Jarak Tempat Tinggal ke Sekolah"
@@ -336,16 +358,19 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.golongan_darah}
                   onChange={handleInput}
                   name="golongan_darah"
                   title="Golongan Darah"
                 />
                 <Input
+                  value={data.penyakit_yang_pernah_diderita}
                   onChange={handleInput}
                   name="penyakit_yang_pernah_diderita"
                   title="Pnyakit Yang Pernah Diderita"
                 />
                 <Input
+                  value={data.kelainan_jasmani}
                   onChange={handleInput}
                   name="kelainan_jasmani"
                   title="Kelainan Jasmani"
@@ -353,16 +378,19 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.tinggi_dan_berat_badan_saat_diterima}
                   onChange={handleInput}
                   name="tinggi_dan_berat_badan_saat_diterima"
                   title="Tinggi dan Berat badan saat diterima"
                 />
                 <Input
+                  value={data.tahun_pelajaran}
                   onChange={handleInput}
                   name="tahun_pelajaran"
                   title="Tahun Pelajaran "
                 />
                 <Input
+                  value={data.semester}
                   onChange={handleInput}
                   name="semester"
                   title="Semester"
@@ -370,11 +398,13 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.berat_badan}
                   onChange={handleInput}
                   name="berat_badan"
                   title="Berat Badan"
                 />
                 <Input
+                  value={data.tinggi_badan}
                   onChange={handleInput}
                   name="tinggi_badan"
                   title="Tinggi Badan"
@@ -400,16 +430,19 @@ export default function AddSiswa() {
                 </div>
                 <div className="flex justify-between">
                   <Input
+                    value={data.asal_murid}
                     onChange={handleInput}
                     name="asal_murid"
                     title="Asal Murid"
                   />
                   <Input
+                    value={data.nama_tk}
                     onChange={handleInput}
                     name="nama_tk"
                     title="Nama Taman Kanak-kanak"
                   />
                   <Input
+                    value={data.alamat_tk}
                     onChange={handleInput}
                     name="alamat_tk"
                     title="Alamat TK"
@@ -417,6 +450,7 @@ export default function AddSiswa() {
                 </div>
                 <div className="flex justify-between">
                   <Input
+                    value={data.tanggal_dan_nomor_sstb}
                     onChange={handleInput}
                     name="tanggal_dan_nomor_sstb"
                     title="Tanggal dan Nomor STTB"
@@ -434,19 +468,27 @@ export default function AddSiswa() {
                   </div>
                   <div className="flex justify-between">
                     <Input
+                      value={data.nama_sekolah_asal}
                       onChange={handleInput}
                       name="nama_sekolah_asal"
                       title="Nama Sekolah Asal"
                     />
                     <Input
+                      value={data.dari_tingkat_kelas}
                       onChange={handleInput}
                       name="dari_tingkat_kelas"
                       title="Dari Tingkat / Kelas"
                     />
-                    <Input onChange={handleInput} name="nis" title="NIS" />
+                    <Input
+                      value={data.nis}
+                      onChange={handleInput}
+                      name="nis"
+                      title="NIS"
+                    />
                   </div>
                   <div className="flex justify-between">
                     <Input
+                      value={data.alasan_pindah}
                       onChange={handleInput}
                       name="alasan_pindah"
                       title="Alasan Pindah"
@@ -457,11 +499,13 @@ export default function AddSiswa() {
                   </div>
                   <div className="flex justify-between">
                     <Input
+                      value={data.diterima_tanggal}
                       onChange={handleInput}
                       name="diterima_tanggal"
                       title="Diterima Tanggal"
                     />
                     <Input
+                      value={data.diterima_saat_kelas}
                       onChange={handleInput}
                       name="diterima_saat_kelas"
                       title="Di Kelas / Tingkat"
@@ -474,21 +518,34 @@ export default function AddSiswa() {
               </div>
               <div className="font-bold">Keterangan Tentang Ayah Kandung</div>
               <div className="flex justify-between">
-                <Input onChange={handleInput} name="nama_ayah" title="Nama" />
                 <Input
+                  value={data.nama_ayah}
                   onChange={handleInput}
-                  name="tahu_lahir_ayah"
+                  name="nama_ayah"
+                  title="Nama"
+                />
+                <Input
+                  value={data.tahun_lahir_ayah}
+                  onChange={handleInput}
+                  name="tahun_lahir_ayah"
                   title="Tahun Lahir"
                 />
-                <Input onChange={handleInput} name="agama_ayah" title="Agama" />
+                <Input
+                  value={data.agama_ayah}
+                  onChange={handleInput}
+                  name="agama_ayah"
+                  title="Agama"
+                />
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.pendidikan_ayah}
                   onChange={handleInput}
-                  name=" pendidikan_ayah"
+                  name="pendidikan_ayah"
                   title="Pendidikan"
                 />
                 <Input
+                  value={data.pekerjaan_ayah}
                   onChange={handleInput}
                   name="pekerjaan_ayah"
                   title="Pekerjaan"
@@ -501,21 +558,34 @@ export default function AddSiswa() {
                 Keterangan Tentang Ibu Kandung
               </div>
               <div className="flex justify-between">
-                <Input onChange={handleInput} name="nama_ibu" title="Nama" />
                 <Input
+                  value={data.nama_ibu}
+                  onChange={handleInput}
+                  name="nama_ibu"
+                  title="Nama"
+                />
+                <Input
+                  value={data.tahu_lahir_ibu}
                   onChange={handleInput}
                   name="tahu_lahir_ibu"
                   title="Tahun Lahir"
                 />
-                <Input onChange={handleInput} name="agama_ibu" title="Agama" />
+                <Input
+                  value={data.agama_ibu}
+                  onChange={handleInput}
+                  name="agama_ibu"
+                  title="Agama"
+                />
               </div>
               <div className="flex justify-between">
                 <Input
+                  value={data.pendidikan_ibu}
                   onChange={handleInput}
                   name="pendidikan_ibu"
                   title="Pendidikan"
                 />
                 <Input
+                  value={data.pekerjaan_ibu}
                   onChange={handleInput}
                   name="pekerjaan_ibu"
                   title="Pekerjaan"
@@ -533,13 +603,22 @@ export default function AddSiswa() {
               <div className={`space-y-[.7rem]`}>
                 <div className="font-bold">Keterangan Tentang Wali</div>
                 <div className="flex justify-between">
-                  <Input onChange={handleInput} name="nama_wali" title="Nama" />
                   <Input
+                    value={isWali ? data.nama_ayah : data.nama_wali}
+                    onChange={handleInput}
+                    name="nama_wali"
+                    title="Nama"
+                  />
+                  <Input
+                    value={
+                      isWali ? data.tahun_lahir_ayah : data.tahun_lahir_wali
+                    }
                     onChange={handleInput}
                     name="tahun_lahir_wali"
                     title="Tahun Lahir"
                   />
                   <Input
+                    value={isWali ? data.agama_ayah : data.agama_wali}
                     onChange={handleInput}
                     name="agama_wali"
                     title="Agama"
@@ -547,16 +626,19 @@ export default function AddSiswa() {
                 </div>
                 <div className="flex justify-between">
                   <Input
+                    value={isWali ? data.pendidikan_ayah : data.pendidikan_wali}
                     onChange={handleInput}
                     name="pendidikan_wali"
                     title="Pendidikan"
                   />
                   <Input
+                    value={isWali ? data.pekerjaan_ayah : data.pekerjaan_wali}
                     onChange={handleInput}
                     name="pekerjaan_wali"
                     title="Pekerjaan"
                   />
                   <Input
+                    value={isWali ? data.alamat : data.alamat_wali}
                     onChange={handleInput}
                     name="alamat_wali"
                     title="Alamat Rumah. Nomor Telp."
@@ -564,6 +646,7 @@ export default function AddSiswa() {
                 </div>
                 <div className="flex justify-between">
                   <Input
+                    value={isWali ? "ayah" : data.hubungan_keluarga_wali}
                     onChange={handleInput}
                     name="hubungan_keluarga_wali"
                     title="Hubungan Keluarga"
@@ -573,23 +656,23 @@ export default function AddSiswa() {
 
               {/* <div className="font-bold pt-[1rem]">Meninggalkan Sekolah</div>
             <div className="flex justify-between">
-              <Input onChange={handleInput} name="" title="Tanggal Meninggalkan Sekolah" />
-              <Input onChange={handleInput} name="" title="Kelas Yang Ditinggalkan" />
-              <Input onChange={handleInput} name="" title="Alasan" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Tanggal Meninggalkan Sekolah" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Kelas Yang Ditinggalkan" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Alasan" />
             </div>
             <div className="flex justify-between">
-              <Input onChange={handleInput} name="" title="Sekolah Yang Dituju" />
-              <Input onChange={handleInput} name="" title="Kecamatan" />
-              <Input onChange={handleInput} name="" title="Kabupaten" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Sekolah Yang Dituju" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Kecamatan" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Kabupaten" />
             </div>
             <div className="flex justify-between">
-              <Input onChange={handleInput} name="" title="Provinsi" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Provinsi" />
             </div> */}
               {/* <div className="font-bold pt-[1rem]">Akhir Pendidikan</div>
             <div className="flex justify-between">
-              <Input onChange={handleInput} name="" title="Tempat belajar / Lulus Tahun" />
-              <Input onChange={handleInput} name="" title="Nomor Ijasah / STL" />
-              <Input onChange={handleInput} name="" title="Akan Melanjutkan Ke" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Tempat belajar / Lulus Tahun" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Nomor Ijasah / STL" />
+              <Input value={data.agama} onChange={handleInput} name="" title="Akan Melanjutkan Ke" />
             </div> */}
             </div>
             <div className="flex justify-between w-[45%]">
