@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 //@ts-ignore
 
-export default function DropDownSiswa({drop,title,classCallback,name,isActive,
+export default function DropDownSiswa({drop,title,classCallback,name,isActive,label,
 }) {
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState(title);
@@ -34,7 +34,7 @@ export default function DropDownSiswa({drop,title,classCallback,name,isActive,
 
   return (
     <div className="relative w-[30%]">
-      <p className="text-[.7rem]">Jenis Kelamin</p>
+      <p className="text-[.7rem]">{label}</p>
       <button
         className="flex rounded-md bg-gray-100 border-[1.5px] border-gray-200 w-full justify-between px-[.5rem] h-[2rem] items-center "
         onClick={dropDown}

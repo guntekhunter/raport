@@ -65,7 +65,7 @@ model students_data {
   penyakit_yang_pernah_diderita        String
   kelainan_jasmani                     String
   tinggi_dan_berat_badan_saat_diterima Int
-  tahun_pelajaran                      Int
+  tahun_pelajaran                      String
   semester                             Int
   berat_badan                          Int
   tinggi_badan                         Int
@@ -107,7 +107,7 @@ model students_data {
   kabupaten_sekolah_tujuan             String
   provinsi_sekolah_tujuan              String
   tempat_belajar                       String
-  nomor_ijasah                         String
+  nomor_ijasah                         Int
   akan_melanjutkan_ke                  String
   createdAt                            DateTime @default(now())
   updatedAt                            DateTime @updatedAt

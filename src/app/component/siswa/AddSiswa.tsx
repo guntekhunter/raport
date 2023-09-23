@@ -120,7 +120,37 @@ export default function AddSiswa() {
     setIsPindahan(!isPindahan);
   };
   const wali = () => {
+    const newIsWali = !isWali;
+    setIsWali(newIsWali);
     setIsWali(!isWali);
+
+    if (newIsWali) {
+      setData((prev) => {
+        return {
+          ...prev,
+          nama_wali: prev.nama_ayah,
+          tahun_lahir_wali: prev.tahun_lahir_ayah,
+          agama_wali: prev.agama_ayah,
+          pendidikan_wali: prev.pendidikan_ayah,
+          alamat_wali: prev.alamat,
+          pekerjaan_wali: prev.pekerjaan_ayah,
+          hubungan_keluarga_wali: "ayah",
+        };
+      });
+    } else {
+      setData((prev) => {
+        return {
+          ...prev,
+          nama_wali: "",
+          tahun_lahir_wali: 0,
+          agama_wali: "",
+          pendidikan_wali: "",
+          alamat_wali: "",
+          pekerjaan_wali: "",
+          hubungan_keluarga_wali: "",
+        };
+      });
+    }
   };
 
   const addInputSet = () => {
@@ -155,6 +185,7 @@ export default function AddSiswa() {
   };
 
   const handleInput = (e: any) => {
+    console.log(e.target.value);
     const name = e.target.name;
     const value = e.target.value;
     setData((prev) => {
@@ -209,6 +240,7 @@ export default function AddSiswa() {
                   title="Nama Panggilan"
                 />
                 <DropDownSiswa
+                  label="Jenis Kelamin"
                   name="jenis_kelamin"
                   title={gender}
                   isActive={isActive}
@@ -343,11 +375,13 @@ export default function AddSiswa() {
                   name="nomor_telepon"
                   title="Nomor Telepon / HP"
                 />
-                <Input
-                  value={data.bertempat_tinggal_bersama}
-                  onChange={handleInput}
+                <DropDownSiswa
+                  label="Bertempat tinggal pada/bersama"
                   name="bertempat_tinggal_bersama"
-                  title="Bertempat tinggal pada/bersama"
+                  title="bertempat_tinggal_bersama"
+                  isActive={isActive}
+                  drop={["Ayah", "Wali"]}
+                  classCallback={classCallback}
                 />
               </div>
               <div className="flex justify-between">
@@ -609,21 +643,19 @@ export default function AddSiswa() {
                 <div className="font-bold">Keterangan Tentang Wali</div>
                 <div className="flex justify-between">
                   <Input
-                    value={isWali ? data.nama_ayah : data.nama_wali}
+                    value={data.nama_wali}
                     onChange={handleInput}
                     name="nama_wali"
                     title="Nama"
                   />
                   <Input
-                    value={
-                      isWali ? data.tahun_lahir_ayah : data.tahun_lahir_wali
-                    }
+                    value={data.tahun_lahir_wali}
                     onChange={handleInput}
                     name="tahun_lahir_wali"
                     title="Tahun Lahir"
                   />
                   <Input
-                    value={isWali ? data.agama_ayah : data.agama_wali}
+                    value={data.agama_wali}
                     onChange={handleInput}
                     name="agama_wali"
                     title="Agama"
@@ -631,19 +663,19 @@ export default function AddSiswa() {
                 </div>
                 <div className="flex justify-between">
                   <Input
-                    value={isWali ? data.pendidikan_ayah : data.pendidikan_wali}
+                    value={data.pendidikan_wali}
                     onChange={handleInput}
                     name="pendidikan_wali"
                     title="Pendidikan"
                   />
                   <Input
-                    value={isWali ? data.pekerjaan_ayah : data.pekerjaan_wali}
+                    value={data.pekerjaan_wali}
                     onChange={handleInput}
                     name="pekerjaan_wali"
                     title="Pekerjaan"
                   />
                   <Input
-                    value={isWali ? data.alamat : data.alamat_wali}
+                    value={data.alamat_wali}
                     onChange={handleInput}
                     name="alamat_wali"
                     title="Alamat Rumah. Nomor Telp."
@@ -651,7 +683,7 @@ export default function AddSiswa() {
                 </div>
                 <div className="flex justify-between">
                   <Input
-                    value={isWali ? "ayah" : data.hubungan_keluarga_wali}
+                    value={data.hubungan_keluarga_wali}
                     onChange={handleInput}
                     name="hubungan_keluarga_wali"
                     title="Hubungan Keluarga"
