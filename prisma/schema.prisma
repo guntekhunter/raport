@@ -52,62 +52,63 @@ model students_data {
   tempat_tanggal_lahir                 String
   agama                                String
   kewarganegaraan                      String
-  anak_keberapa                        Int
-  jumlah_saudara_kandung               Int
-  jumlah_saudara_tiri                  Int
-  jumlah_saudara_angkat                Int
+  anak_keberapa                        String
+  jumlah_saudara_kandung               String
+  jumlah_saudara_tiri                  String
+  jumlah_saudara_angkat                String
   bahasa_sehari_hari                   String
   alamat                               String
-  nomor_telepon                        Int
+  nomor_telepon                        String
   bertempat_tinggal_bersama            String
-  jarak_tempat_tinggal_ke_sekolah      Int
+  jarak_tempat_tinggal_ke_sekolah      String
   golongan_darah                       String
   penyakit_yang_pernah_diderita        String
   kelainan_jasmani                     String
-  tinggi_dan_berat_badan_saat_diterima Int
+  tinggi_dan_berat_badan_saat_diterima String
   tahun_pelajaran                      String
-  semester                             Int
-  berat_badan                          Int
-  tinggi_badan                         Int
+  semester                             String
+  berat_badan                          String
+  tinggi_badan                         String
   asal_murid                           String
   nama_tk                              String
   alamat_tk                            String
   tanggal_dan_nomor_sstb               String
   nama_sekolah_asal                    String
   dari_tingkat_kelas                   String
-  nis                                  Int
+  nis                                  String
   alasan_pindah                        String
   diterima_tanggal                     String
-  diterima_saat_kelas                  Int
+  diterima_saat_kelas                  String
   nama_ayah                            String
-  tahu_lahir_ayah                      Int
+  tahun_lahir_ayah                     String
   agama_ayah                           String
   pendidikan_ayah                      String
   pekerjaan_ayah                       String
   nama_ibu                             String
-  tahu_lahir_ibu                       Int
+  tahu_lahir_ibu                       String
   agama_ibu                            String
   pendidikan_ibu                       String
   pekerjaan_ibu                        String
   nama_wali                            String
-  tahun_lahir_wali                     Int
+  tahun_lahir_wali                     String
   agama_wali                           String
   pendidikan_wali                      String
   pekerjaan_wali                       String
   alamat_wali                          String
   hubungan_keluarga_wali               String
   tahun_sekarang                       String
-  kelas_sekarang                       Int
-  dari_kelas                           Int
+  kelas_sekarang                       String
+  dari_kelas                           String
   tanggal_meninggalkan_sekolah         String
-  kelas_yang_ditinggalkan              Int
+  kelas_yang_ditinggalkan              String
+  keterangan_perkembangan_pesdik       Json[]
   alasan_meninggalkan_sekolah          String
   sekolah_yang_dituju                  String
   kecamatan_sekolah_tujuan             String
   kabupaten_sekolah_tujuan             String
   provinsi_sekolah_tujuan              String
   tempat_belajar                       String
-  nomor_ijasah                         Int
+  nomor_ijasah                         String
   akan_melanjutkan_ke                  String
   createdAt                            DateTime @default(now())
   updatedAt                            DateTime @updatedAt

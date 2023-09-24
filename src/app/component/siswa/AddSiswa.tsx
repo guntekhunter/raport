@@ -5,6 +5,7 @@ import DropDownSiswa from "./DropDownSiswa";
 import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function AddSiswa() {
   const [gender, setGender] = useState("Jenis Kelamin");
@@ -30,56 +31,56 @@ export default function AddSiswa() {
     tempat_tanggal_lahir: "",
     agama: "",
     kewarganegaraan: "",
-    anak_keberapa: 0,
-    jumlah_saudara_kandung: 0,
-    jumlah_saudara_tiri: 0,
-    jumlah_saudara_angkat: 0,
+    anak_keberapa: "",
+    jumlah_saudara_kandung: "",
+    jumlah_saudara_tiri: "",
+    jumlah_saudara_angkat: "",
     bahasa_sehari_hari: "",
     keterangan_perkembangan_pesdik: {},
     alamat: "",
-    nomor_telepon: 0,
+    nomor_telepon: "",
     bertempat_tinggal_bersama: "",
-    jarak_tempat_tinggal_ke_sekolah: 0,
+    jarak_tempat_tinggal_ke_sekolah: "",
     golongan_darah: "",
     penyakit_yang_pernah_diderita: "",
     kelainan_jasmani: "",
-    tinggi_dan_berat_badan_saat_diterima: 0,
-    tahun_pelajaran: 0,
-    semester: 0,
-    berat_badan: 0,
-    tinggi_badan: 0,
+    tinggi_dan_berat_badan_saat_diterima: "",
+    tahun_pelajaran: "",
+    semester: "",
+    berat_badan: "",
+    tinggi_badan: "",
     asal_murid: "",
     nama_tk: "",
     alamat_tk: "",
     tanggal_dan_nomor_sstb: "",
     nama_sekolah_asal: "",
     dari_tingkat_kelas: "",
-    nis: 0,
+    nis: "",
     alasan_pindah: "",
     diterima_tanggal: "",
-    diterima_saat_kelas: 0,
+    diterima_saat_kelas: "",
     nama_ayah: "",
-    tahun_lahir_ayah: 0,
+    tahun_lahir_ayah: "",
     agama_ayah: "",
     pendidikan_ayah: "",
     pekerjaan_ayah: "",
     nama_ibu: "",
-    tahu_lahir_ibu: 0,
+    tahu_lahir_ibu: "",
     agama_ibu: "",
     pendidikan_ibu: "",
     pekerjaan_ibu: "",
     nama_wali: "",
-    tahun_lahir_wali: 0,
+    tahun_lahir_wali: "",
     agama_wali: "",
     pendidikan_wali: "",
     pekerjaan_wali: "",
     alamat_wali: "",
     hubungan_keluarga_wali: "",
     tahun_sekarang: "",
-    kelas_sekarang: 0,
-    dari_kelas: 0,
+    kelas_sekarang: "",
+    dari_kelas: "",
     tanggal_meninggalkan_sekolah: "",
-    kelas_yang_ditinggalkan: 0,
+    kelas_yang_ditinggalkan: "",
     alasan_meninggalkan_sekolah: "",
     sekolah_yang_dituju: "",
     kecamatan_sekolah_tujuan: "",
@@ -142,7 +143,7 @@ export default function AddSiswa() {
         return {
           ...prev,
           nama_wali: "",
-          tahun_lahir_wali: 0,
+          tahun_lahir_wali: "",
           agama_wali: "",
           pendidikan_wali: "",
           alamat_wali: "",
@@ -188,13 +189,24 @@ export default function AddSiswa() {
     console.log(e.target.value);
     const name = e.target.name;
     const value = e.target.value;
+    console.log(value);
     setData((prev) => {
-      return { ...prev, [name]: value };
+      return {
+        ...prev,
+        [name]: value,
+      };
     });
-    console.log(name, value);
-    // if (value.length !== "") {
-    //   setActive(true);
-    // }
+  };
+
+  const saveSiswa = async () => {
+    try {
+      const res = await axios.post("http://localhost:3000/api/siswa", data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log("ahhay");
+    console.log(data);
   };
 
   console.log(data);
@@ -396,12 +408,15 @@ export default function AddSiswa() {
                 Keterangan Tentang Kesehatan
               </div>
               <div className="flex justify-between">
-                <Input
-                  value={data.golongan_darah}
-                  onChange={handleInput}
+                <DropDownSiswa
+                  label="Golongan Darah"
                   name="golongan_darah"
                   title="Golongan Darah"
+                  isActive={isActive}
+                  drop={["A", "B", "AB", "O"]}
+                  classCallback={classCallback}
                 />
+
                 <Input
                   value={data.penyakit_yang_pernah_diderita}
                   onChange={handleInput}
@@ -713,7 +728,10 @@ export default function AddSiswa() {
             </div> */}
             </div>
             <div className="flex justify-between w-[45%]">
-              <button className="bg-[#793FDF] rounded-md text-white px-[2rem] py-[.5rem]">
+              <button
+                className="bg-[#793FDF] rounded-md text-white px-[2rem] py-[.5rem]"
+                onClick={saveSiswa}
+              >
                 Simpan
               </button>
             </div>

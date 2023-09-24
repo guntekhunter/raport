@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       diterima_tanggal,
       diterima_saat_kelas,
       nama_ayah,
-      tahu_lahir_ayah,
+      tahun_lahir_ayah,
       agama_ayah,
       pendidikan_ayah,
       pekerjaan_ayah,
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
 
     const newStudent = await prisma.students_data.create({
       data: {
-        id_user,
+        // id_user,
         nama_lengkap,
         nama_panggilan,
         jenis_kelamin,
@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
         diterima_tanggal,
         diterima_saat_kelas,
         nama_ayah,
-        tahu_lahir_ayah,
+        tahun_lahir_ayah,
         agama_ayah,
         pendidikan_ayah,
         pekerjaan_ayah,
@@ -147,6 +147,11 @@ export async function POST(req: NextRequest) {
         tempat_belajar,
         nomor_ijasah,
         akan_melanjutkan_ke,
+        user: {
+          connect: {
+            id: id_user, // Assuming the user's ID is 2
+          },
+        },
       },
     });
 
@@ -204,7 +209,7 @@ export async function PUT(req: NextRequest) {
       diterima_tanggal,
       diterima_saat_kelas,
       nama_ayah,
-      tahu_lahir_ayah,
+      tahun_lahir_ayah,
       agama_ayah,
       pendidikan_ayah,
       pekerjaan_ayah,
@@ -275,7 +280,7 @@ export async function PUT(req: NextRequest) {
         diterima_tanggal,
         diterima_saat_kelas,
         nama_ayah,
-        tahu_lahir_ayah,
+        tahun_lahir_ayah,
         agama_ayah,
         pendidikan_ayah,
         pekerjaan_ayah,
