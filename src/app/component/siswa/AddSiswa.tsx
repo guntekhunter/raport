@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function AddSiswa() {
   const [gender, setGender] = useState("Jenis Kelamin");
@@ -14,8 +15,8 @@ export default function AddSiswa() {
   const [isPindahan, setIsPindahan] = useState(false);
   const [isWali, setIsWali] = useState(false);
   const [userId, setUserId] = useState(0);
-  
-  
+
+  const router = useRouter();
   const [inputSets, setInputSets] = useState([
     [
       { title: "Tahun", value: "" },
@@ -203,7 +204,7 @@ export default function AddSiswa() {
     try {
       const res = await axios.post("http://localhost:3000/api/siswa", data);
       if (res) {
-        console.log("ahhay");
+        router.push("/siswa");
       }
       console.log(res);
     } catch (error) {
