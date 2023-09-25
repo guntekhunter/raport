@@ -333,20 +333,32 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    const reqBody = req.nextUrl.searchParams.get("id");
-    let id = 0;
+    const idSiswa = req.nextUrl.searchParams.get("id");
+    const idUser = req.nextUrl.searchParams.get("id_user");
+    let idSiswaInt = 0;
+    let idUserInt = 0;
 
-    if (reqBody !== null) {
-      id = parseInt(reqBody); // Using radix 10 for decimal
+    if (idSiswa && idUser !== null) {
+      idSiswaInt = parseInt(idSiswa); // Using radix 10 for decimal
+      idUserInt = parseInt(idUser); // Using radix 10 for decimal
     } else {
       console.log("id_user parameter not found in the URL");
     }
-    const data = await prisma.students_data.delete({
+    const dataDeleted = await prisma.students_data.delete({
       where: {
-        id: id,
+        id: idSiswaInt,
       },
     });
-    return NextResponse.json({ status: "Ok", dataDeleted: data });
+    const data = await prisma.students_data.findMany({
+      where: {
+        id_user: idUserInt,
+      },
+    });
+    return NextResponse.json({
+      status: "Ok",
+      dataDeleted: dataDeleted,
+      data: data,
+    });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

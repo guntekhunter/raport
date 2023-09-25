@@ -14,17 +14,33 @@ export default function Siswa() {
     setIsActive(!isActive);
   };
 
+  const handleDelete = async (id: number) => {
+    try {
+      const idUser = Cookies.get("user id");
+      const siswa = await axios.delete(
+        `http://localhost:3000/api/siswa?id=${id}&id_user=${idUser}`
+      );
+      setStudentsData(siswa.data.data);
+      console.log(siswa);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const callbackActive = async (active: boolean) => {
     setIsActive(active);
   };
 
   const fetchSiswa = async () => {
-    const id = Cookies.get("user id");
-    console.log(id);
-    const siswa = await axios.get(
-      `http://localhost:3000/api/siswa?id_user=${id}`
-    );
-    setStudentsData(siswa.data.students);
+    try {
+      const id = Cookies.get("user id");
+      const siswa = await axios.get(
+        `http://localhost:3000/api/siswa?id_user=${id}`
+      );
+      setStudentsData(siswa.data.students);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -86,7 +102,7 @@ export default function Siswa() {
                   <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
                     <button
                       className="p-[.5rem] bg-red-200 border-red-300 border-[1.3px] rounded-md"
-                      // onClick={(e) => handleDelete(item.id, key)}
+                      onClick={(e) => handleDelete(item.id)}
                     >
                       <Image
                         src="/delete.png"
