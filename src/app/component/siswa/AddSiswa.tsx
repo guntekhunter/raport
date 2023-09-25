@@ -14,7 +14,8 @@ export default function AddSiswa() {
   const [isPindahan, setIsPindahan] = useState(false);
   const [isWali, setIsWali] = useState(false);
   const [userId, setUserId] = useState(0);
-  const [] = useState("");
+  
+  
   const [inputSets, setInputSets] = useState([
     [
       { title: "Tahun", value: "" },
@@ -201,6 +202,9 @@ export default function AddSiswa() {
   const saveSiswa = async () => {
     try {
       const res = await axios.post("http://localhost:3000/api/siswa", data);
+      if (res) {
+        console.log("ahhay");
+      }
       console.log(res);
     } catch (error) {
       console.log(error);
