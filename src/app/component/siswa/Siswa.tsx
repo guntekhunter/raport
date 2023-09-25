@@ -1,12 +1,14 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddSiswa from "../models/AddSiswa";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import axios from "axios";
 
 export default function Siswa() {
   const [isActive, setIsActive] = useState(false);
+  const [studentsData, setStudentsData] = useState([]);
 
   const modalActive = () => {
     setIsActive(!isActive);
@@ -15,6 +17,19 @@ export default function Siswa() {
   const callbackActive = async (active: boolean) => {
     setIsActive(active);
   };
+
+  const fetchSiswa = async () => {
+    const id = Cookies.get("user id");
+    console.log(id);
+    const siswa = await axios.get(
+      `http://localhost:3000/api/siswa?id_user=${id}`
+    );
+    setStudentsData(siswa.data.students);
+  };
+
+  useEffect(() => {
+    fetchSiswa();
+  }, []);
 
   return (
     <div className="flex justify-around relative">
@@ -54,35 +69,45 @@ export default function Siswa() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              <tr>
-                <td className="px-6 py-4 whitespace-nowrap">Samsul Rijal</td>
-                <td className="px-6 py-4 whitespace-nowrap">6/Agustus/2000</td>
-                <td className="px-6 py-4 whitespace-nowrap">Daeng Sunggu</td>
-                <td className="px-6 py-4 whitespace-nowrap">1829040023</td>
-                <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
-                  <button
-                    className="p-[.5rem] bg-red-200 border-red-300 border-[1.3px] rounded-md"
-                    // onClick={(e) => handleDelete(item.id, key)}
-                  >
-                    <Image
-                      src="/delete.png"
-                      alt=""
-                      width={500}
-                      height={500}
-                      className="w-4"
-                    />
-                  </button>
-                  <div className="p-[.5rem] bg-green-200 border-green-300 border-[1.3px] rounded-md">
-                    <Image
-                      src="/editing.png"
-                      alt=""
-                      width={500}
-                      height={500}
-                      className="w-4"
-                    />
-                  </div>
-                </td>
-              </tr>
+              {studentsData?.map((item: any, key) => (
+                <tr key={key}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.nama_lengkap}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.tempat_tanggal_lahir}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.nama_wali}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.nomor_telepon}
+                  </td>
+                  <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
+                    <button
+                      className="p-[.5rem] bg-red-200 border-red-300 border-[1.3px] rounded-md"
+                      // onClick={(e) => handleDelete(item.id, key)}
+                    >
+                      <Image
+                        src="/delete.png"
+                        alt=""
+                        width={500}
+                        height={500}
+                        className="w-4"
+                      />
+                    </button>
+                    <div className="p-[.5rem] bg-green-200 border-green-300 border-[1.3px] rounded-md">
+                      <Image
+                        src="/editing.png"
+                        alt=""
+                        width={500}
+                        height={500}
+                        className="w-4"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

@@ -5,7 +5,19 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
-    const students = await prisma.students_data.findMany();
+    const reqBody = req.nextUrl.searchParams.get("id_user");
+    let id = 0;
+
+    if (reqBody !== null) {
+      id = parseInt(reqBody); // Using radix 10 for decimal
+    } else {
+      console.log("id_user parameter not found in the URL");
+    }
+    const students = await prisma.students_data.findMany({
+      where: {
+        id_user: id,
+      },
+    });
     return NextResponse.json({ status: "Ok", students });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 400 });
