@@ -48,6 +48,7 @@ model students_data {
   id_user                              Int
   nama_lengkap                         String
   nama_panggilan                       String
+  nisn                                 String
   jenis_kelamin                        String
   tempat_tanggal_lahir                 String
   agama                                String

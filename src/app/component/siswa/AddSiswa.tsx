@@ -29,6 +29,7 @@ export default function AddSiswa() {
     id_user: userId,
     nama_lengkap: "",
     nama_panggilan: "",
+    nisn: "",
     jenis_kelamin: "",
     tempat_tanggal_lahir: "",
     agama: "",
@@ -327,9 +328,12 @@ export default function AddSiswa() {
                   name="bahasa_sehari_hari"
                   title="Bahasa Sehari-hari di Keluarga"
                 />
-                <div className="w-[30%]">
-                  <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
-                </div>
+                <Input
+                  value={data.nisn}
+                  onChange={handleInput}
+                  name="nisn"
+                  title="NISN"
+                />
               </div>
               <div className="font-bold pt-[1rem]">
                 Keterangan Perkebangan Peserta Didik
