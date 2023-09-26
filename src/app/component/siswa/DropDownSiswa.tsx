@@ -21,13 +21,17 @@ export default function DropDownSiswa({drop,title,classCallback,name,isActive,la
     }
   }, [title, isActive]);
 
-  console.log(title, active);
-
   const select = (item: any) => {
     setSelected(item);
-    setActive(!active);
+    setActive(true);
     setIsDrop(!isDrop);
-    classCallback(item, name);
+    if (title === "Hindu" || "Islam" || "Kristen" || "Buddha" || "Konghucu") {
+      classCallback(item, name);
+      setActive(true);
+      console.log("ahhay", title);
+    } else {
+      classCallback(item, name);
+    }
   };
 
   const dropData = drop;

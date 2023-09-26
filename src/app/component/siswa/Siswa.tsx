@@ -77,7 +77,7 @@ export default function Siswa() {
                   Orang Tua/Wali
                 </th>
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
-                  NISN
+                  No Telpon
                 </th>
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
                   Edit/Hapus

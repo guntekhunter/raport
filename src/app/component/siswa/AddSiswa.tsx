@@ -272,11 +272,20 @@ export default function AddSiswa() {
                   name="tempat_tanggal_lahir"
                   title="Tempat Tanggal Lahir"
                 />
-                <Input
-                  value={data.agama}
-                  onChange={handleInput}
+                <DropDownSiswa
+                  label="Agama"
                   name="agama"
-                  title="Agama"
+                  title="agama"
+                  isActive={isActive}
+                  drop={[
+                    "Islam",
+                    "Kristen",
+                    "Hindu",
+                    "Buddha",
+                    "Konghucu",
+                    "Lainnya",
+                  ]}
+                  classCallback={classCallback}
                 />
                 <Input
                   value={data.kewarganegaraan}
@@ -589,11 +598,20 @@ export default function AddSiswa() {
                   name="tahun_lahir_ayah"
                   title="Tahun Lahir"
                 />
-                <Input
-                  value={data.agama_ayah}
-                  onChange={handleInput}
+                <DropDownSiswa
+                  label="Agama"
                   name="agama_ayah"
-                  title="Agama"
+                  title="agama_ayah"
+                  isActive={isActive}
+                  drop={[
+                    "Islam",
+                    "Kristen",
+                    "Hindu",
+                    "Buddha",
+                    "Konghucu",
+                    "Lainnya",
+                  ]}
+                  classCallback={classCallback}
                 />
               </div>
               <div className="flex justify-between">
@@ -674,11 +692,20 @@ export default function AddSiswa() {
                     name="tahun_lahir_wali"
                     title="Tahun Lahir"
                   />
-                  <Input
-                    value={data.agama_wali}
-                    onChange={handleInput}
+                  <DropDownSiswa
+                    label="Agama Wali"
                     name="agama_wali"
-                    title="Agama"
+                    title={isWali ? data.agama_ayah : "Agama Wali"}
+                    isActive={isWali ? isWali : isActive}
+                    drop={[
+                      "Islam",
+                      "Kristen",
+                      "Hindu",
+                      "Buddha",
+                      "Konghucu",
+                      "Lainnya",
+                    ]}
+                    classCallback={classCallback}
                   />
                 </div>
                 <div className="flex justify-between">
