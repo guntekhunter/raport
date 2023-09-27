@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 //@ts-ignore
 
-export default function DropDownSiswa({drop,title,classCallback,name,isActive,label,
+export default function DropDownSiswa({drop,title,classCallback,name,isActive,label,star,
 }) {
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState(title);
@@ -38,7 +38,14 @@ export default function DropDownSiswa({drop,title,classCallback,name,isActive,la
 
   return (
     <div className="relative w-[30%]">
-      <p className="text-[.7rem]">{label}</p>
+      <div className="text-[.7rem] flex">
+        {label}{" "}
+        {star === "on" ? (
+          <p className="text-[#CB3A31] ml-1">*</p>
+        ) : (
+          <p className="hidden"></p>
+        )}
+      </div>
       <button
         className="flex rounded-md bg-gray-100 border-[1.5px] border-gray-200 w-full justify-between px-[.5rem] h-[2rem] items-center "
         onClick={dropDown}

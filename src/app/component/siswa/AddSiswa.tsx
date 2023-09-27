@@ -248,18 +248,21 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  star="on"
                   value={data.nama_lengkap}
                   onChange={handleInput}
                   name="nama_lengkap"
                   title="Nama Lengkap"
                 />
                 <Input
+                  star="on"
                   value={data.nama_panggilan}
                   onChange={handleInput}
                   name="nama_panggilan"
                   title="Nama Panggilan"
                 />
                 <DropDownSiswa
+                  star="on"
                   label="Jenis Kelamin"
                   name="jenis_kelamin"
                   title={gender}
@@ -270,12 +273,14 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  star="on"
                   value={data.tempat_tanggal_lahir}
                   onChange={handleInput}
                   name="tempat_tanggal_lahir"
                   title="Tempat Tanggal Lahir"
                 />
                 <DropDownSiswa
+                  star="on"
                   label="Agama"
                   name="agama"
                   title="agama"
@@ -291,6 +296,7 @@ export default function AddSiswa() {
                   classCallback={classCallback}
                 />
                 <Input
+                  star="on"
                   value={data.kewarganegaraan}
                   onChange={handleInput}
                   name="kewarganegaraan"
@@ -299,18 +305,21 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
-                  value={data.anak_keberapa}
+                  star="on"
+                  value={data.nisn}
                   onChange={handleInput}
-                  name="anak_keberapa"
-                  title="Anak Keberapa"
+                  name="nisn"
+                  title="NISN"
                 />
                 <Input
+                  star="off"
                   value={data.jumlah_saudara_kandung}
                   onChange={handleInput}
                   name="jumlah_saudara_kandung"
                   title="Jumlah Saudara kandung"
                 />
                 <Input
+                  star="off"
                   value={data.jumlah_saudara_tiri}
                   onChange={handleInput}
                   name="jumlah_saudara_tiri"
@@ -319,23 +328,234 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  star="off"
                   value={data.jumlah_saudara_angkat}
                   onChange={handleInput}
                   name="jumlah_saudara_angkat"
                   title="Jumlah Saudara Angkat"
                 />
                 <Input
+                  star="off"
                   value={data.bahasa_sehari_hari}
                   onChange={handleInput}
                   name="bahasa_sehari_hari"
                   title="Bahasa Sehari-hari di Keluarga"
                 />
                 <Input
-                  value={data.nisn}
+                  star="off"
+                  value={data.anak_keberapa}
                   onChange={handleInput}
-                  name="nisn"
-                  title="NISN"
+                  name="anak_keberapa"
+                  title="Anak Keberapa"
                 />
+              </div>
+
+              <div className="font-bold pt-[1rem]">
+                Keterangan Tempat Tinggal
+              </div>
+              <div className="flex justify-between">
+                <Input
+                  star="off"
+                  value={data.alamat}
+                  onChange={handleInput}
+                  name="alamat"
+                  title="Alamat"
+                />
+                <Input
+                  star="off"
+                  value={data.nomor_telepon}
+                  onChange={handleInput}
+                  name="nomor_telepon"
+                  title="Nomor Telepon / HP"
+                />
+                <DropDownSiswa
+                  star="off"
+                  label="Bertempat tinggal pada/bersama"
+                  name="bertempat_tinggal_bersama"
+                  title="bertempat_tinggal_bersama"
+                  isActive={isActive}
+                  drop={["Ayah", "Wali"]}
+                  classCallback={classCallback}
+                />
+              </div>
+              <div className="flex justify-between">
+                <Input
+                  star="off"
+                  value={data.jarak_tempat_tinggal_ke_sekolah}
+                  onChange={handleInput}
+                  name="jarak_tempat_tinggal_ke_sekolah"
+                  title="Jarak Tempat Tinggal ke Sekolah"
+                />
+              </div>
+              <div className="font-bold">Keterangan Tentang Ayah Kandung</div>
+              <div className="flex justify-between">
+                <Input
+                  star="off"
+                  value={data.nama_ayah}
+                  onChange={handleInput}
+                  name="nama_ayah"
+                  title="Nama"
+                />
+                <Input
+                  star="off"
+                  value={data.tahun_lahir_ayah}
+                  onChange={handleInput}
+                  name="tahun_lahir_ayah"
+                  title="Tahun Lahir"
+                />
+                <DropDownSiswa
+                  star="off"
+                  label="Agama"
+                  name="agama_ayah"
+                  title="agama_ayah"
+                  isActive={isActive}
+                  drop={[
+                    "Islam",
+                    "Kristen",
+                    "Hindu",
+                    "Buddha",
+                    "Konghucu",
+                    "Lainnya",
+                  ]}
+                  classCallback={classCallback}
+                />
+              </div>
+              <div className="flex justify-between">
+                <Input
+                  star="off"
+                  value={data.pendidikan_ayah}
+                  onChange={handleInput}
+                  name="pendidikan_ayah"
+                  title="Pendidikan"
+                />
+                <Input
+                  star="off"
+                  value={data.pekerjaan_ayah}
+                  onChange={handleInput}
+                  name="pekerjaan_ayah"
+                  title="Pekerjaan"
+                />
+                <div className="w-[30%]">
+                  <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
+                </div>
+              </div>
+              <div className="font-bold pt-[1rem]">
+                Keterangan Tentang Ibu Kandung
+              </div>
+              <div className="flex justify-between">
+                <Input
+                  star="off"
+                  value={data.nama_ibu}
+                  onChange={handleInput}
+                  name="nama_ibu"
+                  title="Nama"
+                />
+                <Input
+                  star="off"
+                  value={data.tahu_lahir_ibu}
+                  onChange={handleInput}
+                  name="tahu_lahir_ibu"
+                  title="Tahun Lahir"
+                />
+                <Input
+                  star="off"
+                  value={data.agama_ibu}
+                  onChange={handleInput}
+                  name="agama_ibu"
+                  title="Agama"
+                />
+              </div>
+              <div className="flex justify-between">
+                <Input
+                  star="off"
+                  value={data.pendidikan_ibu}
+                  onChange={handleInput}
+                  name="pendidikan_ibu"
+                  title="Pendidikan"
+                />
+                <Input
+                  star="off"
+                  value={data.pekerjaan_ibu}
+                  onChange={handleInput}
+                  name="pekerjaan_ibu"
+                  title="Pekerjaan"
+                />
+                <div className="w-[30%]">
+                  <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
+                </div>
+              </div>
+              <button
+                className="bg-[#793FDF] rounded-md text-white px-[2rem] py-[.5rem] text-[.7rem]"
+                onClick={wali}
+              >
+                {!isWali ? <p>Wali adalah Ayah</p> : <p>Wali bukan ayah</p>}
+              </button>
+              <div className={`space-y-[.7rem]`}>
+                <div className="font-bold">Keterangan Tentang Wali</div>
+                <div className="flex justify-between">
+                  <Input
+                    star="off"
+                    value={data.nama_wali}
+                    onChange={handleInput}
+                    name="nama_wali"
+                    title="Nama"
+                  />
+                  <Input
+                    star="off"
+                    value={data.tahun_lahir_wali}
+                    onChange={handleInput}
+                    name="tahun_lahir_wali"
+                    title="Tahun Lahir"
+                  />
+                  <DropDownSiswa
+                    star="off"
+                    label="Agama Wali"
+                    name="agama_wali"
+                    title={isWali ? data.agama_ayah : "Agama Wali"}
+                    isActive={isWali ? isWali : isActive}
+                    drop={[
+                      "Islam",
+                      "Kristen",
+                      "Hindu",
+                      "Buddha",
+                      "Konghucu",
+                      "Lainnya",
+                    ]}
+                    classCallback={classCallback}
+                  />
+                </div>
+                <div className="flex justify-between">
+                  <Input
+                    star="off"
+                    value={data.pendidikan_wali}
+                    onChange={handleInput}
+                    name="pendidikan_wali"
+                    title="Pendidikan"
+                  />
+                  <Input
+                    star="off"
+                    value={data.pekerjaan_wali}
+                    onChange={handleInput}
+                    name="pekerjaan_wali"
+                    title="Pekerjaan"
+                  />
+                  <Input
+                    star="off"
+                    value={data.alamat_wali}
+                    onChange={handleInput}
+                    name="alamat_wali"
+                    title="Alamat Rumah. Nomor Telp."
+                  />
+                </div>
+                <div className="flex justify-between">
+                  <Input
+                    star="off"
+                    value={data.hubungan_keluarga_wali}
+                    onChange={handleInput}
+                    name="hubungan_keluarga_wali"
+                    title="Hubungan Keluarga"
+                  />
+                </div>
               </div>
               <div className="font-bold pt-[1rem]">
                 Keterangan Perkebangan Peserta Didik
@@ -392,43 +612,11 @@ export default function AddSiswa() {
                 Tambahkan Pencapaian Peserta Didik
               </button>
               <div className="font-bold pt-[1rem]">
-                Keterangan Tempat Tinggal
-              </div>
-              <div className="flex justify-between">
-                <Input
-                  value={data.alamat}
-                  onChange={handleInput}
-                  name="alamat"
-                  title="Alamat"
-                />
-                <Input
-                  value={data.nomor_telepon}
-                  onChange={handleInput}
-                  name="nomor_telepon"
-                  title="Nomor Telepon / HP"
-                />
-                <DropDownSiswa
-                  label="Bertempat tinggal pada/bersama"
-                  name="bertempat_tinggal_bersama"
-                  title="bertempat_tinggal_bersama"
-                  isActive={isActive}
-                  drop={["Ayah", "Wali"]}
-                  classCallback={classCallback}
-                />
-              </div>
-              <div className="flex justify-between">
-                <Input
-                  value={data.jarak_tempat_tinggal_ke_sekolah}
-                  onChange={handleInput}
-                  name="jarak_tempat_tinggal_ke_sekolah"
-                  title="Jarak Tempat Tinggal ke Sekolah"
-                />
-              </div>
-              <div className="font-bold pt-[1rem]">
                 Keterangan Tentang Kesehatan
               </div>
               <div className="flex justify-between">
                 <DropDownSiswa
+                  star="off"
                   label="Golongan Darah"
                   name="golongan_darah"
                   title="Golongan Darah"
@@ -438,12 +626,14 @@ export default function AddSiswa() {
                 />
 
                 <Input
+                  star="off"
                   value={data.penyakit_yang_pernah_diderita}
                   onChange={handleInput}
                   name="penyakit_yang_pernah_diderita"
                   title="Pnyakit Yang Pernah Diderita"
                 />
                 <Input
+                  star="off"
                   value={data.kelainan_jasmani}
                   onChange={handleInput}
                   name="kelainan_jasmani"
@@ -452,18 +642,21 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  star="off"
                   value={data.tinggi_dan_berat_badan_saat_diterima}
                   onChange={handleInput}
                   name="tinggi_dan_berat_badan_saat_diterima"
                   title="Tinggi dan Berat badan saat diterima"
                 />
                 <Input
+                  star="off"
                   value={data.tahun_pelajaran}
                   onChange={handleInput}
                   name="tahun_pelajaran"
                   title="Tahun Pelajaran "
                 />
                 <Input
+                  star="off"
                   value={data.semester}
                   onChange={handleInput}
                   name="semester"
@@ -472,12 +665,14 @@ export default function AddSiswa() {
               </div>
               <div className="flex justify-between">
                 <Input
+                  star="off"
                   value={data.berat_badan}
                   onChange={handleInput}
                   name="berat_badan"
                   title="Berat Badan"
                 />
                 <Input
+                  star="off"
                   value={data.tinggi_badan}
                   onChange={handleInput}
                   name="tinggi_badan"
@@ -497,6 +692,7 @@ export default function AddSiswa() {
                   <p>bukan pindahan?</p>
                 )}
               </button>
+
               <div className={`space-y-[.7rem] pb-[.4rem]`}>
                 <div className="font-bold">Keterangan Tentang Pendidikan</div>
                 <div className="font-bold pt-[.5rem] text-[.7rem]">
@@ -504,18 +700,21 @@ export default function AddSiswa() {
                 </div>
                 <div className="flex justify-between">
                   <Input
+                    star="off"
                     value={data.asal_murid}
                     onChange={handleInput}
                     name="asal_murid"
                     title="Asal Murid"
                   />
                   <Input
+                    star="off"
                     value={data.nama_tk}
                     onChange={handleInput}
                     name="nama_tk"
                     title="Nama Taman Kanak-kanak"
                   />
                   <Input
+                    star="off"
                     value={data.alamat_tk}
                     onChange={handleInput}
                     name="alamat_tk"
@@ -524,6 +723,7 @@ export default function AddSiswa() {
                 </div>
                 <div className="flex justify-between">
                   <Input
+                    star="off"
                     value={data.tanggal_dan_nomor_sstb}
                     onChange={handleInput}
                     name="tanggal_dan_nomor_sstb"
@@ -542,18 +742,21 @@ export default function AddSiswa() {
                   </div>
                   <div className="flex justify-between">
                     <Input
+                      star="off"
                       value={data.nama_sekolah_asal}
                       onChange={handleInput}
                       name="nama_sekolah_asal"
                       title="Nama Sekolah Asal"
                     />
                     <Input
+                      star="off"
                       value={data.dari_tingkat_kelas}
                       onChange={handleInput}
                       name="dari_tingkat_kelas"
                       title="Dari Tingkat / Kelas"
                     />
                     <Input
+                      star="off"
                       value={data.nis}
                       onChange={handleInput}
                       name="nis"
@@ -562,6 +765,7 @@ export default function AddSiswa() {
                   </div>
                   <div className="flex justify-between">
                     <Input
+                      star="off"
                       value={data.alasan_pindah}
                       onChange={handleInput}
                       name="alasan_pindah"
@@ -573,12 +777,14 @@ export default function AddSiswa() {
                   </div>
                   <div className="flex justify-between">
                     <Input
+                      star="off"
                       value={data.diterima_tanggal}
                       onChange={handleInput}
                       name="diterima_tanggal"
                       title="Diterima Tanggal"
                     />
                     <Input
+                      star="off"
                       value={data.diterima_saat_kelas}
                       onChange={handleInput}
                       name="diterima_saat_kelas"
@@ -590,179 +796,26 @@ export default function AddSiswa() {
                   </div>
                 </div>
               </div>
-              <div className="font-bold">Keterangan Tentang Ayah Kandung</div>
-              <div className="flex justify-between">
-                <Input
-                  value={data.nama_ayah}
-                  onChange={handleInput}
-                  name="nama_ayah"
-                  title="Nama"
-                />
-                <Input
-                  value={data.tahun_lahir_ayah}
-                  onChange={handleInput}
-                  name="tahun_lahir_ayah"
-                  title="Tahun Lahir"
-                />
-                <DropDownSiswa
-                  label="Agama"
-                  name="agama_ayah"
-                  title="agama_ayah"
-                  isActive={isActive}
-                  drop={[
-                    "Islam",
-                    "Kristen",
-                    "Hindu",
-                    "Buddha",
-                    "Konghucu",
-                    "Lainnya",
-                  ]}
-                  classCallback={classCallback}
-                />
-              </div>
-              <div className="flex justify-between">
-                <Input
-                  value={data.pendidikan_ayah}
-                  onChange={handleInput}
-                  name="pendidikan_ayah"
-                  title="Pendidikan"
-                />
-                <Input
-                  value={data.pekerjaan_ayah}
-                  onChange={handleInput}
-                  name="pekerjaan_ayah"
-                  title="Pekerjaan"
-                />
-                <div className="w-[30%]">
-                  <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
-                </div>
-              </div>
-              <div className="font-bold pt-[1rem]">
-                Keterangan Tentang Ibu Kandung
-              </div>
-              <div className="flex justify-between">
-                <Input
-                  value={data.nama_ibu}
-                  onChange={handleInput}
-                  name="nama_ibu"
-                  title="Nama"
-                />
-                <Input
-                  value={data.tahu_lahir_ibu}
-                  onChange={handleInput}
-                  name="tahu_lahir_ibu"
-                  title="Tahun Lahir"
-                />
-                <Input
-                  value={data.agama_ibu}
-                  onChange={handleInput}
-                  name="agama_ibu"
-                  title="Agama"
-                />
-              </div>
-              <div className="flex justify-between">
-                <Input
-                  value={data.pendidikan_ibu}
-                  onChange={handleInput}
-                  name="pendidikan_ibu"
-                  title="Pendidikan"
-                />
-                <Input
-                  value={data.pekerjaan_ibu}
-                  onChange={handleInput}
-                  name="pekerjaan_ibu"
-                  title="Pekerjaan"
-                />
-                <div className="w-[30%]">
-                  <div className="h-[2rem] px-[.5rem] rounded-md w-[13.7rem]" />
-                </div>
-              </div>
-              <button
-                className="bg-[#793FDF] rounded-md text-white px-[2rem] py-[.5rem] text-[.7rem]"
-                onClick={wali}
-              >
-                {!isWali ? <p>Wali adalah Ayah</p> : <p>Wali bukan ayah</p>}
-              </button>
-              <div className={`space-y-[.7rem]`}>
-                <div className="font-bold">Keterangan Tentang Wali</div>
-                <div className="flex justify-between">
-                  <Input
-                    value={data.nama_wali}
-                    onChange={handleInput}
-                    name="nama_wali"
-                    title="Nama"
-                  />
-                  <Input
-                    value={data.tahun_lahir_wali}
-                    onChange={handleInput}
-                    name="tahun_lahir_wali"
-                    title="Tahun Lahir"
-                  />
-                  <DropDownSiswa
-                    label="Agama Wali"
-                    name="agama_wali"
-                    title={isWali ? data.agama_ayah : "Agama Wali"}
-                    isActive={isWali ? isWali : isActive}
-                    drop={[
-                      "Islam",
-                      "Kristen",
-                      "Hindu",
-                      "Buddha",
-                      "Konghucu",
-                      "Lainnya",
-                    ]}
-                    classCallback={classCallback}
-                  />
-                </div>
-                <div className="flex justify-between">
-                  <Input
-                    value={data.pendidikan_wali}
-                    onChange={handleInput}
-                    name="pendidikan_wali"
-                    title="Pendidikan"
-                  />
-                  <Input
-                    value={data.pekerjaan_wali}
-                    onChange={handleInput}
-                    name="pekerjaan_wali"
-                    title="Pekerjaan"
-                  />
-                  <Input
-                    value={data.alamat_wali}
-                    onChange={handleInput}
-                    name="alamat_wali"
-                    title="Alamat Rumah. Nomor Telp."
-                  />
-                </div>
-                <div className="flex justify-between">
-                  <Input
-                    value={data.hubungan_keluarga_wali}
-                    onChange={handleInput}
-                    name="hubungan_keluarga_wali"
-                    title="Hubungan Keluarga"
-                  />
-                </div>
-              </div>
 
               {/* <div className="font-bold pt-[1rem]">Meninggalkan Sekolah</div>
             <div className="flex justify-between">
-              <Input value={data.agama} onChange={handleInput} name="" title="Tanggal Meninggalkan Sekolah" />
-              <Input value={data.agama} onChange={handleInput} name="" title="Kelas Yang Ditinggalkan" />
-              <Input value={data.agama} onChange={handleInput} name="" title="Alasan" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Tanggal Meninggalkan Sekolah" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Kelas Yang Ditinggalkan" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Alasan" />
             </div>
             <div className="flex justify-between">
-              <Input value={data.agama} onChange={handleInput} name="" title="Sekolah Yang Dituju" />
-              <Input value={data.agama} onChange={handleInput} name="" title="Kecamatan" />
-              <Input value={data.agama} onChange={handleInput} name="" title="Kabupaten" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Sekolah Yang Dituju" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Kecamatan" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Kabupaten" />
             </div>
             <div className="flex justify-between">
-              <Input value={data.agama} onChange={handleInput} name="" title="Provinsi" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Provinsi" />
             </div> */}
               {/* <div className="font-bold pt-[1rem]">Akhir Pendidikan</div>
             <div className="flex justify-between">
-              <Input value={data.agama} onChange={handleInput} name="" title="Tempat belajar / Lulus Tahun" />
-              <Input value={data.agama} onChange={handleInput} name="" title="Nomor Ijasah / STL" />
-              <Input value={data.agama} onChange={handleInput} name="" title="Akan Melanjutkan Ke" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Tempat belajar / Lulus Tahun" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Nomor Ijasah / STL" />
+              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Akan Melanjutkan Ke" />
             </div> */}
             </div>
             <div className="flex justify-between w-[45%]">

@@ -1,10 +1,17 @@
 import React from "react";
 
 // @ts-ignore
-export default function Input({ title, name, onChange, value }) {
+export default function Input({ title, name, onChange, value, star }) {
   return (
     <div className="w-[30%]">
-      <p className="text-[.7rem]">{title}</p>
+      <div className="text-[.7rem] flex">
+        {title}{" "}
+        {star === "on" ? (
+          <p className="text-[#CB3A31] ml-1">*</p>
+        ) : (
+          <p className="hidden"></p>
+        )}
+      </div>
       <input
         value={value}
         name={name}
