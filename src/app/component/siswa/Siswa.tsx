@@ -68,6 +68,9 @@ export default function Siswa() {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
+                  No
+                </th>
+                <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
                   Nama Lengkap
                 </th>
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
@@ -77,7 +80,7 @@ export default function Siswa() {
                   Orang Tua/Wali
                 </th>
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
-                  No Telpon
+                  NISN
                 </th>
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
                   Edit/Hapus
@@ -87,6 +90,7 @@ export default function Siswa() {
             <tbody className="bg-white divide-y divide-gray-200">
               {studentsData?.map((item: any, key) => (
                 <tr key={key}>
+                  <td className="px-6 py-4 whitespace-nowrap">{item.nisn}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {item.nama_lengkap}
                   </td>
@@ -96,9 +100,7 @@ export default function Siswa() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     {item.nama_wali}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {item.nomor_telepon}
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{item.nisn}</td>
                   <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
                     <button
                       className="p-[.5rem] bg-red-200 border-red-300 border-[1.3px] rounded-md"

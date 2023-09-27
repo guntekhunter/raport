@@ -39,7 +39,7 @@ export default function AddSiswa() {
     jumlah_saudara_tiri: "",
     jumlah_saudara_angkat: "",
     bahasa_sehari_hari: "",
-    keterangan_perkembangan_pesdik: {},
+    keterangan_perkembangan_pesdik: [{}],
     alamat: "",
     nomor_telepon: "",
     bertempat_tinggal_bersama: "",
@@ -93,6 +93,8 @@ export default function AddSiswa() {
     nomor_ijasah: "",
     akan_melanjutkan_ke: "",
   });
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     const id = Cookies.get("user id");
