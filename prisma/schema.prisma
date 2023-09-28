@@ -6,18 +6,112 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  // shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+  provider = "postgresql"
+  url      = "postgresql://postgres:060820@localhost:5432/raport?connection_limit=5"
 }
 
+// for online db
+// datasource db {
+//   provider  = "postgresql"
+//   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+//   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+//   // shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+// }
+
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String
-  password  String
-  isAdmin   Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  name          String
+  password      String
+  isAdmin       Boolean
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  main_data     main_data[]
+  students_data students_data[]
+}
+
+model main_data {
+  id          Int      @id @default(autoincrement())
+  guru_kelas  String
+  nip         Int      @unique
+  kelas_huruf String
+  kelas_angka String
+  semester    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  id_user     Int
+  user        User     @relation(fields: [id_user], references: [id])
+}
+
+model students_data {
+  id                                   Int      @id @default(autoincrement())
+  id_user                              Int
+  nama_lengkap                         String
+  nama_panggilan                       String
+  nisn                                 String
+  jenis_kelamin                        String
+  tempat_tanggal_lahir                 String
+  agama                                String
+  kewarganegaraan                      String
+  anak_keberapa                        String
+  jumlah_saudara_kandung               String
+  jumlah_saudara_tiri                  String
+  jumlah_saudara_angkat                String
+  bahasa_sehari_hari                   String
+  alamat                               String
+  nomor_telepon                        String
+  bertempat_tinggal_bersama            String
+  jarak_tempat_tinggal_ke_sekolah      String
+  golongan_darah                       String
+  penyakit_yang_pernah_diderita        String
+  kelainan_jasmani                     String
+  tinggi_dan_berat_badan_saat_diterima String
+  tahun_pelajaran                      String
+  semester                             String
+  berat_badan                          String
+  tinggi_badan                         String
+  asal_murid                           String
+  nama_tk                              String
+  alamat_tk                            String
+  tanggal_dan_nomor_sstb               String
+  nama_sekolah_asal                    String
+  dari_tingkat_kelas                   String
+  nis                                  String
+  alasan_pindah                        String
+  diterima_tanggal                     String
+  diterima_saat_kelas                  String
+  nama_ayah                            String
+  tahun_lahir_ayah                     String
+  agama_ayah                           String
+  pendidikan_ayah                      String
+  pekerjaan_ayah                       String
+  nama_ibu                             String
+  tahu_lahir_ibu                       String
+  agama_ibu                            String
+  pendidikan_ibu                       String
+  pekerjaan_ibu                        String
+  nama_wali                            String
+  tahun_lahir_wali                     String
+  agama_wali                           String
+  pendidikan_wali                      String
+  pekerjaan_wali                       String
+  alamat_wali                          String
+  hubungan_keluarga_wali               String
+  tahun_sekarang                       String
+  kelas_sekarang                       String
+  dari_kelas                           String
+  tanggal_meninggalkan_sekolah         String
+  kelas_yang_ditinggalkan              String
+  keterangan_perkembangan_pesdik       Json[]
+  alasan_meninggalkan_sekolah          String
+  sekolah_yang_dituju                  String
+  kecamatan_sekolah_tujuan             String
+  kabupaten_sekolah_tujuan             String
+  provinsi_sekolah_tujuan              String
+  tempat_belajar                       String
+  nomor_ijasah                         String
+  akan_melanjutkan_ke                  String
+  createdAt                            DateTime @default(now())
+  updatedAt                            DateTime @updatedAt
+  user                                 User     @relation(fields: [id_user], references: [id])
 }

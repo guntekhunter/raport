@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,9 +24,12 @@ export default function Login() {
         email: email,
         password: password,
       });
+
       if (res.status && res.data.user.isAdmin) {
         route.push("/admin");
       } else {
+        const id = res.data.user.id;
+        Cookies.set("user id", id);
         route.push("/member");
       }
     } catch (error: any) {
@@ -75,7 +79,7 @@ export default function Login() {
         <div className="flex justify-around pt-[1rem]">
           <button
             onClick={loginHandler}
-            className="px-[1rem] rounded-md bg-blue-400 text-white w-full h-[2rem] hover:bg-blue-300 flex justify-around items-center"
+            className="px-[1rem] rounded-md bg-[#793FDF] text-white w-full h-[2.5rem] hover:bg-[#793FDF] flex justify-around items-center"
           >
             {isLoading ? (
               <Image
