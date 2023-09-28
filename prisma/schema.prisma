@@ -28,6 +28,8 @@ model User {
   updatedAt     DateTime        @updatedAt
   main_data     main_data[]
   students_data students_data[]
+  absen         absen[]
+  date          date[]
 }
 
 model main_data {
@@ -114,4 +116,31 @@ model students_data {
   createdAt                            DateTime @default(now())
   updatedAt                            DateTime @updatedAt
   user                                 User     @relation(fields: [id_user], references: [id])
+  absen                                absen[]
+}
+
+model date {
+  id             Int      @id @default(autoincrement())
+  date           DateTime
+  mounth         String
+  user_id        Int
+  mata_pelajaran String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  absen          absen[]
+  user           User     @relation(fields: [user_id], references: [id])
+}
+
+model absen {
+  id             Int           @id @default(autoincrement())
+  date_id        Int
+  siswa_id       Int
+  user_id        Int
+  mounth         String
+  mata_pelajaran String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  date           date          @relation(fields: [date_id], references: [id])
+  siswa          students_data @relation(fields: [siswa_id], references: [id])
+  user           User          @relation(fields: [user_id], references: [id])
 }
