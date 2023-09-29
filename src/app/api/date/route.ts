@@ -38,3 +38,25 @@ export async function GET(req: NextRequest, res: NextResponse) {
     console.log(error);
   }
 }
+
+export async function POST(req: NextRequest, res: NextResponse) {
+  try {
+    const reqBody = await req.json();
+    const { date, mounth, user_id, mata_pelajaran } = reqBody;
+
+    const newData = await prisma.date.create({
+      data: {
+        date,
+        mounth,
+        user_id,
+        mata_pelajaran,
+      },
+    });
+
+    return NextResponse.json({ status: "Ok", data: newData });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
