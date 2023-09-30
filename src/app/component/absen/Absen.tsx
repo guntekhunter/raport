@@ -10,6 +10,7 @@ import DropDownAbsen from "./dropDownAbsen";
 export default function Absen() {
   const [isActive, setIsActive] = useState(false);
   const [buttonActive, setButtonActive] = useState(false);
+  const [date, setDate] = useState([]);
   const [mounth, setMount] = useState("");
   const [subject, setSubject] = useState("");
   const [userId, setUserId] = useState<Number>();
@@ -37,7 +38,6 @@ export default function Absen() {
         const data = await axios.get(
           `http://localhost:3000/api/siswa?id_user=${parsedId}`
         );
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -57,9 +57,10 @@ export default function Absen() {
           console.log("User ID not found in localStorage");
         }
         const data = await axios.get(
-          `http://localhost:3000/api/date?id_user=${parsedId}&subject=${subject}&mounth=${mounth}}`
+          `http://localhost:3000/api/date?user_id=${parsedId}&subject=${subject}&mounth=${mounth}`
         );
         console.log(data);
+        setDate(data.data.data);
       } catch (error) {
         console.log(error);
       }
@@ -69,7 +70,21 @@ export default function Absen() {
     }
   }, [subject, mounth]);
 
-  console.log(mounth, subject);
+  const formatDate = (dateString: string | number | Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    };
+
+    const date = new Date(dateString);
+    const [weekday, day, month] = date
+      .toLocaleDateString("id-ID", options)
+      .split(" ");
+
+    return `${weekday}/${day}/${month}`;
+  };
+
   return (
     <div className="flex justify-around relative">
       <div className="w-[80%]">
@@ -119,6 +134,18 @@ export default function Absen() {
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
                   Nama Siswa
                 </th>
+                {date?.map((item: any, key) => {
+                  const formattedDate = formatDate(item.date);
+
+                  return (
+                    <th
+                      key={key}
+                      className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium"
+                    >
+                      {formattedDate}
+                    </th>
+                  );
+                })}
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
