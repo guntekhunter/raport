@@ -55,7 +55,7 @@ export default function Siswa() {
       />
       <div className="w-[80%] py-[2rem]">
         <Link
-          href="/newSiswa"
+          href="/new-siswa"
           className="bg-[#793FDF] rounded-md text-white px-[2rem] py-[.5rem]"
         >
           Tambah Siswa
