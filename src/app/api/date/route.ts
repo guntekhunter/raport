@@ -26,7 +26,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       console.log("id_user parameter is null");
     }
 
-    const data = await prisma.date.findFirst({
+    const data = await prisma.date.findMany({
       where: {
         user_id: user_id,
         mounth: the_mounth,
@@ -59,4 +59,35 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 }
 
+export async function PUT(req: NextRequest, res: NextResponse) {
+  try {
+    const reqBody = await req.json();
 
+    const idDate = req.nextUrl.searchParams.get("id");
+    let id = 0;
+
+    if (idDate !== null) {
+      id = parseInt(idDate); // Using radix 10 for decimal
+    } else {
+      console.log("id_date parameter not found in the URL");
+    }
+
+    const { date, mounth, user_id, mata_pelajaran } = reqBody;
+
+    const data = await prisma.date.update({
+      where: {
+        id: id,
+      },
+      data: {
+        date,
+        mounth,
+        user_id,
+        mata_pelajaran,
+      },
+    });
+
+    return NextResponse.json({ status: "OK", updatedData: data });
+  } catch (error) {
+    console.log(error);
+  }
+}
