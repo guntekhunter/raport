@@ -13,6 +13,7 @@ export default function Absen() {
   const [date, setDate] = useState([]);
   const [mounth, setMount] = useState("");
   const [subject, setSubject] = useState("");
+  const [absens, setAbsens] = useState([]);
   const [userId, setUserId] = useState<Number>();
 
   const classCallback = (item: any, name: any) => {
@@ -36,8 +37,9 @@ export default function Absen() {
           console.log("User ID not found in localStorage");
         }
         const data = await axios.get(
-          `http://localhost:3000/api/siswa?id_user=${parsedId}`
+          `http://localhost:3000/api/absens?user_id=${parsedId}`
         );
+        setAbsens(data.data.data);
       } catch (error) {
         console.log(error);
       }
@@ -85,6 +87,7 @@ export default function Absen() {
     return `${weekday}/${day}/${month}`;
   };
 
+  console.log(absens);
   return (
     <div className="flex justify-around relative">
       <div className="w-[80%]">
@@ -148,40 +151,13 @@ export default function Absen() {
                 })}
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {/* {studentsData?.map((item: any, key) => ( */}
-              {/* <tr>
-                <td className="px-6 py-4 whitespace-nowrap">1231</td>
-                <td className="px-6 py-4 whitespace-nowrap">asdasd</td>
-                <td className="px-6 py-4 whitespace-nowrap">123123</td>
-                <td className="px-6 py-4 whitespace-nowrap">123123</td>
-                <td className="px-6 py-4 whitespace-nowrap">123123123</td>
-                <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
-                  <button
-                    className="p-[.5rem] bg-red-200 border-red-300 border-[1.3px] rounded-md"
-                    // onClick={(e) => handleDelete(item.id)}
-                  >
-                    <Image
-                      src="/delete.png"
-                      alt=""
-                      width={500}
-                      height={500}
-                      className="w-4"
-                    />
-                  </button>
-                  <div className="p-[.5rem] bg-green-200 border-green-300 border-[1.3px] rounded-md">
-                    <Image
-                      src="/editing.png"
-                      alt=""
-                      width={500}
-                      height={500}
-                      className="w-4"
-                    />
-                  </div>
+            {absens?.map((item: any, key) => (
+              <tbody key={key} className="bg-white divide-y divide-gray-200">
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {item.students.nama_lengkap}
                 </td>
-              </tr> */}
-              {/* ))} */}
-            </tbody>
+              </tbody>
+            ))}
           </table>
         </div>
       </div>

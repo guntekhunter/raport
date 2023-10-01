@@ -206,6 +206,7 @@ export default function AddSiswa() {
   const saveSiswa = async () => {
     try {
       const res = await axios.post("http://localhost:3000/api/siswa", data);
+      // axios.post("")
       if (res) {
         router.push("/siswa");
       }
