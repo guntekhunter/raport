@@ -37,15 +37,16 @@ export default function Absen() {
           console.log("User ID not found in localStorage");
         }
         const data = await axios.get(
-          `http://localhost:3000/api/absens?user_id=${parsedId}`
+          `http://localhost:3000/api/absens?user_id=${parsedId}&subject=${subject}&mounth=${mounth}`
         );
         setAbsens(data.data.data);
       } catch (error) {
         console.log(error);
       }
     };
+
     fetchStudents();
-  }, []);
+  }, [mounth, subject]);
 
   useEffect(() => {
     const fetchDate = async () => {
@@ -61,7 +62,6 @@ export default function Absen() {
         const data = await axios.get(
           `http://localhost:3000/api/date?user_id=${parsedId}&subject=${subject}&mounth=${mounth}`
         );
-        console.log(data);
         setDate(data.data.data);
       } catch (error) {
         console.log(error);
@@ -86,8 +86,6 @@ export default function Absen() {
 
     return `${weekday}/${day}/${month}`;
   };
-
-  console.log(absens);
   return (
     <div className="flex justify-around relative">
       <div className="w-[80%]">
@@ -149,13 +147,37 @@ export default function Absen() {
                     </th>
                   );
                 })}
+                <th className="px-6 py-3 text-left font-medium text-[.8rem] text-white ">
+                  <button className="bg-[#793FDF] px-[.5rem] py-[.5rem] rounded-md">
+                    Tambah{" "}
+                  </button>
+                </th>
               </tr>
             </thead>
             {absens?.map((item: any, key) => (
               <tbody key={key} className="bg-white divide-y divide-gray-200">
+                <td className="px-6 py-4 whitespace-nowrap">{key + 1}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {item.students.nama_lengkap}
                 </td>
+                {date.length !== 0 ? (
+                  <td className="px-6 py-4 whitespace-nowrap flex space-x-5">
+                    <div className="rounded-full bg-green-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-green-400 border-[1.5px] text-green-400 border">
+                      H
+                    </div>
+                    <div className="rounded-full bg-blue-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-blue-400 border-[1.5px] text-blue-400 border">
+                      I
+                    </div>
+                    <div className="rounded-full bg-yellow-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-yellow-400 border-[1.5px] text-yellow-400 border">
+                      S
+                    </div>
+                    <div className="rounded-full bg-red-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-red-400 border-[1.5px] text-red-400 border">
+                      A
+                    </div>
+                  </td>
+                ) : (
+                  <></>
+                )}
               </tbody>
             ))}
           </table>

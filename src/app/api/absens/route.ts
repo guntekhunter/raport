@@ -5,17 +5,29 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
-    const reqBody = req.nextUrl.searchParams.get("user_id");
-    let id = 0;
+    const userId = req.nextUrl.searchParams.get("user_id");
+    const subject = req.nextUrl.searchParams.get("subject");
+    const mounth = req.nextUrl.searchParams.get("mounth");
+    let user_id = 0;
+    let the_subject: string = "";
+    let the_mounth = "";
 
-    if (reqBody !== null) {
-      id = parseInt(reqBody); // Using radix 10 for decimal
+    if (userId !== null) {
+      if (mounth !== null && mounth !== "") {
+        if (subject !== "" && subject !== null) {
+          the_mounth = mounth;
+          user_id = parseInt(userId);
+          the_subject = subject;
+        }
+      } else {
+        console.log("Month parameter is null or empty");
+      }
     } else {
-      console.log("id_user parameter not found in the URL");
+      console.log("id_user parameter is null");
     }
     const data = await prisma.absens.findMany({
       where: {
-        user_id: id,
+        user_id,
       },
       include: {
         students: {
@@ -24,6 +36,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
           },
         },
         absen: {
+          where: {
+            user_id: user_id,
+            mounth: the_mounth,
+            subject: the_subject,
+          },
           include: {
             date: true, // Include the date associated with absen
           },
