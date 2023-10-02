@@ -39,8 +39,8 @@ export default function Login() {
     }
   };
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-100">
-      <div className="p-[4rem] space-y-[1rem] w-[30rem] rounded-md shadow-md bg-white">
+    <div className="h-screen flex items-center justify-center bg-background">
+      <div className="p-[4rem] space-y-[1rem] w-[30rem] rounded-md shadow-md bg-white text-text">
         <p className="flex justify-center font-bold">LOGIN</p>
         <div className="w-full space-y-2">
           <p className="text-[.9rem]">Email</p>
@@ -79,7 +79,7 @@ export default function Login() {
         <div className="flex justify-around pt-[1rem]">
           <button
             onClick={loginHandler}
-            className="px-[1rem] rounded-md bg-[#793FDF] text-white w-full h-[2.5rem] hover:bg-[#793FDF] flex justify-around items-center"
+            className="px-[1rem] rounded-md bg-[#793FDF] text-white w-full h-[2.5rem] hover:bg-[#793FDF] flex justify-around items-center bg-primary"
           >
             {isLoading ? (
               <Image

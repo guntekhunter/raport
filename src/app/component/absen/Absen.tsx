@@ -13,6 +13,7 @@ export default function Absen() {
   const [date, setDate] = useState([]);
   const [mounth, setMount] = useState("");
   const [subject, setSubject] = useState("");
+  const [defaultDate, setDefaultDate] = useState("");
   const [absens, setAbsens] = useState([]);
   const [userId, setUserId] = useState<Number>();
 
@@ -86,6 +87,35 @@ export default function Absen() {
 
     return `${weekday}/${day}/${month}`;
   };
+
+  useEffect(() => {
+    const monthNameToNumber = (month: string | number) => {
+      const monthNames: { [key: string]: string } = {
+        Januari: "01",
+        Februai: "02",
+        Maret: "03",
+        April: "04",
+        Mey: "05",
+        Juni: "06",
+        Juli: "07",
+        Augustus: "08",
+        September: "09",
+        Oktober: "10",
+        November: "11",
+        Desember: "12",
+      };
+
+      return monthNames[month as string] || null;
+    };
+    const monthNumber = monthNameToNumber(mounth as string);
+    console.log(monthNumber);
+    console.log(mounth);
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const defaultOctoberDate = `${currentYear}-${monthNumber}-01`;
+    setDefaultDate(defaultOctoberDate);
+  }, [mounth]);
+
   return (
     <div className="flex justify-around relative">
       <div className="w-[80%]">
@@ -148,9 +178,18 @@ export default function Absen() {
                   );
                 })}
                 <th className="px-6 py-3 text-left font-medium text-[.8rem] text-white ">
-                  <button className="bg-[#793FDF] px-[.5rem] py-[.5rem] rounded-md">
-                    Tambah{" "}
-                  </button>
+                  {absens.length === 0 ? (
+                    <div className="bg-gray-200 px-[.5rem] py-[.5rem] rounded-md text-gray-400">
+                      tambah
+                    </div>
+                  ) : (
+                    <input
+                      type="date"
+                      className="bg-[#793FDF] px-[.5rem] py-[.5rem] rounded-md"
+                      value={defaultDate}
+                      onChange={(e) => setDefaultDate(e.target.value)}
+                    />
+                  )}
                 </th>
               </tr>
             </thead>
