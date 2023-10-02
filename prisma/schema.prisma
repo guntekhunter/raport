@@ -30,6 +30,7 @@ model User {
   students_data students_data[]
   absen         absen[]
   date          date[]
+  absens        absens[]
 }
 
 model main_data {
@@ -116,7 +117,7 @@ model students_data {
   createdAt                            DateTime @default(now())
   updatedAt                            DateTime @updatedAt
   user                                 User     @relation(fields: [id_user], references: [id])
-  absen                                absen[]
+  absens                               absens[]
 }
 
 model date {
@@ -132,15 +133,26 @@ model date {
 }
 
 model absen {
-  id             Int           @id @default(autoincrement())
-  date_id        Int
-  siswa_id       Int
-  user_id        Int
-  mounth         String
-  mata_pelajaran String
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  date           date          @relation(fields: [date_id], references: [id])
-  siswa          students_data @relation(fields: [siswa_id], references: [id])
-  user           User          @relation(fields: [user_id], references: [id])
+  id        Int      @id @default(autoincrement())
+  date_id   Int
+  absens_id Int
+  user_id   Int
+  mounth    String
+  subject   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  date      date     @relation(fields: [date_id], references: [id])
+  user      User     @relation(fields: [user_id], references: [id])
+  absens    absens   @relation(fields: [absens_id], references: [id])
+}
+
+model absens {
+  id        Int           @id @default(autoincrement())
+  siswa_id  Int
+  user_id   Int
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  students  students_data @relation(fields: [siswa_id], references: [id])
+  user      User          @relation(fields: [user_id], references: [id])
+  absen     absen[]
 }
