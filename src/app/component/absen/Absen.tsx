@@ -108,13 +108,38 @@ export default function Absen() {
       return monthNames[month as string] || null;
     };
     const monthNumber = monthNameToNumber(mounth as string);
-    console.log(monthNumber);
-    console.log(mounth);
     const today = new Date();
     const currentYear = today.getFullYear();
     const defaultOctoberDate = `${currentYear}-${monthNumber}-01`;
     setDefaultDate(defaultOctoberDate);
   }, [mounth]);
+
+  console.log(defaultDate);
+  const addDate = async () => {
+    try {
+      const user = Cookies.get("user id");
+      let parsedId = 0;
+      if (user !== undefined) {
+        parsedId = parseInt(user); // Parsing the user ID to an integer
+        setUserId(parsedId);
+      } else {
+        console.log("User ID not found in localStorage");
+      }
+      const formattedDate = new Date(defaultDate);
+      const dateData = {
+        mounth: mounth,
+        mata_pelajaran: subject,
+        user_id: parsedId,
+        date: formattedDate.toISOString(),
+      };
+      console.log(dateData);
+      const data = await axios.post("http://localhost:3000/api/date", dateData);
+      console.log(data);
+      setDate(data.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="flex justify-around relative">
@@ -183,12 +208,20 @@ export default function Absen() {
                       tambah
                     </div>
                   ) : (
-                    <input
-                      type="date"
-                      className="bg-[#793FDF] px-[.5rem] py-[.5rem] rounded-md"
-                      value={defaultDate}
-                      onChange={(e) => setDefaultDate(e.target.value)}
-                    />
+                    <div className="flex space-x-2">
+                      <input
+                        type="date"
+                        className="bg-[#793FDF] px-[.5rem] py-[.5rem] rounded-md"
+                        value={defaultDate}
+                        onChange={(e) => setDefaultDate(e.target.value)}
+                      />
+                      <button
+                        className="bg-primary px-[.5rem] py-[.5rem] rounded-md text-white"
+                        onClick={addDate}
+                      >
+                        tambah
+                      </button>
+                    </div>
                   )}
                 </th>
               </tr>

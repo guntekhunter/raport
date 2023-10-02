@@ -53,7 +53,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
       },
     });
 
-    return NextResponse.json({ status: "Ok", data: newData });
+    const data = await prisma.date.findMany({
+      where: {
+        mounth,
+        user_id,
+        mata_pelajaran,
+      },
+    });
+
+    return NextResponse.json({ status: "Ok", newData, data });
   } catch (error) {
     console.log(error);
   }
