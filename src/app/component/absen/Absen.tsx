@@ -149,9 +149,15 @@ export default function Absen() {
         user_id: userId,
         mounth: mounth,
         subject: subject,
+        status,
       };
-      const data = await axios.post("", absenData);
+      const data = await axios.post(
+        "http://localhost:3000/api/absen",
+        absenData
+      );
       console.log(dateId, absenId, status);
+      console.log(data);
+
     } catch (err) {
       console.log(err);
     }
