@@ -139,6 +139,7 @@ model absen {
   user_id   Int
   mounth    String
   subject   String
+  status    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   date      date     @relation(fields: [date_id], references: [id])
