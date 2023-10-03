@@ -180,8 +180,8 @@ export default function Absen() {
             classCallback={classCallback}
           />
         </div>
-        <div className="rounded-md border border-gray-300 overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200 rounded-md overflow-hidden">
+        <div className="rounded-md border border-gray-300 overflow-scroll">
+          <table className="min-w-full divide-y divide-gray-200 rounded-md ">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
@@ -226,27 +226,37 @@ export default function Absen() {
                 </th>
               </tr>
             </thead>
-            {absens?.map((item: any, key) => (
-              <tbody key={key} className="bg-white divide-y divide-gray-200">
-                <td className="px-6 py-4 whitespace-nowrap">{key + 1}</td>
+            {absens?.map((item: any, absenIndex) => (
+              <tbody
+                key={absenIndex}
+                className="bg-white divide-y divide-gray-200"
+              >
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {absenIndex + 1}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {item.students.nama_lengkap}
                 </td>
+
                 {date.length !== 0 ? (
-                  <td className="px-6 py-4 whitespace-nowrap flex space-x-5">
-                    <div className="rounded-full bg-green-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-green-400 border-[1.5px] text-green-400 border">
-                      H
-                    </div>
-                    <div className="rounded-full bg-blue-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-blue-400 border-[1.5px] text-blue-400 border">
-                      I
-                    </div>
-                    <div className="rounded-full bg-yellow-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-yellow-400 border-[1.5px] text-yellow-400 border">
-                      S
-                    </div>
-                    <div className="rounded-full bg-red-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-red-400 border-[1.5px] text-red-400 border">
-                      A
-                    </div>
-                  </td>
+                  date.map((dateItem, dateIndex) => (
+                    <td key={dateIndex} className="px-6 py-4 ">
+                      <div className="whitespace-nowrap flex space-x-5">
+                        <div className="rounded-full bg-green-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-green-400 border-[1.5px] text-green-400 border">
+                          H
+                        </div>
+                        <div className="rounded-full bg-blue-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-blue-400 border-[1.5px] text-blue-400 border">
+                          I
+                        </div>
+                        <div className="rounded-full bg-yellow-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-yellow-400 border-[1.5px] text-yellow-400 border">
+                          S
+                        </div>
+                        <div className="rounded-full bg-red-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-red-400 border-[1.5px] text-red-400 border">
+                          A
+                        </div>
+                      </div>
+                    </td>
+                  ))
                 ) : (
                   <></>
                 )}
