@@ -141,6 +141,22 @@ export default function Absen() {
     }
   };
 
+  const makeAbsen = async (dateId: number, absenId: number, status: string) => {
+    try {
+      const absenData = {
+        date_id: dateId,
+        absens_id: absenId,
+        user_id: userId,
+        mounth: mounth,
+        subject: subject,
+      };
+      const data = await axios.post("", absenData);
+      console.log(dateId, absenId, status);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="flex justify-around relative">
       <div className="w-[80%]">
@@ -180,7 +196,7 @@ export default function Absen() {
             classCallback={classCallback}
           />
         </div>
-        <div className="rounded-md border border-gray-300 overflow-scroll">
+        <div className="rounded-md border border-gray-300 overflow-auto scrollbar-hide">
           <table className="min-w-full divide-y divide-gray-200 rounded-md ">
             <thead className="bg-gray-50">
               <tr>
@@ -239,21 +255,33 @@ export default function Absen() {
                 </td>
 
                 {date.length !== 0 ? (
-                  date.map((dateItem, dateIndex) => (
+                  date.map((dateItem: any, dateIndex) => (
                     <td key={dateIndex} className="px-6 py-4 ">
                       <div className="whitespace-nowrap flex space-x-5">
-                        <div className="rounded-full bg-green-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-green-400 border-[1.5px] text-green-400 border">
+                        <button
+                          onClick={(e) => makeAbsen(dateItem.id, item.id, "h")}
+                          className="rounded-full bg-green-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-green-400 border-[1.5px] text-green-400 border"
+                        >
                           H
-                        </div>
-                        <div className="rounded-full bg-blue-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-blue-400 border-[1.5px] text-blue-400 border">
+                        </button>
+                        <button
+                          onClick={(e) => makeAbsen(dateItem.id, item.id, "i")}
+                          className="rounded-full bg-blue-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-blue-400 border-[1.5px] text-blue-400 border"
+                        >
                           I
-                        </div>
-                        <div className="rounded-full bg-yellow-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-yellow-400 border-[1.5px] text-yellow-400 border">
+                        </button>
+                        <button
+                          onClick={(e) => makeAbsen(dateItem.id, item.id, "s")}
+                          className="rounded-full bg-yellow-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-yellow-400 border-[1.5px] text-yellow-400 border"
+                        >
                           S
-                        </div>
-                        <div className="rounded-full bg-red-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-red-400 border-[1.5px] text-red-400 border">
+                        </button>
+                        <button
+                          onClick={(e) => makeAbsen(dateItem.id, item.id, "a")}
+                          className="rounded-full bg-red-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-red-400 border-[1.5px] text-red-400 border"
+                        >
                           A
-                        </div>
+                        </button>
                       </div>
                     </td>
                   ))
