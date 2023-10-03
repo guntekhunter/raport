@@ -15,6 +15,7 @@ export default function Absen() {
   const [subject, setSubject] = useState("");
   const [defaultDate, setDefaultDate] = useState("");
   const [absens, setAbsens] = useState([]);
+  const [absen, setAbsen] = useState([]);
   const [userId, setUserId] = useState<Number>();
 
   const classCallback = (item: any, name: any) => {
@@ -72,6 +73,29 @@ export default function Absen() {
       fetchDate();
     }
   }, [subject, mounth]);
+  useEffect(() => {
+    const fetchAbsen = async () => {
+      try {
+        const user = Cookies.get("user id");
+        let parsedId = 0;
+        if (user !== undefined) {
+          parsedId = parseInt(user); // Parsing the user ID to an integer
+          setUserId(parsedId);
+        } else {
+          console.log("User ID not found in localStorage");
+        }
+        const data = await axios.get(
+          `http://localhost:3000/api/absen?user_id=${parsedId}&subject=${subject}&mounth=${mounth}`
+        );
+        setAbsen(data.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (subject && mounth) {
+      fetchAbsen();
+    }
+  }, [subject, mounth]);
 
   const formatDate = (dateString: string | number | Date) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -114,7 +138,6 @@ export default function Absen() {
     setDefaultDate(defaultOctoberDate);
   }, [mounth]);
 
-  console.log(defaultDate);
   const addDate = async () => {
     try {
       const user = Cookies.get("user id");
@@ -132,9 +155,7 @@ export default function Absen() {
         user_id: parsedId,
         date: formattedDate.toISOString(),
       };
-      console.log(dateData);
       const data = await axios.post("http://localhost:3000/api/date", dateData);
-      console.log(data);
       setDate(data.data.data);
     } catch (err) {
       console.log(err);
@@ -155,14 +176,13 @@ export default function Absen() {
         "http://localhost:3000/api/absen",
         absenData
       );
-      console.log(dateId, absenId, status);
       console.log(data);
-
+      setAbsen(data.data.dataAbsen);
+      setAbsens(data.data.data);
     } catch (err) {
       console.log(err);
     }
   };
-
   return (
     <div className="flex justify-around relative">
       <div className="w-[80%]">
@@ -248,54 +268,100 @@ export default function Absen() {
                 </th>
               </tr>
             </thead>
-            {absens?.map((item: any, absenIndex) => (
-              <tbody
-                key={absenIndex}
-                className="bg-white divide-y divide-gray-200"
-              >
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {absenIndex + 1}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {item.students.nama_lengkap}
-                </td>
+            {absens?.map((item: any, absenIndex) => {
+              let newArray: any[] = [];
+              for (let i = item.absen.length; i > 0; i--) {
+                newArray.push(i - 1);
+              }
+              console.log(newArray);
+              const isNumberInArray = (number: any) =>
+                newArray.includes(number);
+              return (
+                <tbody
+                  key={absenIndex}
+                  className="bg-white divide-y divide-gray-200"
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {absenIndex + 1}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.students.nama_lengkap}
+                  </td>
 
-                {date.length !== 0 ? (
-                  date.map((dateItem: any, dateIndex) => (
-                    <td key={dateIndex} className="px-6 py-4 ">
-                      <div className="whitespace-nowrap flex space-x-5">
-                        <button
-                          onClick={(e) => makeAbsen(dateItem.id, item.id, "h")}
-                          className="rounded-full bg-green-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-green-400 border-[1.5px] text-green-400 border"
-                        >
-                          H
-                        </button>
-                        <button
-                          onClick={(e) => makeAbsen(dateItem.id, item.id, "i")}
-                          className="rounded-full bg-blue-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-blue-400 border-[1.5px] text-blue-400 border"
-                        >
-                          I
-                        </button>
-                        <button
-                          onClick={(e) => makeAbsen(dateItem.id, item.id, "s")}
-                          className="rounded-full bg-yellow-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-yellow-400 border-[1.5px] text-yellow-400 border"
-                        >
-                          S
-                        </button>
-                        <button
-                          onClick={(e) => makeAbsen(dateItem.id, item.id, "a")}
-                          className="rounded-full bg-red-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-red-400 border-[1.5px] text-red-400 border"
-                        >
-                          A
-                        </button>
-                      </div>
-                    </td>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </tbody>
-            ))}
+                  {date.length !== 0 ? (
+                    date.map((dateItem: any, dateIndex: any) => {
+                      const showAhhay = isNumberInArray(dateIndex);
+                      const absenStatus = item.absen[dateIndex]?.status;
+
+                      let bgColorClass = "";
+                      if (absenStatus === "H") {
+                        bgColorClass =
+                          "bg-green-200 border-green-400 text-green-400";
+                      } else if (absenStatus === "I") {
+                        bgColorClass =
+                          "bg-yellow-200 border-yellow-400 text-yellow-400";
+                      } else if (absenStatus === "S") {
+                        bgColorClass =
+                          "bg-blue-200 border-blue-400 text-blue-400";
+                      } else if (absenStatus === "A") {
+                        bgColorClass = "bg-red-200 border-red-400 text-red-400";
+                      }
+                      return (
+                        <td key={dateIndex} className="px-6 py-4 ">
+                          {!showAhhay ? (
+                            <div className="whitespace-nowrap flex space-x-5">
+                              <button
+                                onClick={(e) =>
+                                  makeAbsen(dateItem.id, item.id, "H")
+                                }
+                                className="rounded-full bg-green-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-green-400 border-[1.5px] text-green-400 border"
+                              >
+                                H
+                              </button>
+                              <button
+                                onClick={(e) =>
+                                  makeAbsen(dateItem.id, item.id, "I")
+                                }
+                                className="rounded-full bg-yellow-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-yellow-400 border-[1.5px] text-yellow-400 border"
+                              >
+                                I
+                              </button>
+                              <button
+                                onClick={(e) =>
+                                  makeAbsen(dateItem.id, item.id, "S")
+                                }
+                                className="rounded-full bg-blue-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-blue-400 border-[1.5px] text-blue-400 border"
+                              >
+                                S
+                              </button>
+                              <button
+                                onClick={(e) =>
+                                  makeAbsen(dateItem.id, item.id, "A")
+                                }
+                                className="rounded-full bg-red-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-red-400 border-[1.5px] text-red-400 border"
+                              >
+                                A
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={(e) =>
+                                makeAbsen(dateItem.id, item.id, "a")
+                              }
+                              className={`rounded-full ${bgColorClass} w-[1.7rem] h-[1.7rem] flex justify-around items-center  border-[1.5px] border`}
+                            >
+                              {item.absen[dateIndex].status}
+                            </button>
+                          )}
+                        </td>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
+                </tbody>
+              );
+            })}
           </table>
         </div>
       </div>

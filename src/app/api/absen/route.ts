@@ -56,15 +56,37 @@ export async function POST(req: NextRequest, res: NextResponse) {
       },
     });
 
-    const data = await prisma.absen.findMany({
+    const dataAbsen = await prisma.absen.findMany({
       where: {
         user_id,
         mounth,
         subject,
       },
     });
+    const data = await prisma.absens.findMany({
+      where: {
+        user_id,
+      },
+      include: {
+        students: {
+          select: {
+            nama_lengkap: true,
+          },
+        },
+        absen: {
+          where: {
+            user_id: user_id,
+            mounth,
+            subject,
+          },
+          include: {
+            date: true, // Include the date associated with absen
+          },
+        },
+      },
+    });
 
-    return NextResponse.json({ status: "Ok", newData, data, mounth });
+    return NextResponse.json({ status: "Ok", newData, dataAbsen, data });
   } catch (error) {
     console.log(error);
   }
