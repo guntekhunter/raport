@@ -33,6 +33,7 @@ model User {
   absens        absens[]
   nilai_siswa   nilai_siswa[]
   kd            kd[]
+  nilai         nilai[]
 }
 
 model main_data {
@@ -195,8 +196,10 @@ model nilai {
   mapel       String
   id_kd       Int
   nilai       Int
+  user_id     Int
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   nilai_siswa nilai_siswa @relation(fields: [id_nilai], references: [id])
   kd          kd          @relation(fields: [id_kd], references: [id])
+  user        User        @relation(fields: [user_id], references: [id])
 }
