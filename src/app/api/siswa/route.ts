@@ -97,7 +97,6 @@ export async function POST(req: NextRequest) {
 
     const newStudent = await prisma.students_data.create({
       data: {
-        // id_user,
         nama_lengkap,
         nama_panggilan,
         nisn,
@@ -171,6 +170,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    await prisma.absens.create({
+      data: {
+        siswa_id: newStudent.id,
+        user_id: id_user,
+      },
+    });
     return NextResponse.json({ status: "Ok", newStudent });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
