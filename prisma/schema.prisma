@@ -31,6 +31,8 @@ model User {
   absen         absen[]
   date          date[]
   absens        absens[]
+  nilai_siswa   nilai_siswa[]
+  kd            kd[]
 }
 
 model main_data {
@@ -47,7 +49,7 @@ model main_data {
 }
 
 model students_data {
-  id                                   Int      @id @default(autoincrement())
+  id                                   Int           @id @default(autoincrement())
   id_user                              Int
   nama_lengkap                         String
   nama_panggilan                       String
@@ -114,10 +116,12 @@ model students_data {
   tempat_belajar                       String
   nomor_ijasah                         String
   akan_melanjutkan_ke                  String
-  createdAt                            DateTime @default(now())
-  updatedAt                            DateTime @updatedAt
-  user                                 User     @relation(fields: [id_user], references: [id])
+  createdAt                            DateTime      @default(now())
+  updatedAt                            DateTime      @updatedAt
+  user                                 User          @relation(fields: [id_user], references: [id])
   absens                               absens[]
+  nilai_siswa                          nilai_siswa[]
+  kd                                   kd[]
 }
 
 model date {
@@ -156,4 +160,43 @@ model absens {
   students  students_data @relation(fields: [siswa_id], references: [id])
   user      User          @relation(fields: [user_id], references: [id])
   absen     absen[]
+}
+
+model nilai_siswa {
+  id        Int           @id @default(autoincrement())
+  siswa_id  Int
+  user_id   Int
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  students  students_data @relation(fields: [siswa_id], references: [id])
+  user      User          @relation(fields: [user_id], references: [id])
+  nilai     nilai[]
+}
+
+model kd {
+  id         Int           @id @default(autoincrement())
+  nilai_type String
+  mapel      String
+  no_kd      String
+  ket_kd     String
+  siswa_id   Int
+  user_id    Int
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  students   students_data @relation(fields: [siswa_id], references: [id])
+  user       User          @relation(fields: [user_id], references: [id])
+  nilai      nilai[]
+}
+
+model nilai {
+  id          Int         @id @default(autoincrement())
+  id_nilai    Int
+  nilai_type  String
+  mapel       String
+  id_kd       Int
+  nilai       Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  nilai_siswa nilai_siswa @relation(fields: [id_nilai], references: [id])
+  kd          kd          @relation(fields: [id_kd], references: [id])
 }
