@@ -175,18 +175,18 @@ model nilai_siswa {
 }
 
 model kd {
-  id         Int           @id @default(autoincrement())
-  nilai_type String
-  mapel      String
-  no_kd      String
-  ket_kd     String
-  siswa_id   Int
-  user_id    Int
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
-  students   students_data @relation(fields: [siswa_id], references: [id])
-  user       User          @relation(fields: [user_id], references: [id])
-  nilai      nilai[]
+  id              Int            @id @default(autoincrement())
+  nilai_type      String
+  mapel           String
+  no_kd           String
+  ket_kd          String
+  user_id         Int
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  user            User           @relation(fields: [user_id], references: [id])
+  nilai           nilai[]
+  students_data   students_data? @relation(fields: [students_dataId], references: [id])
+  students_dataId Int?
 }
 
 model nilai {

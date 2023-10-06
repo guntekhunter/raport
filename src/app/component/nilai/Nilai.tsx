@@ -15,6 +15,7 @@ export default function Nilai() {
   const [defaultkd, setDefaultkd] = useState("");
   const [nilaiSiswa, setNilaiSiswa] = useState([]);
   const [nilai, setNilai] = useState([]);
+  const [scor, setScor] = useState("");
   const [userId, setUserId] = useState<Number>();
 
   const classCallback = (item: any, name: any) => {
@@ -72,44 +73,6 @@ export default function Nilai() {
       fetchKd();
     }
   }, [subject, type]);
-  useEffect(() => {
-    const fetchNilai = async () => {
-      try {
-        const user = Cookies.get("user id");
-        let parsedId = 0;
-        if (user !== undefined) {
-          parsedId = parseInt(user); // Parsing the user ID to an integer
-          setUserId(parsedId);
-        } else {
-          console.log("User ID not found in localStorage");
-        }
-        const data = await axios.get(
-          `http://localhost:3000/api/nilai?user_id=${parsedId}&subject=${subject}&type=${type}`
-        );
-        setNilai(data.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (subject && type) {
-      fetchNilai();
-    }
-  }, [subject, type]);
-
-  //   const formatkd = (kdString: string | number | kd) => {
-  //     const options: Intl.kdTimeFormatOptions = {
-  //       weekday: "long",
-  //       day: "numeric",
-  //       month: "long",
-  //     };
-
-  //     const kd = new kd(kdString);
-  //     const [weekday, day, month] = kd
-  //       .toLocalekdString("id-ID", options)
-  //       .split(" ");
-
-  //     return `${weekday}/${day}/${month}`;
-  //   };
 
   useEffect(() => {
     const fetchNilai = async () => {
@@ -135,45 +98,22 @@ export default function Nilai() {
     }
   }, [type, subject]);
 
-  const addKd = async () => {
+  const makeNilai = async (id_kd: number, id_nilai: number, nilai: string) => {
     try {
-      const user = Cookies.get("user id");
-      let parsedId = 0;
-      if (user !== undefined) {
-        parsedId = parseInt(user); // Parsing the user ID to an integer
-        setUserId(parsedId);
-      } else {
-        console.log("User ID not found in localStorage");
-      }
-      const kdData = {
-        type: type,
-        mapel: subject,
-        user_id: parsedId,
-        nilai: nilai,
-      };
-      const data = await axios.post("http://localhost:3000/api/kd", kdData);
-      setKd(data.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const makenilai = async (id_kd: number, id_nilai: number, nilai: Number) => {
-    try {
+      const newNilai = parseInt(nilai);
       const nilaiData = {
-        id_kd,
         id_nilai,
+        nilai_type: type,
+        mapel: subject,
+        id_kd,
+        nilai: newNilai,
         user_id: userId,
-        type: type,
-        subject: subject,
-        nilai,
       };
       const data = await axios.post(
         "http://localhost:3000/api/nilai",
         nilaiData
       );
-      console.log(data);
-      setNilai(data.data.datanilai);
+      setNilai(data.data.dataNilai);
       setNilaiSiswa(data.data.data);
     } catch (err) {
       console.log(err);
@@ -182,13 +122,17 @@ export default function Nilai() {
   const callbackModal = (status: boolean) => {
     setModalActive(status);
   };
-
-  console.log(modalActive);
+  const callbackData = (data: any) => {
+    setKd(data.data);
+  };
   return (
     <div className="flex justify-around">
       <AddKd
         className={`${modalActive ? "" : "hidden"}`}
         callbackModal={callbackModal}
+        type={type}
+        subject={subject}
+        callbackData={callbackData}
       />
       <div className="w-[80%]">
         <div className="rounded-md py-[1rem] w-full">
@@ -224,34 +168,21 @@ export default function Nilai() {
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
                   Nama Siswa
                 </th>
-                <th className="text-left text-gray-500 text-[1rem] text-sm font-medium flex">
-                  <div>
-                    <div className="text-center border-b-[1.5px] border-l-[1.5px] py-[.5rem]">
-                      Kompetensi Dasar
-                    </div>
-                    <div className="flex">
-                      <div className="w-[10rem] pb-[.5rem] border-l-[1.5px]">
-                        <div className="min-h-[1rem] break-words text-[.7rem] border-b-[1.5px] px-1 pb-2">
-                          ommalekaasdasdasdasdasdasdasasdasdasdasd
-                        </div>
-                        <div className="flex justify-around pt-[.5rem]">
-                          3.0
-                        </div>
+                {kd?.map((item: any, key) => (
+                  <th
+                    key={key}
+                    className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium"
+                  >
+                    <div className="w-[10rem] pb-[.5rem]">
+                      <div className="min-h-[1rem] break-words text-[.7rem] px-1">
+                        {item.ket_kd}
+                      </div>
+                      <div className="flex justify-around pt-[.5rem]">
+                        {item.no_kd}
                       </div>
                     </div>
-                  </div>
-                </th>
-                {kd?.map((item: any, key) => {
-                  return (
-                    <th
-                      key={key}
-                      className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium"
-                    >
-                      ahhay
-                      {item.no_kd}
-                    </th>
-                  );
-                })}
+                  </th>
+                ))}
                 <th className="px-6 py-3 text-left font-medium text-[.8rem] text-white ">
                   {nilaiSiswa.length === 0 ? (
                     <div className="bg-gray-200 px-[.5rem] py-[.5rem] rounded-md text-gray-400">
@@ -293,41 +224,31 @@ export default function Nilai() {
                   {kd.length !== 0 ? (
                     kd.map((kdItem: any, kdIndex: any) => {
                       const showAhhay = isNumberInArray(kdIndex);
-                      const nilaiSiswatatus = item.nilai[kdIndex]?.status;
-
-                      let bgColorClass = "";
-                      if (nilaiSiswatatus === "H") {
-                        bgColorClass =
-                          "bg-green-200 border-green-400 text-green-400";
-                      } else if (nilaiSiswatatus === "I") {
-                        bgColorClass =
-                          "bg-yellow-200 border-yellow-400 text-yellow-400";
-                      } else if (nilaiSiswatatus === "S") {
-                        bgColorClass =
-                          "bg-blue-200 border-blue-400 text-blue-400";
-                      } else if (nilaiSiswatatus === "A") {
-                        bgColorClass = "bg-red-200 border-red-400 text-red-400";
-                      }
                       return (
                         <td key={kdIndex} className="px-6 py-4 ">
                           {!showAhhay ? (
-                            <div className="whitespace-nowrap flex space-x-5">
+                            <div className="whitespace-nowrap flex space-x-5 justify-center flex">
+                              <div className="">
+                                <input
+                                  onChange={(e) => setScor(e.target.value)}
+                                  className="w-[2rem] rounded-md h-full flex justify-center bg-gray-200 text-center"
+                                />
+                              </div>
                               <button
+                                className="bg-primary px-[.5rem] py-[.5rem] rounded-md text-white font-medium text-[.8rem]"
                                 onClick={(e) =>
-                                  makenilai(kdItem.id, item.id, 1)
+                                  makeNilai(kdItem.id, item.id, scor)
                                 }
-                                className="rounded-full bg-green-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-green-400 border-[1.5px] text-green-400 border"
                               >
-                                H
+                                Tambah
                               </button>
                             </div>
                           ) : (
-                            <button
-                              onClick={(e) => makenilai(kdItem.id, item.id, 1)}
-                              className={`rounded-full ${bgColorClass} w-[1.7rem] h-[1.7rem] flex justify-around items-center  border-[1.5px] border`}
+                            <div
+                              className={`rounded-full w-[1.7rem] h-[1.7rem] flex justify-around items-center  border-[1.5px] border flex`}
                             >
-                              {item.nilai[kdIndex].status}
-                            </button>
+                              {item.nilai[kdIndex].nilai}
+                            </div>
                           )}
                         </td>
                       );

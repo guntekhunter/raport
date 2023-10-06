@@ -42,7 +42,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const reqBody = await req.json();
-    const { nilai_type, mapel, no_kd, ket_kd, siswa_id, user_id } = reqBody;
+    const { nilai_type, mapel, no_kd, ket_kd, user_id } = reqBody;
 
     const newData = await prisma.kd.create({
       data: {
@@ -50,7 +50,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
         mapel,
         no_kd,
         ket_kd,
-        siswa_id,
         user_id,
       },
     });
