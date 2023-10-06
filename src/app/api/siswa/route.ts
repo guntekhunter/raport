@@ -176,6 +176,12 @@ export async function POST(req: NextRequest) {
         user_id: id_user,
       },
     });
+    await prisma.nilai_siswa.create({
+      data: {
+        siswa_id: newStudent.id,
+        user_id: id_user,
+      },
+    });
     return NextResponse.json({ status: "Ok", newStudent });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -363,6 +369,7 @@ export async function DELETE(req: NextRequest) {
         id_user: idUserInt,
       },
     });
+
     return NextResponse.json({
       status: "Ok",
       dataDeleted: dataDeleted,

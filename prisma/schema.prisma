@@ -149,7 +149,7 @@ model absen {
   updatedAt DateTime @updatedAt
   date      date     @relation(fields: [date_id], references: [id])
   user      User     @relation(fields: [user_id], references: [id])
-  absens    absens   @relation(fields: [absens_id], references: [id])
+  absens    absens   @relation(fields: [absens_id], references: [id], onDelete: Cascade)
 }
 
 model absens {
@@ -158,7 +158,7 @@ model absens {
   user_id   Int
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
-  students  students_data @relation(fields: [siswa_id], references: [id])
+  students  students_data @relation(fields: [siswa_id], references: [id], onDelete: Cascade)
   user      User          @relation(fields: [user_id], references: [id])
   absen     absen[]
 }
@@ -169,7 +169,7 @@ model nilai_siswa {
   user_id   Int
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
-  students  students_data @relation(fields: [siswa_id], references: [id])
+  students  students_data @relation(fields: [siswa_id], references: [id], onDelete: Cascade)
   user      User          @relation(fields: [user_id], references: [id])
   nilai     nilai[]
 }
@@ -199,7 +199,7 @@ model nilai {
   user_id     Int
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  nilai_siswa nilai_siswa @relation(fields: [id_nilai], references: [id])
+  nilai_siswa nilai_siswa @relation(fields: [id_nilai], references: [id], onDelete: Cascade)
   kd          kd          @relation(fields: [id_kd], references: [id])
   user        User        @relation(fields: [user_id], references: [id])
 }
