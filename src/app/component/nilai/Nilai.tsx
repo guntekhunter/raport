@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import DropDownAbsen from "../absen/dropDownAbsen";
+import AddKd from "../models/AddKd";
 
 export default function Nilai() {
   const [isActive, setIsActive] = useState(false);
   const [buttonActive, setButtonActive] = useState(false);
+  const [modalActive, setModalActive] = useState(false);
   const [kd, setKd] = useState([]);
   const [type, setType] = useState("");
   const [subject, setSubject] = useState("");
@@ -177,8 +179,17 @@ export default function Nilai() {
       console.log(err);
     }
   };
+  const callbackModal = (status: boolean) => {
+    setModalActive(status);
+  };
+
+  console.log(modalActive);
   return (
-    <div className="flex justify-around relative">
+    <div className="flex justify-around">
+      <AddKd
+        className={`${modalActive ? "" : "hidden"}`}
+        callbackModal={callbackModal}
+      />
       <div className="w-[80%]">
         <div className="rounded-md py-[1rem] w-full">
           <p className="text-[1rem] font-bold">nilai</p>
@@ -213,14 +224,30 @@ export default function Nilai() {
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
                   Nama Siswa
                 </th>
+                <th className="text-left text-gray-500 text-[1rem] text-sm font-medium flex">
+                  <div>
+                    <div className="text-center border-b-[1.5px] border-l-[1.5px] py-[.5rem]">
+                      Kompetensi Dasar
+                    </div>
+                    <div className="flex">
+                      <div className="w-[10rem] pb-[.5rem] border-l-[1.5px]">
+                        <div className="min-h-[1rem] break-words text-[.7rem] border-b-[1.5px] px-1 pb-2">
+                          ommalekaasdasdasdasdasdasdasasdasdasdasd
+                        </div>
+                        <div className="flex justify-around pt-[.5rem]">
+                          3.0
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </th>
                 {kd?.map((item: any, key) => {
-                  //   const formattedkd = formatkd(item.kd);
-
                   return (
                     <th
                       key={key}
                       className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium"
                     >
+                      ahhay
                       {item.no_kd}
                     </th>
                   );
@@ -232,15 +259,9 @@ export default function Nilai() {
                     </div>
                   ) : (
                     <div className="flex space-x-2">
-                      <input
-                        type="kd"
-                        className="bg-[#793FDF] px-[.5rem] py-[.5rem] rounded-md"
-                        value={defaultkd}
-                        onChange={(e) => setDefaultkd(e.target.value)}
-                      />
                       <button
                         className="bg-primary px-[.5rem] py-[.5rem] rounded-md text-white"
-                        onClick={addKd}
+                        onClick={() => setModalActive(!modalActive)}
                       >
                         tambah
                       </button>
