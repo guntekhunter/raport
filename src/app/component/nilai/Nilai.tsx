@@ -17,6 +17,9 @@ export default function Nilai() {
   const [nilai, setNilai] = useState([]);
   const [scor, setScor] = useState("");
   const [userId, setUserId] = useState<Number>();
+  const [isEdit, setIsEdit] = useState(false);
+  const [editableIndex, setEditableIndex] = useState<Number>();
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const classCallback = (item: any, name: any) => {
     if (name === "type") {
@@ -119,12 +122,48 @@ export default function Nilai() {
       console.log(err);
     }
   };
+  const updateNilai = async (id: Number, nilai: string) => {
+    try {
+      const newNilai = parseInt(nilai);
+      const nilaiData = {
+        nilai: newNilai,
+        id,
+        nilai_type: type,
+        mapel: subject,
+        user_id: userId,
+      };
+      const data = await axios.put(
+        "http://localhost:3000/api/nilai",
+        nilaiData
+      );
+      setIsUpdated(true);
+      setNilai(data.data.dataNilai);
+      setNilaiSiswa(data.data.data);
+      setIsEdit(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const callbackModal = (status: boolean) => {
     setModalActive(status);
   };
   const callbackData = (data: any) => {
     setKd(data.data);
   };
+
+  const handleDoubleClick = (e: any, id: Number) => {
+    setEditableIndex(id);
+    const delay = 300;
+    let clickCount = e.detail;
+
+    clickCount++;
+    setTimeout(() => {
+      if (clickCount === 2) {
+        setIsEdit(true);
+      }
+    }, delay);
+  };
+  console.log("this is autside", nilaiSiswa);
   return (
     <div className="flex justify-around">
       <AddKd
@@ -160,8 +199,8 @@ export default function Nilai() {
         </div>
         <div className="rounded-md border border-gray-300 overflow-auto scrollbar-hide">
           <table className="min-w-full divide-y divide-gray-200 rounded-md ">
-            <thead className="bg-gray-50">
-              <tr>
+            <thead className="bg-gray-50 divide-gray-200">
+              <tr className="divide-x">
                 <th className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium">
                   No
                 </th>
@@ -171,10 +210,10 @@ export default function Nilai() {
                 {kd?.map((item: any, key) => (
                   <th
                     key={key}
-                    className="px-6 py-3 text-left text-gray-500 text-[1rem] text-sm font-medium"
+                    className="text-left text-gray-500 text-[1rem] text-sm font-medium"
                   >
-                    <div className="w-[10rem] pb-[.5rem]">
-                      <div className="min-h-[1rem] break-words text-[.7rem] px-1">
+                    <div className="pb-[.5rem] divide-y">
+                      <div className="min-h-[1rem] break-words text-[.7rem] px-2 py-2">
                         {item.ket_kd}
                       </div>
                       <div className="flex justify-around pt-[.5rem]">
@@ -206,13 +245,12 @@ export default function Nilai() {
               for (let i = item.nilai.length; i > 0; i--) {
                 newArray.push(i - 1);
               }
-              console.log(newArray);
               const isNumberInArray = (number: any) =>
                 newArray.includes(number);
               return (
                 <tbody
                   key={nilaiIndex}
-                  className="bg-white divide-y divide-gray-200"
+                  className="bg-white divide-y divide-gray-200 divide-x"
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     {nilaiIndex + 1}
@@ -224,8 +262,11 @@ export default function Nilai() {
                   {kd.length !== 0 ? (
                     kd.map((kdItem: any, kdIndex: any) => {
                       const showAhhay = isNumberInArray(kdIndex);
+                      const uniqueKey = item.nilai[kdIndex].id;
+                      const nilai = item.nilai[kdIndex].nilai;
+                      console.log(uniqueKey, nilai);
                       return (
-                        <td key={kdIndex} className="px-6 py-4 ">
+                        <td key={uniqueKey} className="px-6 py-4 ">
                           {!showAhhay ? (
                             <div className="whitespace-nowrap flex space-x-5 justify-center flex">
                               <div className="">
@@ -244,11 +285,37 @@ export default function Nilai() {
                               </button>
                             </div>
                           ) : (
-                            <div
-                              className={`rounded-full w-[1.7rem] h-[1.7rem] flex justify-around items-center  border-[1.5px] border flex`}
-                            >
-                              {item.nilai[kdIndex].nilai}
-                            </div>
+                            <>
+                              {isEdit &&
+                              editableIndex === item.nilai[kdIndex].id ? (
+                                <div className="h-[1.7rem] flex justify-center">
+                                  <input
+                                    onChange={(e) => setScor(e.target.value)}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") {
+                                        // Call your function here when Enter is pressed and pass the input value
+                                        const target =
+                                          e.target as HTMLInputElement; // Cast e.target to HTMLInputElement
+                                        updateNilai(
+                                          item.nilai[kdIndex].id,
+                                          target.value
+                                        );
+                                      }
+                                    }}
+                                    className={`h-[1.7rem] w-[2rem] flex justify-center text-center`}
+                                  />
+                                </div>
+                              ) : (
+                                <button
+                                  className="h-[1.7rem] flex justify-center w-full"
+                                  onClick={(e) =>
+                                    handleDoubleClick(e, item.nilai[kdIndex].id)
+                                  }
+                                >
+                                  <p>{item.nilai[kdIndex].nilai}</p>
+                                </button>
+                              )}
+                            </>
                           )}
                         </td>
                       );

@@ -90,3 +90,61 @@ export async function POST(req: NextRequest, res: NextResponse) {
     console.log(error);
   }
 }
+export async function PUT(req: NextRequest, res: NextResponse) {
+  try {
+    const reqBody = await req.json();
+    const { nilai, id, nilai_type, mapel, user_id } = reqBody;
+
+    const newData = await prisma.nilai.update({
+      where: {
+        id,
+      },
+      data: {
+        nilai,
+      },
+    });
+
+    const dataNilai = await prisma.nilai.findMany({
+      where: {
+        user_id,
+        nilai_type,
+        mapel,
+      },
+    });
+    const data = await prisma.nilai_siswa.findMany({
+      where: {
+        user_id,
+      },
+      include: {
+        students: {
+          select: {
+            nama_lengkap: true,
+          },
+        },
+        nilai: {
+          where: {
+            user_id: user_id,
+            nilai_type,
+            mapel,
+          },
+          include: {
+            kd: true,
+          },
+        },
+      },
+    });
+    const sortedData = data.map((item) => ({
+      ...item,
+      nilai: item.nilai.sort((a, b) => a.id - b.id), // Sort the nilai array by id
+    }));
+
+    return NextResponse.json({
+      status: "Ok",
+      newData,
+      dataNilai,
+      data: sortedData,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
