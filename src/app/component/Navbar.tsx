@@ -51,7 +51,7 @@ export default function Navbar() {
               Absen
             </Link>
             <Link
-              href="/"
+              href="/nilai"
               className="cursor-pointer transform duration-200 ease-in px-[1rem] hover:shadow-md rounded-md"
             >
               Nilai
@@ -60,7 +60,7 @@ export default function Navbar() {
               href="/"
               className="cursor-pointer transform duration-200 ease-in px-[1rem] hover:shadow-md rounded-md"
             >
-              Print     
+              Print
             </Link>
           </div>
         </div>
