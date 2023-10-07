@@ -302,7 +302,8 @@ export default function Nilai() {
                                         );
                                       }
                                     }}
-                                    className={`h-[1.7rem] w-[2rem] flex justify-center text-center`}
+                                    autoFocus
+                                    className={`h-[1.7rem] w-[2rem] flex justify-center text-center bg-gray-200 rounded-md`}
                                   />
                                 </div>
                               ) : (
