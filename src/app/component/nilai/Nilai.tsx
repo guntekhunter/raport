@@ -222,6 +222,12 @@ export default function Nilai() {
                     </div>
                   </th>
                 ))}
+                <th className="px-6 py-3 text-left text-gray-500 text-sm font-medium">
+                  Rerata
+                </th>
+                <th className="px-6 py-3 text-left text-gray-500 text-sm font-medium">
+                  Predikat
+                </th>
                 <th className="px-6 py-3 text-left font-medium text-[.8rem] text-white ">
                   {nilaiSiswa.length === 0 ? (
                     <div className="bg-gray-200 px-[.5rem] py-[.5rem] rounded-md text-gray-400">

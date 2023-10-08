@@ -345,9 +345,6 @@ export default function Absen() {
                             </div>
                           ) : (
                             <button
-                              onClick={(e) =>
-                                makeAbsen(dateItem.id, item.id, "a")
-                              }
                               className={`rounded-full ${bgColorClass} w-[1.7rem] h-[1.7rem] flex justify-around items-center  border-[1.5px] border`}
                             >
                               {item.absen[dateIndex].status}
