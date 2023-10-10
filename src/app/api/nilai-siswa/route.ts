@@ -28,6 +28,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     } else {
       console.log("id_user parameter is null");
     }
+
     const data = await prisma.nilai_siswa.findMany({
       where: {
         user_id,

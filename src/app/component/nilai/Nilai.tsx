@@ -222,12 +222,6 @@ export default function Nilai() {
                     </div>
                   </th>
                 ))}
-                <th className="px-6 py-3 text-left text-gray-500 text-sm font-medium">
-                  Rerata
-                </th>
-                <th className="px-6 py-3 text-left text-gray-500 text-sm font-medium">
-                  Predikat
-                </th>
                 <th className="px-6 py-3 text-left font-medium text-[.8rem] text-white ">
                   {nilaiSiswa.length === 0 ? (
                     <div className="bg-gray-200 px-[.5rem] py-[.5rem] rounded-md text-gray-400">
@@ -244,13 +238,37 @@ export default function Nilai() {
                     </div>
                   )}
                 </th>
+                {nilaiSiswa.length !== 0 ? (
+                  <td className="px-2 py-2 text-left text-gray-500 text-sm font-medium rotate-[-90deg] transform">
+                    Rerata
+                  </td>
+                ) : (
+                  <></>
+                )}
+                {nilaiSiswa.length !== 0 ? (
+                  <td className="px-2 py-3 text-left text-gray-500 text-sm font-medium rotate-[-90deg] transform">
+                    Predikat
+                  </td>
+                ) : (
+                  <></>
+                )}
               </tr>
             </thead>
             {nilaiSiswa?.map((item: any, nilaiIndex) => {
+              let sum = null;
               let newArray: any[] = [];
-              for (let i = item.nilai.length; i > 0; i--) {
-                newArray.push(i - 1);
+              let finalScore = null;
+              for (let i = 0; i < item.nilai.length; i++) {
+                newArray.push(i);
+                if (item.nilai[i].nilai !== null) {
+                  finalScore += item.nilai[i].nilai; // Add the value to the total score
+                }
               }
+
+              if (finalScore !== null && item.nilai.length > 0) {
+                sum = Math.floor(finalScore / item.nilai.length);
+              }
+
               const isNumberInArray = (number: any) =>
                 newArray.includes(number);
               return (
@@ -267,10 +285,23 @@ export default function Nilai() {
 
                   {kd.length !== 0 ? (
                     kd.map((kdItem: any, kdIndex: any) => {
+                      let uniqueKey; // Declare uniqueKey variable outside the if-else block
+                      let nilai;
+                      if (
+                        item.nilai[kdIndex] &&
+                        item.nilai[kdIndex].id !== undefined &&
+                        item.nilai[kdIndex].nilai !== undefined
+                      ) {
+                        uniqueKey = item.nilai[kdIndex].id;
+                        nilai = item.nilai[kdIndex].nilai;
+                        console.log(uniqueKey, nilai);
+                        // Rest of your code
+                      } else {
+                        console.error(
+                          "item.nilai[kdIndex] is undefined or id/nilai is undefined."
+                        );
+                      }
                       const showAhhay = isNumberInArray(kdIndex);
-                      const uniqueKey = item.nilai[kdIndex].id;
-                      const nilai = item.nilai[kdIndex].nilai;
-                      console.log(uniqueKey, nilai);
                       return (
                         <td key={uniqueKey} className="px-6 py-4 ">
                           {!showAhhay ? (
@@ -330,6 +361,23 @@ export default function Nilai() {
                   ) : (
                     <></>
                   )}
+                  <td></td>
+                  <td className="">
+                    <div className="h-[1.7rem] flex justify-center w-full">
+                      {sum}
+                    </div>
+                  </td>
+                  <td className="text-[.7rem] px-5 text-center">
+                    <div className="h-[1.7rem] flex justify-center w-full">
+                      {sum !== null
+                        ? sum > 77
+                          ? "Baik"
+                          : sum >= 60
+                          ? "Cukup Baik"
+                          : "Kurang"
+                        : "Sum is null"}
+                    </div>
+                  </td>
                 </tbody>
               );
             })}
