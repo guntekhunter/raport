@@ -57,7 +57,7 @@ export default function Navbar() {
               Nilai
             </Link>
             <Link
-              href="/"
+              href="/print"
               className="cursor-pointer transform duration-200 ease-in px-[1rem] hover:shadow-md rounded-md"
             >
               Print
