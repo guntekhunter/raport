@@ -10,15 +10,15 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const userId = req.nextUrl.searchParams.get("user_id");
     const subject = req.nextUrl.searchParams.get("subject");
-    const mounth = req.nextUrl.searchParams.get("mounth");
+    const type = req.nextUrl.searchParams.get("type");
     let user_id = 0;
     let the_subject: string = "";
-    let the_mounth = "";
+    let the_type = "";
 
     if (userId !== null) {
-      if (mounth !== null && mounth !== "") {
+      if (type !== null && type !== "") {
         if (subject !== "" && subject !== null) {
-          the_mounth = mounth;
+          the_type = type;
           user_id = parseInt(userId);
           the_subject = subject;
         }
@@ -28,7 +28,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     } else {
       console.log("id_user parameter is null");
     }
-    const data = await prisma.absens.findMany({
+
+    const data = await prisma.nilai_siswa.findMany({
       where: {
         user_id,
       },
@@ -38,14 +39,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
             nama_lengkap: true,
           },
         },
-        absen: {
+        nilai: {
           where: {
-            user_id: user_id,
-            mounth: the_mounth,
-            subject: the_subject,
+            user_id,
+            nilai_type: the_type,
+            mapel: the_subject,
           },
           include: {
-            date: true, // Include the date associated with absen
+            kd: true, // Include the date associated with absen
           },
         },
       },

@@ -6,6 +6,11 @@ import getConfig from "next/config";
 
 const prisma = new PrismaClient();
 
+export const config = {
+  runtime: "edge", // this is a pre-requisite
+  regions: ["iad1"], // only execute this function in iad1
+};
+
 export async function GET(req: NextRequest, res: NextResponse) {
   return NextResponse.json({ status: "Ok" });
 }

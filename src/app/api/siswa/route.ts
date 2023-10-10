@@ -2,7 +2,10 @@ import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
-
+export const config = {
+  runtime: "edge", // this is a pre-requisite
+  regions: ["iad1"], // only execute this function in iad1
+};
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const reqBody = req.nextUrl.searchParams.get("id_user");
@@ -171,6 +174,12 @@ export async function POST(req: NextRequest) {
     });
 
     await prisma.absens.create({
+      data: {
+        siswa_id: newStudent.id,
+        user_id: id_user,
+      },
+    });
+    await prisma.nilai_siswa.create({
       data: {
         siswa_id: newStudent.id,
         user_id: id_user,
@@ -363,6 +372,7 @@ export async function DELETE(req: NextRequest) {
         id_user: idUserInt,
       },
     });
+
     return NextResponse.json({
       status: "Ok",
       dataDeleted: dataDeleted,
