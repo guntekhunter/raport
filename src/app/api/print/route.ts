@@ -17,12 +17,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
     } else {
       console.log("id_user parameter not found in the URL");
     }
-    const studentt = await prisma.students_data.findFirst({
+    const student = await prisma.students_data.findFirst({
       where: {
         id: id,
       },
     });
-    return NextResponse.json({ status: "Ok", studentt });
+    return NextResponse.json({ status: "Ok", student });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }

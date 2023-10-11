@@ -5,7 +5,7 @@ import { useReactToPrint } from "react-to-print";
 
 // @ts-ignore
 export default function PrintPage({ id }) {
-  const [student, setStudent] = useState([]);
+  const [student, setStudent] = useState<any>([]);
   const ref = useRef<HTMLDivElement>(null);
   const print = useReactToPrint({
     content: () => ref.current,
@@ -13,13 +13,15 @@ export default function PrintPage({ id }) {
 
   useEffect(() => {
     const fetchStudent = async () => {
-      try {
-        const data = await axios.get(
-          `http://localhost:3000/api/print?id=${id}`
-        );
-        setStudent(data.data);
-      } catch (error) {
-        console.log(error);
+      if (id) {
+        try {
+          const data = await axios.get(
+            `http://localhost:3000/api/print?id=${id}`
+          );
+          setStudent(data.data.student);
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
     fetchStudent();
@@ -29,12 +31,15 @@ export default function PrintPage({ id }) {
     if (id) {
       print();
     }
-  }, [id]);
+  }, [id, print]);
 
   console.log(student);
+
+  if (!student) return null;
+
   return (
-    <div className="relative" ref={ref}>
-      <div className="justify-around flex">ommalekanya mi kjsda ahhay</div>
+    <div className="flex justify-between py-2" ref={ref}>
+      <div>{student?.nama_lengkap}</div>
     </div>
   );
 }

@@ -13,6 +13,7 @@ export default function Print() {
   const [id, setId] = useState<number | undefined>(undefined);
 
   const handlePrint = async (id: number) => {
+
     setId(id);
   };
 
