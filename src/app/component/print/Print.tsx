@@ -3,12 +3,20 @@ import AddSiswa from "../models/AddSiswa";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import PrintPage from "./PrintPage";
+import { useReactToPrint } from "react-to-print";
 
 export default function Print() {
   const [isActive, setIsActive] = useState(false);
   const [studentsData, setStudentsData] = useState([]);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => ref.current,
+  });
 
   const modalActive = () => {
     setIsActive(!isActive);
@@ -83,9 +91,10 @@ export default function Print() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">{item.nisn}</td>
                   <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
-                    <Link
+                    <button
+                      onClick={handlePrint}
                       className="p-[.5rem] bg-green-200 border-green-400 border-[1.3px] rounded-md flex space-x-2"
-                      href={`/print-page?id=${item.id}`}
+                      // href={`/print-page?id=${item.id}`}
                     >
                       <p>Print</p>
                       <div className="h-full flex flex-col justify-center items-center">
@@ -97,7 +106,7 @@ export default function Print() {
                           className="w-4 h-4"
                         />
                       </div>
-                    </Link>
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -112,6 +121,11 @@ export default function Print() {
             </div>
             <div className="">ahhay</div>
           </div> */}
+      </div>
+      <div className="hidden">
+        <div ref={ref}>
+          <PrintPage />
+        </div>
       </div>
     </div>
   );
