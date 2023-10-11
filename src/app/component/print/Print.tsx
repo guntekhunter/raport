@@ -6,20 +6,14 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import PrintPage from "./PrintPage";
-import { useReactToPrint } from "react-to-print";
 
 export default function Print() {
   const [isActive, setIsActive] = useState(false);
   const [studentsData, setStudentsData] = useState([]);
+  const [id, setId] = useState<number | undefined>(undefined);
 
-  const ref = useRef<HTMLDivElement>(null);
-
-  const handlePrint = useReactToPrint({
-    content: () => ref.current,
-  });
-
-  const modalActive = () => {
-    setIsActive(!isActive);
+  const handlePrint = async (id: number) => {
+    setId(id);
   };
 
   const callbackActive = async (active: boolean) => {
@@ -92,9 +86,8 @@ export default function Print() {
                   <td className="px-6 py-4 whitespace-nowrap">{item.nisn}</td>
                   <td className="px-6 py-4 whitespace-no-wrap flex justify-between py-[1rem]">
                     <button
-                      onClick={handlePrint}
+                      onClick={(e) => handlePrint(item.id)}
                       className="p-[.5rem] bg-green-200 border-green-400 border-[1.3px] rounded-md flex space-x-2"
-                      // href={`/print-page?id=${item.id}`}
                     >
                       <p>Print</p>
                       <div className="h-full flex flex-col justify-center items-center">
@@ -123,8 +116,8 @@ export default function Print() {
           </div> */}
       </div>
       <div className="hidden">
-        <div ref={ref}>
-          <PrintPage />
+        <div>
+          <PrintPage id={id} />
         </div>
       </div>
     </div>
