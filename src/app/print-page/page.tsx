@@ -4,7 +4,7 @@ import PrintPage from "../component/print/PrintPage";
 export default function page() {
   return (
     <div>
-      <PrintPage />
+      <PrintPage id={2} />
     </div>
   );
 }

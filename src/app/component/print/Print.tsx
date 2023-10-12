@@ -13,7 +13,6 @@ export default function Print() {
   const [id, setId] = useState<number | undefined>(undefined);
 
   const handlePrint = async (id: number) => {
-
     setId(id);
   };
 
@@ -107,14 +106,6 @@ export default function Print() {
             </tbody>
           </table>
         </div>
-        {/* <div className="rounded-md border-[1.5px] border-gray-200 bg-whitepy-[1rem] border-b-[1.5px] w-full ">
-            <div className="bg-[#F5F5F5] px-[2rem] flex justify-between">
-              <div>Nama</div>
-              <div>Kelas</div>
-              <div></div>
-            </div>
-            <div className="">ahhay</div>
-          </div> */}
       </div>
       <div className="hidden">
         <div>
