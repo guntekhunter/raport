@@ -13,45 +13,45 @@ export default function PrintPage({ id }) {
     content: () => ref.current,
   });
 
-  // useEffect(() => {
-  //   const fetchStudent = async () => {
-  //     if (id) {
-  //       try {
-  //         const data = await axios.get(
-  //           `http://localhost:3000/api/print?id=${id}`
-  //         );
-  //         setStudent(data.data.student);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //   };
-  //   fetchStudent();
-  // }, [id]);
+  useEffect(() => {
+    const fetchStudent = async () => {
+      if (id) {
+        try {
+          const data = await axios.get(
+            `http://localhost:3000/api/print?id=${id}`
+          );
+          setStudent(data.data.student);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchStudent();
+  }, [id]);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     print();
-  //   }
-  // }, [id, print]);
+  useEffect(() => {
+    if (id) {
+      print();
+    }
+  }, [id, print]);
 
-  // console.log(student);
+  console.log(student);
 
   // ----------------- temporary code ----------------
-  const handlePrint = () => {
-    print();
-  };
+  // const handlePrint = () => {
+  //   print();
+  // };
 
-  // if (!student) return null;
+  if (!student) return null;
 
   return (
     <div className="py-6 text-[1rem] text-sm font-medium" ref={ref}>
-      <button
+      {/* <button
         className="fixed top-[6rem] z-20 bg-blue-200 left-[2rem] p-[1rem]"
         onClick={handlePrint}
       >
         ahhay
-      </button>
+      </button> */}
 
       {/* first page */}
       <div className="h-[68.5rem]">
@@ -166,13 +166,13 @@ export default function PrintPage({ id }) {
             <div className="flex flex-row ">
               <p className="basis-6/12 md:basis-2/12">NIS</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-8/12">123123123</p>
+              <p className="basis-5/12 md:basis-8/12">{student.nis}</p>
             </div>
 
             <div className="flex flex-row">
               <p className="basis-6/12 md:basis-2/12">NISN</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-8/12">123123123</p>
+              <p className="basis-5/12 md:basis-8/12">{student.nisn}</p>
             </div>
           </div>
           {/* KETERANGAN TENTANG DIRI PESERTA DIDIK */}
@@ -187,43 +187,55 @@ export default function PrintPage({ id }) {
                   Nama Lengkap Peserta Didik
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.nama_lengkap}
+                </p>
               </div>
               <div className="flex flex-row ">
                 <p className="basis-1/12">2.</p>
                 <p className="basis-6/12 md:basis-7/12">Nama Panggilan</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.nama_panggilan}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">3.</p>
                 <p className="basis-6/12 md:basis-7/12">Jenis Kelamin</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.jenis_kelamin}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">4.</p>
                 <p className="basis-6/12 md:basis-7/12">Tempat Tanggal Lahir</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.tempat_tanggal_lahir}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">5.</p>
                 <p className="basis-6/12 md:basis-7/12">Agama</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">{student.agama}</p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">6.</p>
                 <p className="basis-6/12 md:basis-7/12">Kewarga Negaraan</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.kewarganegaraan}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">7.</p>
                 <p className="basis-6/12 md:basis-7/12">Anak Keberapa</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.anak_keberapa}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">8.</p>
@@ -231,13 +243,17 @@ export default function PrintPage({ id }) {
                   Jumlah Saudara Kandung
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.jumlah_saudara_kandung}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">9.</p>
                 <p className="basis-6/12 md:basis-7/12">Jumlah Sadara Tiri</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.jumlah_saudara_tiri}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">10.</p>
@@ -245,7 +261,9 @@ export default function PrintPage({ id }) {
                   Jumlah Saudara Angkat
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.jmlah_saudara_angkat}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">11.</p>
@@ -253,7 +271,9 @@ export default function PrintPage({ id }) {
                   Bahasa Sehari-hari dalam Keluarga
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.bahasa_sehari_hari}
+                </p>
               </div>
             </div>
           </div>
@@ -267,13 +287,15 @@ export default function PrintPage({ id }) {
                 <p className="basis-1/12">12.</p>
                 <p className="basis-6/12 md:basis-7/12">Alamat</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">{student.alamat}</p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">13.</p>
                 <p className="basis-6/12 md:basis-7/12">No. Telpon/ HP</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.nomor_telepon}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">14.</p>
@@ -281,7 +303,9 @@ export default function PrintPage({ id }) {
                   Bertempat tinggal pada/bersama
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.bertempat_tinggal_bersama}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">15.</p>
@@ -289,7 +313,9 @@ export default function PrintPage({ id }) {
                   Jarak tempat tinggal ke sekolah
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.jarak_tempat_tinggal_kesekolah}
+                </p>
               </div>
             </div>
           </div>
@@ -303,7 +329,9 @@ export default function PrintPage({ id }) {
                 <p className="basis-1/12">16.</p>
                 <p className="basis-6/12 md:basis-7/12">Golongan darah</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.golongan_darah}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">17.</p>
@@ -311,13 +339,17 @@ export default function PrintPage({ id }) {
                   Penyakit yang pernah diderita
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.penyakit_yang_pernah_diderita}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">18.</p>
                 <p className="basis-6/12 md:basis-7/12">Kelainan jasmani</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.kelainan_jasmani}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">19.</p>
@@ -325,13 +357,17 @@ export default function PrintPage({ id }) {
                   Tinggi dan berat badan saat diterima
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.tinggi_dan_berat_badan}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">20.</p>
                 <p className="basis-6/12 md:basis-7/12">Keadaan jasmani</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.kelainan_jasmani}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12"></p>
@@ -426,7 +462,9 @@ export default function PrintPage({ id }) {
                   <p className="basis-1/12">a.</p>
                   <p className="basis-6/12 md:basis-[5rem]/12">Asal Murid</p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-5/12 md:basis-9/12">123123123</p>
+                  <p className="basis-5/12 md:basis-9/12">
+                    {student.asal_murid}
+                  </p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-1/12">b.</p>
@@ -434,13 +472,15 @@ export default function PrintPage({ id }) {
                     Nama Taman Kanak-Kanak
                   </p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-5/12 md:basis-9/12">123123123</p>
+                  <p className="basis-5/12 md:basis-9/12">{student.nama_tk}</p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-1/12">c.</p>
                   <p className="basis-6/12 md:basis-[5rem]/12">Alamat</p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-5/12 md:basis-9/12">123123123</p>
+                  <p className="basis-5/12 md:basis-9/12">
+                    {student.alamat_tk}
+                  </p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-1/12">d.</p>
@@ -448,7 +488,9 @@ export default function PrintPage({ id }) {
                     Tanggal dan Nomor STTB
                   </p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-5/12 md:basis-9/12">123123123</p>
+                  <p className="basis-5/12 md:basis-9/12">
+                    {student.tanggal_dan_nomor_sttb}
+                  </p>
                 </div>
               </div>
             </div>
@@ -468,7 +510,9 @@ export default function PrintPage({ id }) {
                     Nama Sekolah Asal
                   </p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-5/12 md:basis-9/12">123123123</p>
+                  <p className="basis-5/12 md:basis-9/12">
+                    {student.nama_sekolah_asal}
+                  </p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-1/12">b.</p>
@@ -476,19 +520,23 @@ export default function PrintPage({ id }) {
                     Dari Tingkat / kelas
                   </p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-5/12 md:basis-9/12">123123123</p>
+                  <p className="basis-5/12 md:basis-9/12">
+                    {student.dari_tingkat_kelas}
+                  </p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-1/12">c.</p>
                   <p className="basis-6/12 md:basis-[5rem]/12">NISN</p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-5/12 md:basis-9/12">123123123</p>
+                  <p className="basis-5/12 md:basis-9/12">{student.nisn}</p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-1/12">d.</p>
                   <p className="basis-6/12 md:basis-[5rem]/12">Alasan Pindah</p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-5/12 md:basis-9/12">123123123</p>
+                  <p className="basis-5/12 md:basis-9/12">
+                    {student.alasan_pindah}
+                  </p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-1/12">e.</p>
@@ -496,7 +544,9 @@ export default function PrintPage({ id }) {
                     Diterima di sekolah ini
                   </p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-5/12 md:basis-9/12">123123123</p>
+                  <p className="basis-5/12 md:basis-9/12">
+                    {student.diterima_tanggal}
+                  </p>
                 </div>
               </div>
             </div>
@@ -516,31 +566,37 @@ export default function PrintPage({ id }) {
               <p className="basis-1/12">24.</p>
               <p className="basis-6/12 md:basis-7/12">Nama</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">{student.nama_ayah}</p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">25.</p>
               <p className="basis-6/12 md:basis-7/12">Tahun Lahir</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.tahun_lahir_ayah}
+              </p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">26.</p>
               <p className="basis-6/12 md:basis-7/12">Agama</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">{student.agama_ayah}</p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">27.</p>
               <p className="basis-6/12 md:basis-7/12">Pendidikan</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.pendidikan_ayah}
+              </p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">28.</p>
               <p className="basis-6/12 md:basis-7/12">Pekerjaan</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.pekerjaan_ayah}
+              </p>
             </div>
           </div>
         </div>
@@ -552,31 +608,37 @@ export default function PrintPage({ id }) {
               <p className="basis-1/12">29.</p>
               <p className="basis-6/12 md:basis-7/12">Nama</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">{student.nama_ibu}</p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">30.</p>
               <p className="basis-6/12 md:basis-7/12">Tahun Lahir</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.tahun_lahir_ibu}
+              </p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">31.</p>
               <p className="basis-6/12 md:basis-7/12">Agama</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">{student.agama_ibu}</p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">32.</p>
               <p className="basis-6/12 md:basis-7/12">Pendidikan</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.pendidikan_ibu}
+              </p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">33.</p>
               <p className="basis-6/12 md:basis-7/12">Pekerjaan</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.pekerjaan_ibu}
+              </p>
             </div>
           </div>
         </div>
@@ -588,31 +650,37 @@ export default function PrintPage({ id }) {
               <p className="basis-1/12">34.</p>
               <p className="basis-6/12 md:basis-7/12">Nama</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">{student.nama_wali}</p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">35.</p>
               <p className="basis-6/12 md:basis-7/12">Tahun Lahir</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.tahun_lahir_wali}
+              </p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">36.</p>
               <p className="basis-6/12 md:basis-7/12">Agama</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">{student.agama_wali}</p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">37.</p>
               <p className="basis-6/12 md:basis-7/12">Pendidikan</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.pendidikan_wali}
+              </p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">38.</p>
               <p className="basis-6/12 md:basis-7/12">Pekerjaan</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.pekerjaan_wali}
+              </p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">39.</p>
@@ -620,13 +688,15 @@ export default function PrintPage({ id }) {
                 Alamat Rumah. Nomor Telp.
               </p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">{student.alamat_wali}</p>
             </div>
             <div className="flex flex-row">
               <p className="basis-1/12">40.</p>
               <p className="basis-6/12 md:basis-7/12">Hubungan Keluarga</p>
               <p className="basis-1/12 text-center">:</p>
-              <p className="basis-5/12 md:basis-9/12">123123123</p>
+              <p className="basis-5/12 md:basis-9/12">
+                {student.hubungan_keluarga_wali}
+              </p>
             </div>
           </div>
         </div>
@@ -688,13 +758,17 @@ export default function PrintPage({ id }) {
                   Kelas yang ditinggalkan
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.kelas_yang_ditinggalkan}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">c.</p>
                 <p className="basis-6/12 md:basis-[5rem]/12">Alasan</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.alasan_meninggalkan}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">d.</p>
@@ -702,25 +776,33 @@ export default function PrintPage({ id }) {
                   Sekolah yang dituju
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.sekolah_yang_dituju}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">e.</p>
                 <p className="basis-6/12 md:basis-[5rem]/12">Kecamatan</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.kecamatan_sekolah_tujuan}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">f.</p>
                 <p className="basis-6/12 md:basis-[5rem]/12">Kabupaten</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.kabupaten_sekolah_tujuan}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">g.</p>
-                <p className="basis-6/12 md:basis-[5rem]/12">Profinsi</p>
+                <p className="basis-6/12 md:basis-[5rem]/12">Provinsi</p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.provinsi_sekolah_tujuan}
+                </p>
               </div>
             </div>
             <div className="flex flex-row">
@@ -736,7 +818,9 @@ export default function PrintPage({ id }) {
                   Tamat belajar / lulus tahun
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.tempat_belajar}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">b.</p>
@@ -744,7 +828,9 @@ export default function PrintPage({ id }) {
                   Nomor ijazah / STL
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.nomor_ijazah}
+                </p>
               </div>
               <div className="flex flex-row">
                 <p className="basis-1/12">c.</p>
@@ -752,7 +838,9 @@ export default function PrintPage({ id }) {
                   Akan melanjutkan ke
                 </p>
                 <p className="basis-1/12 text-center">:</p>
-                <p className="basis-5/12 md:basis-9/12">123123123</p>
+                <p className="basis-5/12 md:basis-9/12">
+                  {student.akan_melanjutkan_ke}
+                </p>
               </div>
             </div>
           </div>
