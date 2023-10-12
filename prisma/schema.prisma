@@ -37,16 +37,24 @@ model User {
 }
 
 model main_data {
-  id          Int      @id @default(autoincrement())
-  guru_kelas  String
-  nip         Int      @unique
-  kelas_huruf String
-  kelas_angka String
-  semester    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  id_user     Int
-  user        User     @relation(fields: [id_user], references: [id])
+  id             Int      @id @default(autoincrement())
+  guru_kelas     String
+  nip            Int      @unique
+  kelas_huruf    String
+  kelas_angka    String
+  semester       String
+  nama_sekolah   String
+  npsn           String
+  status_sekolah String
+  alamat_sekolah String
+  desa           String
+  kecamatan      String
+  kabupaten      String
+  propinsi       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  id_user        Int
+  user           User     @relation(fields: [id_user], references: [id])
 }
 
 model students_data {

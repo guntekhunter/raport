@@ -6,35 +6,41 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import EditMainData from "../models/EditMainData";
 
-interface DataItem {
-  guru: string;
-  nip: number;
-  grade: string;
-  semester: string;
-}
-
 export default function HomeClient() {
   const [guru, setGuru] = useState("");
   const [nip, setNip] = useState<number>(0);
   const [grade, setGrade] = useState("I");
   const [semester, setSemester] = useState("Genap");
-  const [data, setData] = useState<DataItem[]>([]);
   const [buttonActive, setButtonActive] = useState(false);
-  const [userId, setUserId] = useState(0);
+  const [userId, setUserId] = useState<number>();
   const [isActive, setIsActive] = useState(false);
-  const [id, setId] = useState(0);
+  const [id, setId] = useState<number>();
   const [updated, setUpdated] = useState(false);
+  const [defaultData, setDefaultData] = useState<any>([]);
+  const [data, setData] = useState<any>({
+    guru_kelas: "",
+    nip: 0,
+    kelas_angka: "",
+    semester: "",
+    id_user: 0,
+    kelas_huruf: "",
+    nama_sekolah: "",
+    npsn: "",
+    status_sekolah: "",
+    alamat_sekolah: "",
+    desa: "",
+    kecamatan: "",
+    kabupaten: "",
+    propinsi: "",
+  });
 
   const route = useRouter();
 
   const classCallback = (item: any, name: any) => {
+    setData((prev: any) => {
+      return { ...prev, [name]: item };
+    });
     setButtonActive(true);
-    if (name === "kelas") {
-      setGrade(item);
-    }
-    if (name === "semester") {
-      setSemester(item);
-    }
   };
 
   useEffect(() => {
@@ -49,133 +55,225 @@ export default function HomeClient() {
         } else {
           console.log("User ID not found in localStorage");
         }
+        setData((prev: any) => {
+          return { ...prev, ["id_user"]: parsedId };
+        });
+
         const res = await axios.get(`/api/main-data?id_user=${parsedId}`);
-        if (res.data.data !== null) {
+        if (res.data?.data !== null) {
           setIsActive(true);
+          if (!defaultData) {
+            setDefaultData(res.data?.data);
+          }
+          setData(res.data?.data);
+          setId(res.data?.data.id);
         } else {
           setIsActive(false);
         }
-        setData(res.data.data);
-        setGuru(res.data.data.guru_kelas);
-        setGrade(res.data.data.kelas_angka);
-        setSemester(res.data.data.semester);
-        setNip(res.data.data.nip);
-        setUserId(res.data.data.id_user);
-        setId(res.data.data.id);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetch();
-  }, [isActive]);
+  }, [defaultData, isActive]);
 
   const save = async () => {
     if (buttonActive) {
-      const newData = {
-        guru: guru,
-        nip: nip,
-        grade: grade,
-        semester: semester,
-      };
       setUpdated(true);
       setTimeout(() => {
         setUpdated(false);
       }, 3000);
 
-      if (data === null) {
+      console.log(defaultData);
+
+      if (defaultData && defaultData.id) {
         try {
-          const res = await axios.post("/api/main-data", {
-            guru_kelas: guru,
-            nip: nip,
-            kelas_angka: grade,
-            semester: semester,
-            id_user: userId,
-            kelas_huruf: "A",
-          });
-          setData(res.data.newData);
-          setGuru(res.data.newData.guru_kelas);
-          setGrade(res.data.newData.kelas_angka);
-          setSemester(res.data.newData.semester);
-          setNip(res.data.newData.nip);
-          setUserId(res.data.newData.id_user);
-          setId(res.data.newData.id);
+          const res = await axios.put(`/api/main-data?id=${id}`, data);
+          setData(res.data?.newData);
+          setDefaultData(res.data?.newData);
         } catch (error) {
           console.log(error);
         }
       } else {
         try {
-          const res = await axios.put(`/api/main-data?id=${id}`, {
-            guru_kelas: guru,
-            nip: nip,
-            kelas_angka: grade,
-            semester: semester,
-            id_user: userId,
-            kelas_huruf: "A",
-          });
-          setGuru(res.data.dataUpdated.guru_kelas);
-          setGrade(res.data.dataUpdated.kelas_angka);
-          setSemester(res.data.dataUpdated.semester);
-          setNip(res.data.dataUpdated.nip);
-          setUserId(res.data.dataUpdated.id_user);
-          setId(res.data.dataUpdated.id);
-        } catch (error) {
-          console.log(error);
+          const res = await axios.post(`/api/main-data`, data);
+          setData(res.data?.newData);
+          setDefaultData(res.data?.newData);
+          setId(data.data?.newData.id);
+        } catch (err) {
+          console.log(err);
         }
       }
-      setData([newData]);
       setButtonActive(false);
     }
+  };
+
+  const setInput = (value: any, name: any) => {
+    let nip;
+    let valueData = value;
+    if (name === "nip") {
+      nip = parseInt(value);
+      valueData = nip;
+    }
+    setData((prev: any) => {
+      return { ...prev, [name]: valueData };
+    });
+    setButtonActive(true);
   };
 
   return (
     <div className="flex justify-around py-[2rem]">
       <EditMainData className={`${updated ? "" : "hidden"}`} />
       <div className="w-[80%] flex justify-between">
-        <div className="w-[50%] border-[1.5px] border-gray-200 rounded-md px-[3.5rem] py-[1.5rem]">
-          <div className="flex justify-between py-[1rem] border-b-[1.5px]">
-            <div>Guru Kelas</div>
-            <input
-              onChange={(e) => {
-                setGuru(e.target.value), setButtonActive(true);
-              }}
-              value={guru}
-              placeholder="Salsul Rijal S.Pt"
-              className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
-            />
-          </div>
-          <div className="flex justify-between py-[1rem] border-b-[1.5px]">
-            <div>NIP</div>
-            <input
-              value={nip}
-              onChange={(e) => {
-                setNip(Number(e.target.value)), setButtonActive(true);
-              }}
-              placeholder="1829040023"
-              className={`flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem] ${
-                nip === 0 ? "text-gray-400" : "text-black"
-              }`}
-            />
-          </div>
-          <div className="flex justify-between py-[1rem] border-b-[1.5px]">
-            <div>Kelas</div>
-            <DropDown
-              name="kelas"
-              title={grade}
-              isActive={isActive}
-              drop={["I", "II", "III", "IV", "V", "VI"]}
-              classCallback={classCallback}
-            />
-          </div>
-          <div className="flex justify-between py-[1rem]">
-            <div>Semester</div>
-            <DropDown
-              name="semester"
-              title={semester}
-              isActive={isActive}
-              drop={["Ganjil", "Genap"]}
-              classCallback={classCallback}
-            />
+        <div className="w-full border-[1.5px] border-gray-200 rounded-md px-[3.5rem] py-[1.5rem]">
+          <div className="flex space-x-[2rem]">
+            <div className="w-[50%]">
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Nama Sekolah</div>
+                <input
+                  value={data?.nama_sekolah || ""}
+                  name="nama_sekolah"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>NPSN</div>
+                <input
+                  value={data?.npsn || ""}
+                  name="npsn"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Status Sekolah</div>
+                <input
+                  value={data?.status_sekolah || ""}
+                  name="status_sekolah"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Alamat Sekolah</div>
+                <input
+                  value={data?.alamat_sekolah || ""}
+                  name="alamat_sekolah"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Desa</div>
+                <input
+                  value={data?.desa || ""}
+                  name="desa"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem]">
+                <div>Kecamatan</div>
+                <input
+                  value={data?.kecamatan || ""}
+                  name="kecamatan"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+            </div>
+            <div className="w-[50%]">
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Kabupaten</div>
+                <input
+                  value={data?.kabupaten || ""}
+                  name="kabupaten"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Propinsi</div>
+                <input
+                  value={data?.propinsi || ""}
+                  name="propinsi"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Guru Kelas</div>
+                <input
+                  value={data?.guru_kelas || ""}
+                  name="guru_kelas"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>NIP</div>
+                <input
+                  name="nip"
+                  value={data?.nip || ""}
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="1829040023"
+                  className={`flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem] ${
+                    nip === 0 ? "text-gray-400" : "text-black"
+                  }`}
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Kelas</div>
+                <DropDown
+                  name="kelas_angka"
+                  title={data?.kelas_angka}
+                  isActive={isActive}
+                  drop={["I", "II", "III", "IV", "V", "VI"]}
+                  classCallback={classCallback}
+                />
+              </div>
+              <div className="flex justify-between py-[1rem]">
+                <div>Semester</div>
+                <DropDown
+                  name="semester"
+                  title={data?.semester}
+                  isActive={isActive}
+                  drop={["Ganjil", "Genap"]}
+                  classCallback={classCallback}
+                />
+              </div>
+            </div>
           </div>
           <div>
             <button
@@ -189,9 +287,6 @@ export default function HomeClient() {
               Simpan Perubahan
             </button>
           </div>
-        </div>
-        <div className="w-[47%] rounded-md px-[3.5rem] py-[1.5rem] bg-[#793FDF] text-white">
-          ahhay
         </div>
       </div>
     </div>

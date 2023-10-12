@@ -20,8 +20,6 @@ export default function DropDown({drop,title,classCallback,name,isActive,
     }
   }, [title, isActive]);
 
-  console.log(title, active);
-
   const select = (item: any) => {
     setSelected(item);
     setActive(!active);
