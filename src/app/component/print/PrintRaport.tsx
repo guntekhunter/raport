@@ -13,14 +13,30 @@ export default function PrintRaport() {
     print();
   };
   return (
-    <div className="py-6 text-[1rem] text-sm font-medium" ref={ref}>
+    <div className="text-[1rem] text-sm font-medium" ref={ref}>
+      <style type="text/css">
+        {`
+        @page {
+          size: auto;
+          margin: 20mm 0 10mm 0;
+        }
+        body {
+          margin: 0;
+          padding: 0;
+        }
+          table { page-break-inside:auto }
+          tr { page-break-inside:avoid; page-break-after:auto }
+          thead { display:table-header-group}
+          tboady { display:table-footer-group }
+        `}
+      </style>
       <button
         className="fixed top-[2rem] z-20 bg-blue-200 left-[2rem] p-[1rem]"
         onClick={handlePrint}
       >
         ahhay
       </button>
-      <div className="h-[68.5rem] py-[2rem] font-serif bg-red-200">
+      <div className="font-serif">
         <div className="px-[2rem]">
           <p className="text-center text-[1.5rem]">
             RAPOR DAN PROFILE PESERTA DIDIK
@@ -156,6 +172,96 @@ export default function PrintRaport() {
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td className="px-[.5rem] border-b border-r border-black">
+                      1
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black">
+                      Matematika
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      1
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      B
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
+                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
+                      berperilaku syukur, berdoa seblum dan sesudah melakukan
+                      kegiatan, toleransi dalam beribadah
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      1
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      B
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
+                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
+                      berperilaku syukur, berdoa seblum dan sesudah melakukan
+                      kegiatan, toleransi dalam beribadah
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-[.5rem] border-b border-r border-black">
+                      1
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black">
+                      Matematika
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      1
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      B
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
+                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
+                      berperilaku syukur, berdoa seblum dan sesudah melakukan
+                      kegiatan, toleransi dalam beribadah
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      1
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      B
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
+                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
+                      berperilaku syukur, berdoa seblum dan sesudah melakukan
+                      kegiatan, toleransi dalam beribadah
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-[.5rem] border-b border-r border-black">
+                      1
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black">
+                      Matematika
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      1
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      B
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
+                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
+                      berperilaku syukur, berdoa seblum dan sesudah melakukan
+                      kegiatan, toleransi dalam beribadah
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      1
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black text-center">
+                      B
+                    </td>
+                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
+                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
+                      berperilaku syukur, berdoa seblum dan sesudah melakukan
+                      kegiatan, toleransi dalam beribadah
+                    </td>
+                  </tr>
                   <tr>
                     <td className="px-[.5rem] border-b border-r border-black">
                       1
