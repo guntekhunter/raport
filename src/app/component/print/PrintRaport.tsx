@@ -1,8 +1,12 @@
 "use client";
-import React, { useRef } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
+import Cookies from "js-cookie";
 
 export default function PrintRaport() {
+  const [data, setData] = useState([]);
+  const [nilai, setNilai] = useState<any>([]);
   const ref = useRef<HTMLDivElement>(null);
 
   const print = useReactToPrint({
@@ -12,6 +16,88 @@ export default function PrintRaport() {
   const handlePrint = () => {
     print();
   };
+
+  useEffect(() => {
+    const id = 23;
+    const fetchStudent = async () => {
+      if (id) {
+        try {
+          const user = Cookies.get("user id");
+          let parsedId = 0;
+          if (user !== undefined) {
+            parsedId = parseInt(user); // Parsing the user ID to an integer
+          } else {
+            console.log("User ID not found in localStorage");
+          }
+          const data = await axios.get(
+            `http://localhost:3000/api/print?id=${id}&user_id=${parsedId}`
+          );
+          setData(data.data.data.nilai);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchStudent();
+  }, []);
+
+  useEffect(() => {
+    let pengetahuanSums: Record<string, { sum: number; count: number }> = {};
+    let keterampilanSums: Record<string, { sum: number; count: number }> = {};
+
+    // Calculate the sum of scores for each "mapel" and each type
+    for (const item of data) {
+      const { mapel, nilai, nilai_type } = item;
+
+      if (nilai_type === "Pengetahuan") {
+        if (pengetahuanSums[mapel]) {
+          pengetahuanSums[mapel].sum += nilai;
+          pengetahuanSums[mapel].count++;
+        } else {
+          pengetahuanSums[mapel] = { sum: nilai, count: 1 };
+        }
+      }
+
+      if (nilai_type === "Keterampilan") {
+        if (keterampilanSums[mapel]) {
+          keterampilanSums[mapel].sum += nilai;
+          keterampilanSums[mapel].count++;
+        } else {
+          keterampilanSums[mapel] = { sum: nilai, count: 1 };
+        }
+      }
+    }
+
+    // Ensure "Pengetahuan" and "Keterampilan" are always present in the result array
+    const allSubjects: string[] = [];
+    for (const mapel of Object.keys(pengetahuanSums)) {
+      if (!allSubjects.includes(mapel)) {
+        allSubjects.push(mapel);
+      }
+    }
+    for (const mapel of Object.keys(keterampilanSums)) {
+      if (!allSubjects.includes(mapel)) {
+        allSubjects.push(mapel);
+      }
+    }
+
+    const resultArray = allSubjects.map((mapel) => ({
+      mapel,
+      pengetahuan: pengetahuanSums[mapel]
+        ? Math.round(pengetahuanSums[mapel].sum / pengetahuanSums[mapel].count)
+        : 0,
+      keterampilan: keterampilanSums[mapel]
+        ? Math.round(
+            keterampilanSums[mapel].sum / keterampilanSums[mapel].count
+          )
+        : 0,
+    }));
+
+    setNilai(resultArray);
+  }, [data]);
+
+  console.log(nilai);
+
   return (
     <div className="text-[1rem] text-sm font-medium" ref={ref}>
       <style type="text/css">
