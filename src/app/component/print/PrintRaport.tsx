@@ -7,6 +7,9 @@ import Cookies from "js-cookie";
 export default function PrintRaport() {
   const [data, setData] = useState([]);
   const [nilai, setNilai] = useState<any>([]);
+  const [studentData, setStudentData] = useState<any>([]);
+  const [userData, setUserData] = useState<any>([]);
+  const [date, setDate] = useState("");
   const ref = useRef<HTMLDivElement>(null);
 
   const print = useReactToPrint({
@@ -33,6 +36,8 @@ export default function PrintRaport() {
             `http://localhost:3000/api/print?id=${id}&user_id=${parsedId}`
           );
           setData(data.data.data.nilai);
+          setStudentData(data.data.data.students);
+          setUserData(data.data.data.user.main_data[0]);
         } catch (error) {
           console.log(error);
         }
@@ -96,7 +101,35 @@ export default function PrintRaport() {
     setNilai(resultArray);
   }, [data]);
 
-  console.log(nilai);
+  console.log(studentData);
+  useEffect(() => {
+    const monthNames = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    // Get the current date
+    const currentDate = new Date();
+
+    // Extract the day, month, and year
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+
+    // Format the date
+    const formattedDate = `${day} ${monthNames[month]} ${year}`;
+    setDate(formattedDate);
+  }, []);
 
   return (
     <div className="text-[1rem] text-sm font-medium" ref={ref}>
@@ -135,23 +168,27 @@ export default function PrintRaport() {
                     Nama Peserta Didik
                   </p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-9/12 md:basis-9/12">Samsul Rijal</p>
+                  <p className="basis-9/12 md:basis-9/12">
+                    {studentData.nama_lengkap}
+                  </p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-6/12 md:basis-10/12">NISN</p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-9/12 md:basis-9/12">123123123</p>
+                  <p className="basis-9/12 md:basis-9/12">{studentData.nisn}</p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-6/12 md:basis-10/12">Nama Sekolah</p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-9/12 md:basis-9/12">SDI Lojong</p>
+                  <p className="basis-9/12 md:basis-9/12">
+                    {userData.nama_sekolah}
+                  </p>
                 </div>
                 <div className="flex flex-row">
                   <p className="basis-6/12 md:basis-10/12">Alamat Sekolah</p>
                   <p className="basis-1/12 text-center">:</p>
                   <p className="basis-9/12 md:basis-9/12">
-                    Jl. Pendidikan, Lojong
+                    {userData.alamat_sekolah}
                   </p>
                 </div>
               </div>
@@ -159,12 +196,16 @@ export default function PrintRaport() {
                 <div className="flex flex-row ">
                   <p className="basis-6/12 md:basis-9/12">Kelas</p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-9/12 md:basis-9/12">2 (Dua)</p>
+                  <p className="basis-9/12 md:basis-9/12">
+                    {studentData.kelas_angka}
+                  </p>
                 </div>
                 <div className="flex flex-row ">
                   <p className="basis-6/12 md:basis-9/12">Semester</p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-9/12 md:basis-9/12">Ganjil</p>
+                  <p className="basis-9/12 md:basis-9/12">
+                    {studentData.semester}
+                  </p>
                 </div>
 
                 <div className="flex flex-row ">
@@ -258,126 +299,50 @@ export default function PrintRaport() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="px-[.5rem] border-b border-r border-black">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black">
-                      Matematika
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      B
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
-                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
-                      berperilaku syukur, berdoa seblum dan sesudah melakukan
-                      kegiatan, toleransi dalam beribadah
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      B
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
-                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
-                      berperilaku syukur, berdoa seblum dan sesudah melakukan
-                      kegiatan, toleransi dalam beribadah
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-[.5rem] border-b border-r border-black">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black">
-                      Matematika
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      B
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
-                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
-                      berperilaku syukur, berdoa seblum dan sesudah melakukan
-                      kegiatan, toleransi dalam beribadah
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      B
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
-                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
-                      berperilaku syukur, berdoa seblum dan sesudah melakukan
-                      kegiatan, toleransi dalam beribadah
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-[.5rem] border-b border-r border-black">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black">
-                      Matematika
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      B
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
-                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
-                      berperilaku syukur, berdoa seblum dan sesudah melakukan
-                      kegiatan, toleransi dalam beribadah
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      B
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
-                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
-                      berperilaku syukur, berdoa seblum dan sesudah melakukan
-                      kegiatan, toleransi dalam beribadah
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-[.5rem] border-b border-r border-black">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black">
-                      Matematika
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      B
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
-                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
-                      berperilaku syukur, berdoa seblum dan sesudah melakukan
-                      kegiatan, toleransi dalam beribadah
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      1
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black text-center">
-                      B
-                    </td>
-                    <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
-                      Ananda SULPIKAR baik dalam ketaatan beribadah ,
-                      berperilaku syukur, berdoa seblum dan sesudah melakukan
-                      kegiatan, toleransi dalam beribadah
-                    </td>
-                  </tr>
+                  {nilai.map((item: any, key: any) => (
+                    <tr key={key}>
+                      <td className="px-[.5rem] border-b border-r border-black">
+                        {key + 1}
+                      </td>
+                      <td className="px-[.5rem] border-b border-r border-black">
+                        {item.mapel}
+                      </td>
+                      <td className="px-[.5rem] border-b border-r border-black text-center">
+                        {item.pengetahuan ? item.pengetahuan : "-"}
+                      </td>
+                      <td className="px-[.5rem] border-b border-r border-black text-center">
+                        {item.pengetahuan > 85
+                          ? "A"
+                          : item.pengetahuan > 70
+                          ? "B"
+                          : item.pengetahuan > 50
+                          ? "C"
+                          : "D"}
+                      </td>
+                      <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
+                        Ananda SULPIKAR baik dalam ketaatan beribadah ,
+                        berperilaku syukur, berdoa seblum dan sesudah melakukan
+                        kegiatan, toleransi dalam beribadah
+                      </td>
+                      <td className="px-[.5rem] border-b border-r border-black text-center">
+                        {item.keterampilan ? item.keterampilan : "-"}
+                      </td>
+                      <td className="px-[.5rem] border-b border-r border-black text-center">
+                        {item.keterampilan > 85
+                          ? "A"
+                          : item.keterampilan > 70
+                          ? "B"
+                          : item.keterampilan > 50
+                          ? "C"
+                          : "D"}
+                      </td>
+                      <td className="px-[.5rem] border-b border-r border-black py-[1rem]">
+                        Ananda SULPIKAR baik dalam ketaatan beribadah ,
+                        berperilaku syukur, berdoa seblum dan sesudah melakukan
+                        kegiatan, toleransi dalam beribadah
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
               <div>
@@ -627,13 +592,19 @@ export default function PrintRaport() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="text-center border border-black">1</td>
-                      <td className="px-[.5rem] border border-black"></td>
-                      <td className="px-[.5rem] border border-black">
-                        Peringkat 1
-                      </td>
-                    </tr>
+                    {studentData?.keterangan_perkembangan_pesdik?.map(
+                      (item: any, key: any) => (
+                        <tr key={key}>
+                          <td className="text-center border border-black">
+                            {key}
+                          </td>
+                          <td className="px-[.5rem] border border-black"></td>
+                          <td className="px-[.5rem] border border-black">
+                            Peringkat 1
+                          </td>
+                        </tr>
+                      )
+                    )}
                     <tr>
                       <td className="text-center border border-black">1</td>
                       <td className="px-[.5rem] border border-black">Gigi</td>
@@ -674,14 +645,16 @@ export default function PrintRaport() {
               <div className="px-[2rem]">Orang Tua/Wali</div>
               <div className="text-center px-[2rem] space-y-[5rem]">
                 <div>
-                  <div>Lojong, 21 Desember 2023</div>
+                  <div>
+                    {userData.desa}, {date}
+                  </div>
                   <div>Guru Kelas</div>
                 </div>
                 <div>
                   <div className="font-bold">
-                    <u>Hasnah S.Pd.i</u>{" "}
+                    <u>{userData.guru_kelas}</u>{" "}
                   </div>
-                  <div>NIP: 1912093012930912</div>
+                  <div>NIP: {userData.nip}</div>
                 </div>
               </div>
             </div>

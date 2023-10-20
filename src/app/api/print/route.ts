@@ -54,6 +54,23 @@ export async function GET(req: NextRequest, res: NextResponse) {
           select: {
             nama_lengkap: true,
             nisn: true,
+            keterangan_perkembangan_pesdik: true,
+          },
+        },
+        user: {
+          select: {
+            main_data: {
+              select: {
+                nama_sekolah: true,
+                alamat_sekolah: true,
+                kelas_angka: true,
+                semester: true,
+                guru_kelas: true,
+                nip: true,
+                desa: true
+                // Add other fields from main_data that you want to include
+              },
+            },
           },
         },
         nilai: {

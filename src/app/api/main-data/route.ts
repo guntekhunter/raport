@@ -47,26 +47,57 @@ export async function POST(req: NextRequest) {
       propinsi,
     } = reqBody;
 
-    const newData = await prisma.main_data.create({
-      data: {
-        guru_kelas,
-        nip,
-        kelas_huruf,
-        kelas_angka,
-        semester,
+    const exitingData = await prisma.main_data.findFirst({
+      where: {
         id_user,
-        nama_sekolah,
-        npsn,
-        status_sekolah,
-        alamat_sekolah,
-        desa,
-        kecamatan,
-        kabupaten,
-        propinsi,
       },
     });
+    let data;
 
-    return NextResponse.json({ status: "Ok", newData });
+    if (!exitingData) {
+      data = await prisma.main_data.create({
+        data: {
+          guru_kelas,
+          nip,
+          kelas_huruf,
+          kelas_angka,
+          semester,
+          id_user,
+          nama_sekolah,
+          npsn,
+          status_sekolah,
+          alamat_sekolah,
+          desa,
+          kecamatan,
+          kabupaten,
+          propinsi,
+        },
+      });
+    } else {
+      data = await prisma.main_data.update({
+        where: {
+          id: exitingData.id,
+        },
+        data: {
+          guru_kelas,
+          nip,
+          kelas_huruf,
+          kelas_angka,
+          semester,
+          id_user,
+          nama_sekolah,
+          npsn,
+          status_sekolah,
+          alamat_sekolah,
+          desa,
+          kecamatan,
+          kabupaten,
+          propinsi,
+        },
+      });
+    }
+
+    return NextResponse.json({ status: "Ok", data });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

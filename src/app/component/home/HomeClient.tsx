@@ -7,14 +7,9 @@ import Cookies from "js-cookie";
 import EditMainData from "../models/EditMainData";
 
 export default function HomeClient() {
-  const [guru, setGuru] = useState("");
   const [nip, setNip] = useState<number>(0);
-  const [grade, setGrade] = useState("I");
-  const [semester, setSemester] = useState("Genap");
   const [buttonActive, setButtonActive] = useState(false);
-  const [userId, setUserId] = useState<number>();
   const [isActive, setIsActive] = useState(false);
-  const [id, setId] = useState<number>();
   const [updated, setUpdated] = useState(false);
   const [defaultData, setDefaultData] = useState<any>([]);
   const [data, setData] = useState<any>({
@@ -51,7 +46,6 @@ export default function HomeClient() {
         let parsedId = 0;
         if (id !== undefined) {
           parsedId = parseInt(id); // Parsing the user ID to an integer
-          setUserId(parsedId);
         } else {
           console.log("User ID not found in localStorage");
         }
@@ -66,7 +60,6 @@ export default function HomeClient() {
             setDefaultData(res.data?.data);
           }
           setData(res.data?.data);
-          setId(res.data?.data.id);
         } else {
           setIsActive(false);
         }
@@ -87,23 +80,12 @@ export default function HomeClient() {
 
       console.log(defaultData);
 
-      if (defaultData && defaultData.id) {
-        try {
-          const res = await axios.put(`/api/main-data?id=${id}`, data);
-          setData(res.data?.newData);
-          setDefaultData(res.data?.newData);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        try {
-          const res = await axios.post(`/api/main-data`, data);
-          setData(res.data?.newData);
-          setDefaultData(res.data?.newData);
-          setId(data.data?.newData.id);
-        } catch (err) {
-          console.log(err);
-        }
+      try {
+        const res = await axios.post(`/api/main-data`, data);
+        setData(res.data?.newData);
+        setDefaultData(res.data?.newData);
+      } catch (err) {
+        console.log(err);
       }
       setButtonActive(false);
     }
