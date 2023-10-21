@@ -3,34 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 export const config = {
-  runtime: "edge", // this is a pre-requisite
-  regions: ["iad1"], // only execute this function in iad1
+  runtime: "edge",
+  regions: ["iad1"],
 };
 
-// export async function GET(req: NextRequest, res: NextResponse) {
-//   try {
-//     const reqData = await req.json();
-//     const { user_id, siswa_id } = reqData;
-
-//     console.log(user_id, siswa_id);
-//     const reqBody = req.nextUrl.searchParams.get("id");
-//     let id = 0;
-
-//     if (reqBody !== null) {
-//       id = parseInt(reqBody); // Using radix 10 for decimal
-//     } else {
-//       console.log("id_user parameter not found in the URL");
-//     }
-//     const student = await prisma.students_data.findFirst({
-//       where: {
-//         id: id,
-//       },
-//     });
-//     return NextResponse.json({ status: "Ok", student });
-//   } catch (error: any) {
-//     return NextResponse.json({ error: error.message }, { status: 400 });
-//   }
-// }
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const reqBody = req.nextUrl.searchParams.get("id");
@@ -55,6 +31,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
             nama_lengkap: true,
             nisn: true,
             keterangan_perkembangan_pesdik: true,
+            nama_wali: true,
           },
         },
         user: {
@@ -67,15 +44,22 @@ export async function GET(req: NextRequest, res: NextResponse) {
                 semester: true,
                 guru_kelas: true,
                 nip: true,
-                desa: true
-                // Add other fields from main_data that you want to include
+                desa: true,
+                kepala_sekolah: true,
+                nip_kepsek: true,
+                tahun_ajaran: true,
               },
             },
           },
         },
         nilai: {
-          where: {
-            user_id: idUser,
+          select: {
+            id_nilai: true,
+            nilai_type: true,
+            mapel: true,
+            id_kd: true,
+            nilai: true,
+            user_id: true,
           },
         },
       },

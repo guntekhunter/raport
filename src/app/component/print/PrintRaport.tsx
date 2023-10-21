@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import Cookies from "js-cookie";
 
-export default function PrintRaport() {
+// @ts-ignore
+export default function PrintRaport({ id }) {
   const [data, setData] = useState([]);
   const [nilai, setNilai] = useState<any>([]);
   const [studentData, setStudentData] = useState<any>([]);
@@ -16,12 +17,12 @@ export default function PrintRaport() {
     content: () => ref.current,
   });
   // ----------------- temporary code ----------------
-  const handlePrint = () => {
-    print();
-  };
+  // const handlePrint = () => {
+  //   print();
+  // };
 
   useEffect(() => {
-    const id = 23;
+    // const id = 23;
     const fetchStudent = async () => {
       if (id) {
         try {
@@ -44,7 +45,7 @@ export default function PrintRaport() {
       }
     };
     fetchStudent();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     let pengetahuanSums: Record<string, { sum: number; count: number }> = {};
@@ -131,6 +132,14 @@ export default function PrintRaport() {
     setDate(formattedDate);
   }, []);
 
+  useEffect(() => {
+    if (id) {
+      print();
+    }
+  }, [id, data, print]);
+
+  if (!studentData) return null;
+
   return (
     <div className="text-[1rem] text-sm font-medium" ref={ref}>
       <style type="text/css">
@@ -149,12 +158,12 @@ export default function PrintRaport() {
           tboady { display:table-footer-group }
         `}
       </style>
-      <button
+      {/* <button
         className="fixed top-[2rem] z-20 bg-blue-200 left-[2rem] p-[1rem]"
         onClick={handlePrint}
       >
         ahhay
-      </button>
+      </button> */}
       <div className="font-serif">
         <div className="px-[2rem]">
           <p className="text-center text-[1.5rem]">
@@ -197,21 +206,23 @@ export default function PrintRaport() {
                   <p className="basis-6/12 md:basis-9/12">Kelas</p>
                   <p className="basis-1/12 text-center">:</p>
                   <p className="basis-9/12 md:basis-9/12">
-                    {studentData.kelas_angka}
+                    {userData.kelas_angka}
                   </p>
                 </div>
                 <div className="flex flex-row ">
                   <p className="basis-6/12 md:basis-9/12">Semester</p>
                   <p className="basis-1/12 text-center">:</p>
                   <p className="basis-9/12 md:basis-9/12">
-                    {studentData.semester}
+                    {userData.semester}
                   </p>
                 </div>
 
                 <div className="flex flex-row ">
                   <p className="basis-6/12 md:basis-9/12">Tahun Pelajaran</p>
                   <p className="basis-1/12 text-center">:</p>
-                  <p className="basis-9/12 md:basis-9/12">2020/2021</p>
+                  <p className="basis-9/12 md:basis-9/12">
+                    {userData.tahun_ajaran}
+                  </p>
                 </div>
               </div>
             </div>
@@ -642,7 +653,12 @@ export default function PrintRaport() {
               </div>
             </div>
             <div className="justify-between flex ">
-              <div className="px-[2rem]">Orang Tua/Wali</div>
+              <div className="text-center px-[2rem] space-y-[5rem]">
+                <div>
+                  <div>Orang Tua/Wali</div>
+                </div>
+                <div>{studentData.nama_wali}</div>
+              </div>
               <div className="text-center px-[2rem] space-y-[5rem]">
                 <div>
                   <div>
@@ -665,9 +681,9 @@ export default function PrintRaport() {
               </div>
               <div>
                 <div className="font-bold">
-                  <u>DAHLIA S.Pd</u>{" "}
+                  <u>{userData.kepala_sekolah}</u>{" "}
                 </div>
-                <div>NIP: 1912093012930912</div>
+                <div>NIP: {userData.nip_kepsek}</div>
               </div>
             </div>
           </div>

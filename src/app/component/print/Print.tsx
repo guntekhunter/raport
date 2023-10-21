@@ -6,6 +6,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import PrintPage from "./PrintPage";
+import PrintRaport from "./PrintRaport";
 
 export default function Print() {
   const [isActive, setIsActive] = useState(false);
@@ -109,7 +110,7 @@ export default function Print() {
       </div>
       <div className="hidden">
         <div>
-          <PrintPage id={id} />
+          <PrintRaport id={id} />
         </div>
       </div>
     </div>

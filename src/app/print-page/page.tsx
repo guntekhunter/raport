@@ -6,7 +6,7 @@ export default function page() {
   return (
     <div>
       {/* <PrintPage id={2} /> */}
-      <PrintRaport />
+      <PrintRaport id={2} />
     </div>
   );
 }
