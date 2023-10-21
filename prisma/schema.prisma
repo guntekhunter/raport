@@ -51,6 +51,9 @@ model main_data {
   kecamatan      String
   kabupaten      String
   propinsi       String
+  kepala_sekolah String
+  nip_kepsek     Int
+  tahun_ajaran   String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   id_user        Int

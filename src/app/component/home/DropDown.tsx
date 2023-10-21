@@ -22,7 +22,7 @@ export default function DropDown({drop,title,classCallback,name,isActive,
 
   const select = (item: any) => {
     setSelected(item);
-    setActive(!active);
+    setActive(true);
     setIsDrop(!isDrop);
     classCallback(item, name);
   };

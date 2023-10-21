@@ -45,6 +45,9 @@ export async function POST(req: NextRequest) {
       kecamatan,
       kabupaten,
       propinsi,
+      kepala_sekolah,
+      nip_kepsek,
+      tahun_ajaran,
     } = reqBody;
 
     const exitingData = await prisma.main_data.findFirst({
@@ -71,6 +74,9 @@ export async function POST(req: NextRequest) {
           kecamatan,
           kabupaten,
           propinsi,
+          kepala_sekolah,
+          nip_kepsek,
+          tahun_ajaran,
         },
       });
     } else {
@@ -93,68 +99,14 @@ export async function POST(req: NextRequest) {
           kecamatan,
           kabupaten,
           propinsi,
+          kepala_sekolah,
+          nip_kepsek,
+          tahun_ajaran,
         },
       });
     }
 
     return NextResponse.json({ status: "Ok", data });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
-
-export async function PUT(req: NextRequest) {
-  try {
-    const reqBody = await req.json();
-
-    const idUser = req.nextUrl.searchParams.get("id");
-    let id = 0;
-
-    if (idUser !== null) {
-      id = parseInt(idUser); // Using radix 10 for decimal
-    } else {
-      console.log("id_user parameter not found in the URL");
-    }
-
-    const {
-      guru_kelas,
-      nip,
-      kelas_huruf,
-      kelas_angka,
-      semester,
-      id_user,
-      nama_sekolah,
-      npsn,
-      status_sekolah,
-      alamat_sekolah,
-      desa,
-      kecamatan,
-      kabupaten,
-      propinsi,
-    } = reqBody;
-
-    const data = await prisma.main_data.update({
-      where: {
-        id: id,
-      },
-      data: {
-        guru_kelas,
-        nip,
-        kelas_huruf,
-        kelas_angka,
-        semester,
-        id_user,
-        nama_sekolah,
-        npsn,
-        status_sekolah,
-        alamat_sekolah,
-        desa,
-        kecamatan,
-        kabupaten,
-        propinsi,
-      },
-    });
-    return NextResponse.json({ status: "Ok", dataUpdated: data });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

@@ -27,6 +27,9 @@ export default function HomeClient() {
     kecamatan: "",
     kabupaten: "",
     propinsi: "",
+    kepala_sekolah: "",
+    nip_kepsek: 0,
+    tahun_ajaran: "",
   });
 
   const route = useRouter();
@@ -93,8 +96,9 @@ export default function HomeClient() {
 
   const setInput = (value: any, name: any) => {
     let nip;
+    let nipKepsek;
     let valueData = value;
-    if (name === "nip") {
+    if (name === "nip" || name === "nip_kepsek") {
       nip = parseInt(value);
       valueData = nip;
     }
@@ -148,6 +152,88 @@ export default function HomeClient() {
                 />
               </div>
               <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Tahun Ajaran</div>
+                <input
+                  value={data?.tahun_ajaran || ""}
+                  name="tahun_ajaran"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="2020/2021"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Kepala Sekolah</div>
+                <input
+                  value={data?.kepala_sekolah || ""}
+                  name="kepala_sekolah"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>NIP Kepala Sekolah</div>
+                <input
+                  value={data?.nip_kepsek || ""}
+                  name="nip_kepsek"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="19120239102"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Guru Kelas</div>
+                <input
+                  value={data?.guru_kelas || ""}
+                  name="guru_kelas"
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="Salsul Rijal S.Pt"
+                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
+                />
+              </div>
+              <div className="flex justify-between py-[1rem]">
+                <div>NIP Guru Kelas</div>
+                <input
+                  name="nip"
+                  value={data?.nip || ""}
+                  onChange={(e) => {
+                    setInput(e.target.value, e.target.name);
+                  }}
+                  placeholder="1829040023"
+                  className={`flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem] `}
+                />
+              </div>
+            </div>
+            <div className="w-[50%]">
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Kelas</div>
+                <DropDown
+                  name="kelas_angka"
+                  title={data?.kelas_angka}
+                  isActive={isActive}
+                  drop={["I", "II", "III", "IV", "V", "VI"]}
+                  classCallback={classCallback}
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+                <div>Semester</div>
+                <DropDown
+                  name="semester"
+                  title={data?.semester}
+                  isActive={isActive}
+                  drop={["Ganjil", "Genap"]}
+                  classCallback={classCallback}
+                />
+              </div>
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
                 <div>Alamat Sekolah</div>
                 <input
                   value={data?.alamat_sekolah || ""}
@@ -171,7 +257,7 @@ export default function HomeClient() {
                   className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
                 />
               </div>
-              <div className="flex justify-between py-[1rem]">
+              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
                 <div>Kecamatan</div>
                 <input
                   value={data?.kecamatan || ""}
@@ -183,8 +269,6 @@ export default function HomeClient() {
                   className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
                 />
               </div>
-            </div>
-            <div className="w-[50%]">
               <div className="flex justify-between py-[1rem] border-b-[1.5px]">
                 <div>Kabupaten</div>
                 <input
@@ -197,7 +281,7 @@ export default function HomeClient() {
                   className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
                 />
               </div>
-              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
+              <div className="flex justify-between py-[1rem]">
                 <div>Propinsi</div>
                 <input
                   value={data?.propinsi || ""}
@@ -207,52 +291,6 @@ export default function HomeClient() {
                   }}
                   placeholder="Salsul Rijal S.Pt"
                   className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
-                />
-              </div>
-              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
-                <div>Guru Kelas</div>
-                <input
-                  value={data?.guru_kelas || ""}
-                  name="guru_kelas"
-                  onChange={(e) => {
-                    setInput(e.target.value, e.target.name);
-                  }}
-                  placeholder="Salsul Rijal S.Pt"
-                  className="flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem]"
-                />
-              </div>
-              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
-                <div>NIP</div>
-                <input
-                  name="nip"
-                  value={data?.nip || ""}
-                  onChange={(e) => {
-                    setInput(e.target.value, e.target.name);
-                  }}
-                  placeholder="1829040023"
-                  className={`flex justify-center text-left w-[10rem] rounded-md bg-gray-100 border-[1.5px] border-gray-200 px-[.5rem] ${
-                    nip === 0 ? "text-gray-400" : "text-black"
-                  }`}
-                />
-              </div>
-              <div className="flex justify-between py-[1rem] border-b-[1.5px]">
-                <div>Kelas</div>
-                <DropDown
-                  name="kelas_angka"
-                  title={data?.kelas_angka}
-                  isActive={isActive}
-                  drop={["I", "II", "III", "IV", "V", "VI"]}
-                  classCallback={classCallback}
-                />
-              </div>
-              <div className="flex justify-between py-[1rem]">
-                <div>Semester</div>
-                <DropDown
-                  name="semester"
-                  title={data?.semester}
-                  isActive={isActive}
-                  drop={["Ganjil", "Genap"]}
-                  classCallback={classCallback}
                 />
               </div>
             </div>
