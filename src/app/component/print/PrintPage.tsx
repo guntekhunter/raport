@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import Image from "next/image";
 import { tr } from "date-fns/locale";
+import Cookies from "js-cookie";
 
 // @ts-ignore
 export default function PrintPage({ id }) {
@@ -24,6 +25,22 @@ export default function PrintPage({ id }) {
         } catch (error) {
           console.log(error);
         }
+      }
+    };
+    const fetchMainData = async () => {
+      try {
+        const user = Cookies.get("user id");
+        let parsedId = 0;
+        if (user !== undefined) {
+          parsedId = parseInt(user); // Parsing the user ID to an integer
+        } else {
+          console.log("User ID not found in localStorage");
+        }
+        const data = await axios.get(
+          `http://localhost:3000/api/main-data?user_id=${parsedId}`
+        );
+      } catch (err) {
+        console.log(err);
       }
     };
     fetchStudent();

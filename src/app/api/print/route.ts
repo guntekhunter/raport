@@ -7,22 +7,80 @@ export const config = {
   regions: ["iad1"], // only execute this function in iad1
 };
 
+// export async function GET(req: NextRequest, res: NextResponse) {
+//   try {
+//     const reqData = await req.json();
+//     const { user_id, siswa_id } = reqData;
+
+//     console.log(user_id, siswa_id);
+//     const reqBody = req.nextUrl.searchParams.get("id");
+//     let id = 0;
+
+//     if (reqBody !== null) {
+//       id = parseInt(reqBody); // Using radix 10 for decimal
+//     } else {
+//       console.log("id_user parameter not found in the URL");
+//     }
+//     const student = await prisma.students_data.findFirst({
+//       where: {
+//         id: id,
+//       },
+//     });
+//     return NextResponse.json({ status: "Ok", student });
+//   } catch (error: any) {
+//     return NextResponse.json({ error: error.message }, { status: 400 });
+//   }
+// }
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const reqBody = req.nextUrl.searchParams.get("id");
+    const userId = req.nextUrl.searchParams.get("user_id");
     let id = 0;
+    let idUser = 0;
 
-    if (reqBody !== null) {
+    if (reqBody && userId !== null) {
+      idUser = parseInt(userId);
       id = parseInt(reqBody); // Using radix 10 for decimal
     } else {
       console.log("id_user parameter not found in the URL");
     }
-    const student = await prisma.students_data.findFirst({
+    const data = await prisma.nilai_siswa.findFirst({
       where: {
-        id: id,
+        siswa_id: id,
+        user_id: idUser,
+      },
+      include: {
+        students: {
+          select: {
+            nama_lengkap: true,
+            nisn: true,
+            keterangan_perkembangan_pesdik: true,
+          },
+        },
+        user: {
+          select: {
+            main_data: {
+              select: {
+                nama_sekolah: true,
+                alamat_sekolah: true,
+                kelas_angka: true,
+                semester: true,
+                guru_kelas: true,
+                nip: true,
+                desa: true
+                // Add other fields from main_data that you want to include
+              },
+            },
+          },
+        },
+        nilai: {
+          where: {
+            user_id: idUser,
+          },
+        },
       },
     });
-    return NextResponse.json({ status: "Ok", student });
+    return NextResponse.json({ status: "Ok", data });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }

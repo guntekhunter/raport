@@ -191,10 +191,8 @@ export default function AddSiswa() {
   };
 
   const handleInput = (e: any) => {
-    console.log(e.target.value);
     const name = e.target.name;
     const value = e.target.value;
-    console.log(value);
     setData((prev) => {
       return {
         ...prev,
@@ -206,21 +204,13 @@ export default function AddSiswa() {
   const saveSiswa = async () => {
     try {
       const res = await axios.post("http://localhost:3000/api/siswa", data);
-      // axios.post("")
       if (res) {
         router.push("/siswa");
       }
-      console.log(res);
     } catch (error) {
       console.log(error);
     }
-    console.log("ahhay");
-    console.log(data);
   };
-
-  console.log(data);
-  console.log(userId);
-  console.log(inputSets);
   return (
     <div className={`w-full flex justify-around z-1 py-[1.7rem]`}>
       <div className="w-[80%] space-y-[.7rem]">
@@ -797,27 +787,6 @@ export default function AddSiswa() {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="font-bold pt-[1rem]">Meninggalkan Sekolah</div>
-            <div className="flex justify-between">
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Tanggal Meninggalkan Sekolah" />
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Kelas Yang Ditinggalkan" />
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Alasan" />
-            </div>
-            <div className="flex justify-between">
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Sekolah Yang Dituju" />
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Kecamatan" />
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Kabupaten" />
-            </div>
-            <div className="flex justify-between">
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Provinsi" />
-            </div> */}
-              {/* <div className="font-bold pt-[1rem]">Akhir Pendidikan</div>
-            <div className="flex justify-between">
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Tempat belajar / Lulus Tahun" />
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Nomor Ijasah / STL" />
-              <Input star="off" value={data.agama} onChange={handleInput} name="" title="Akan Melanjutkan Ke" />
-            </div> */}
             </div>
             <div className="flex justify-between w-[45%]">
               <button

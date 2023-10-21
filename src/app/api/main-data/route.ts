@@ -30,56 +30,83 @@ export async function GET(req: NextRequest, res: NextResponse) {
 export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
-    const { guru_kelas, nip, kelas_huruf, kelas_angka, semester, id_user } =
-      reqBody;
+    const {
+      guru_kelas,
+      nip,
+      kelas_huruf,
+      kelas_angka,
+      semester,
+      id_user,
+      nama_sekolah,
+      npsn,
+      status_sekolah,
+      alamat_sekolah,
+      desa,
+      kecamatan,
+      kabupaten,
+      propinsi,
+      kepala_sekolah,
+      nip_kepsek,
+      tahun_ajaran,
+    } = reqBody;
 
-    const newData = await prisma.main_data.create({
-      data: {
-        guru_kelas,
-        nip,
-        kelas_huruf,
-        kelas_angka,
-        semester,
+    const exitingData = await prisma.main_data.findFirst({
+      where: {
         id_user,
       },
     });
+    let data;
 
-    return NextResponse.json({ status: "Ok", newData });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
-
-export async function PUT(req: NextRequest) {
-  try {
-    const reqBody = await req.json();
-
-    const idUser = req.nextUrl.searchParams.get("id");
-    let id = 0;
-
-    if (idUser !== null) {
-      id = parseInt(idUser); // Using radix 10 for decimal
+    if (!exitingData) {
+      data = await prisma.main_data.create({
+        data: {
+          guru_kelas,
+          nip,
+          kelas_huruf,
+          kelas_angka,
+          semester,
+          id_user,
+          nama_sekolah,
+          npsn,
+          status_sekolah,
+          alamat_sekolah,
+          desa,
+          kecamatan,
+          kabupaten,
+          propinsi,
+          kepala_sekolah,
+          nip_kepsek,
+          tahun_ajaran,
+        },
+      });
     } else {
-      console.log("id_user parameter not found in the URL");
+      data = await prisma.main_data.update({
+        where: {
+          id: exitingData.id,
+        },
+        data: {
+          guru_kelas,
+          nip,
+          kelas_huruf,
+          kelas_angka,
+          semester,
+          id_user,
+          nama_sekolah,
+          npsn,
+          status_sekolah,
+          alamat_sekolah,
+          desa,
+          kecamatan,
+          kabupaten,
+          propinsi,
+          kepala_sekolah,
+          nip_kepsek,
+          tahun_ajaran,
+        },
+      });
     }
 
-    const { guru_kelas, nip, kelas_huruf, kelas_angka, semester, id_user } =
-      reqBody;
-
-    const data = await prisma.main_data.update({
-      where: {
-        id: id,
-      },
-      data: {
-        guru_kelas,
-        nip,
-        kelas_huruf,
-        kelas_angka,
-        semester,
-        id_user,
-      },
-    });
-    return NextResponse.json({ status: "Ok", dataUpdated: data });
+    return NextResponse.json({ status: "Ok", data });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

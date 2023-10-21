@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        roman: ["var(--far-roman)"],
+      },
       colors: {
         text: "#120808",
         background: "#ffffff",
