@@ -136,10 +136,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
         },
       },
     });
-    const sortedData = data.map((item) => ({
-      ...item,
-      nilai: item.nilai.sort((a, b) => a.id - b.id), // Sort the nilai array by id
-    }));
+    http://localhost:3000/api/absen?user_id=${parsedId}&absen_id=${absenId}&subject=${subject}&mounth=${mounth}
 
     return NextResponse.json({
       status: "Ok",

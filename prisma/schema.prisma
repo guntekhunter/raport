@@ -156,6 +156,7 @@ model absen {
   mounth    String
   subject   String
   status    String
+  is_active Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   date      date     @relation(fields: [date_id], references: [id])

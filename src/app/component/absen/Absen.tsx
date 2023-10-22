@@ -176,7 +176,26 @@ export default function Absen() {
         "http://localhost:3000/api/absen",
         absenData
       );
-      console.log(data);
+      setAbsen(data.data.dataAbsen);
+      setAbsens(data.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const deleteAbsen = async (absenId: number) => {
+    try {
+      const user = Cookies.get("user id");
+      let parsedId = 0;
+      if (user !== undefined) {
+        parsedId = parseInt(user); // Parsing the user ID to an integer
+        setUserId(parsedId);
+      } else {
+        console.log("User ID not found in localStorage");
+      }
+      const data = await axios.put(
+        `http://localhost:3000/api/absen?user_id=${parsedId}&absen_id=${absenId}&subject=${subject}&mounth=${mounth}`
+      );
+      console.log(absenId);
       setAbsen(data.data.dataAbsen);
       setAbsens(data.data.data);
     } catch (err) {
@@ -292,6 +311,8 @@ export default function Absen() {
                     date.map((dateItem: any, dateIndex: any) => {
                       const showAhhay = isNumberInArray(dateIndex);
                       const absenStatus = item.absen[dateIndex]?.status;
+                      const id = item.absen[dateIndex]?.id;
+                      const active = item.absen[dateIndex]?.active;
 
                       let bgColorClass = "";
                       if (absenStatus === "H") {
@@ -308,7 +329,7 @@ export default function Absen() {
                       }
                       return (
                         <td key={dateIndex} className="px-6 py-4 ">
-                          {!showAhhay ? (
+                          {!showAhhay || active ? (
                             <div className="whitespace-nowrap flex space-x-5">
                               <button
                                 onClick={(e) =>
@@ -344,8 +365,10 @@ export default function Absen() {
                               </button>
                             </div>
                           ) : (
+                            // if the active is true show the one button if active is false show the multiple button to update the status on absen table
                             <button
                               className={`rounded-full ${bgColorClass} w-[1.7rem] h-[1.7rem] flex justify-around items-center  border-[1.5px] border`}
+                              onClick={(e) => deleteAbsen(id)}
                             >
                               {item.absen[dateIndex].status}
                             </button>

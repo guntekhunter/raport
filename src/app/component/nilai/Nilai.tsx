@@ -294,7 +294,6 @@ export default function Nilai() {
                       ) {
                         uniqueKey = item.nilai[kdIndex].id;
                         nilai = item.nilai[kdIndex].nilai;
-                        // Rest of your code
                       } else {
                         console.error(
                           "item.nilai[kdIndex] is undefined or id/nilai is undefined."
