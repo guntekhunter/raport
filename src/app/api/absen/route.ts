@@ -103,36 +103,56 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     const absenId = req.nextUrl.searchParams.get("absen_id");
     const subject = req.nextUrl.searchParams.get("subject");
     const mounth = req.nextUrl.searchParams.get("mounth");
+    const active = req.nextUrl.searchParams.get("active");
+    const status = req.nextUrl.searchParams.get("status");
     let user_id = 0;
     let absen_id = 0;
     let the_subject: string = "";
     let the_mounth = "";
+    let the_status;
+    let dataDeleted;
 
     if (userId !== null) {
-      if (absenId !== null) {
-        if (mounth !== null && mounth !== "") {
-          if (subject !== "" && subject !== null) {
-            the_mounth = mounth;
-            user_id = parseInt(userId);
-            absen_id = parseInt(absenId);
-            the_subject = subject;
+      if (status !== null) {
+        if (absenId !== null) {
+          if (mounth !== null && mounth !== "") {
+            if (subject !== "" && subject !== null) {
+              the_mounth = mounth;
+              user_id = parseInt(userId);
+              absen_id = parseInt(absenId);
+              the_subject = subject;
+              the_status = status;
+            }
+          } else {
+            console.log("Month parameter is null or empty");
           }
         } else {
-          console.log("Month parameter is null or empty");
+          console.log("id_user parameter is null");
         }
-      } else {
-        console.log("id_user parameter is null");
       }
     }
 
-    const dataDeleted = await prisma.absen.update({
-      where: {
-        id: absen_id,
-      },
-      data: {
-        is_active: false,
-      },
-    });
+    if (active === "delete") {
+      dataDeleted = await prisma.absen.update({
+        where: {
+          id: absen_id,
+        },
+        data: {
+          is_active: false,
+          status: the_status,
+        },
+      });
+    } else if (active === "update") {
+      dataDeleted = await prisma.absen.update({
+        where: {
+          id: absen_id,
+        },
+        data: {
+          is_active: true,
+          status: the_status,
+        },
+      });
+    }
 
     const dataAbsen = await prisma.absen.findMany({
       where: {

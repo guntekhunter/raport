@@ -182,7 +182,7 @@ export default function Absen() {
       console.log(err);
     }
   };
-  const deleteAbsen = async (absenId: number) => {
+  const deleteAbsen = async (absenId: number, status: string) => {
     try {
       const user = Cookies.get("user id");
       let parsedId = 0;
@@ -193,7 +193,27 @@ export default function Absen() {
         console.log("User ID not found in localStorage");
       }
       const data = await axios.put(
-        `http://localhost:3000/api/absen?user_id=${parsedId}&absen_id=${absenId}&subject=${subject}&mounth=${mounth}`
+        `http://localhost:3000/api/absen?user_id=${parsedId}&absen_id=${absenId}&subject=${subject}&mounth=${mounth}&active=delete&status=${status}`
+      );
+      console.log(absenId);
+      setAbsen(data.data.dataAbsen);
+      setAbsens(data.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const updateAbsen = async (absenId: number, status: string) => {
+    try {
+      const user = Cookies.get("user id");
+      let parsedId = 0;
+      if (user !== undefined) {
+        parsedId = parseInt(user); // Parsing the user ID to an integer
+        setUserId(parsedId);
+      } else {
+        console.log("User ID not found in localStorage");
+      }
+      const data = await axios.put(
+        `http://localhost:3000/api/absen?user_id=${parsedId}&absen_id=${absenId}&subject=${subject}&mounth=${mounth}&active=update&status=${status}`
       );
       console.log(absenId);
       setAbsen(data.data.dataAbsen);
@@ -366,12 +386,48 @@ export default function Absen() {
                             </div>
                           ) : (
                             // if the active is true show the one button if active is false show the multiple button to update the status on absen table
-                            <button
-                              className={`rounded-full ${bgColorClass} w-[1.7rem] h-[1.7rem] flex justify-around items-center  border-[1.5px] border`}
-                              onClick={(e) => deleteAbsen(id)}
-                            >
-                              {item.absen[dateIndex].status}
-                            </button>
+                            <>
+                              {!item.absen[dateIndex].is_active ? (
+                                <div className="whitespace-nowrap flex space-x-5">
+                                  <button
+                                    onClick={(e) => updateAbsen(id, "H")}
+                                    className="rounded-full bg-green-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-green-400 border-[1.5px] text-green-400 border"
+                                  >
+                                    H
+                                  </button>
+                                  <button
+                                    onClick={(e) => updateAbsen(id, "I")}
+                                    className="rounded-full bg-yellow-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-yellow-400 border-[1.5px] text-yellow-400 border"
+                                  >
+                                    I
+                                  </button>
+                                  <button
+                                    onClick={(e) => updateAbsen(id, "S")}
+                                    className="rounded-full bg-blue-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-blue-400 border-[1.5px] text-blue-400 border"
+                                  >
+                                    S
+                                  </button>
+                                  <button
+                                    onClick={(e) => updateAbsen(id, "A")}
+                                    className="rounded-full bg-red-200 w-[1.7rem] h-[1.7rem] flex justify-around items-center border-red-400 border-[1.5px] text-red-400 border"
+                                  >
+                                    A
+                                  </button>
+                                </div>
+                              ) : (
+                                <button
+                                  className={`rounded-full ${bgColorClass} w-[1.7rem] h-[1.7rem] flex justify-around items-center  border-[1.5px] border`}
+                                  onClick={(e) =>
+                                    deleteAbsen(
+                                      id,
+                                      item.absen[dateIndex].status
+                                    )
+                                  }
+                                >
+                                  {item.absen[dateIndex].status}
+                                </button>
+                              )}
+                            </>
                           )}
                         </td>
                       );
