@@ -136,13 +136,13 @@ export async function PUT(req: NextRequest, res: NextResponse) {
         },
       },
     });
-    http://localhost:3000/api/absen?user_id=${parsedId}&absen_id=${absenId}&subject=${subject}&mounth=${mounth}
+    //localhost:3000/api/absen?user_id=${parsedId}&absen_id=${absenId}&subject=${subject}&mounth=${mounth}
 
-    return NextResponse.json({
+    http: return NextResponse.json({
       status: "Ok",
       newData,
       dataNilai,
-      data: sortedData,
+      data,
     });
   } catch (error) {
     console.log(error);
